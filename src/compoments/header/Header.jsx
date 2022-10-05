@@ -3,10 +3,10 @@ import { Navigation } from './Nav'
 
 const Header = () => {
   return (
-    <>
+    <header>
       <HeaderTop />
       <Navigation />
-    </>
+    </header>
   )
 }
 

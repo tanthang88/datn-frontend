@@ -1,7 +1,7 @@
 function ContainerFullWidth(props) {
   return (
     <>
-      <section className={`w-full max-w-full ${props.className}`}>
+      <section className={`w-screen w-full ${props.className}`}>
         {props.children}
       </section>
     </>
