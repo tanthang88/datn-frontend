@@ -1,16 +1,9 @@
-import { Outlet } from 'react-router-dom'
 import Header from '../compoments/header/header'
-import { Container, ContainerFullWidth } from '../compoments/base/Container'
+import MainLayout from '../compoments/base/MainLayout'
 const Home = () => {
   return (
-    <>
-      <ContainerFullWidth>
-        <Container className='bg-main'>
-          <Header />
-          <Outlet />
-        </Container>
-      </ContainerFullWidth>
-    </>
+    <MainLayout>
+    </MainLayout>
   )
 }
 
