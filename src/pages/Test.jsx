@@ -7,9 +7,9 @@ export default function Test() {
   return (
     <div>
       <h1>Page Test</h1>
-      <div className="inline-flex items-center gap-3 bg-amber-500 rounded px-2 py-2">
+      <div className='inline-flex items-center gap-3 bg-amber-500 rounded px-2 py-2'>
         <button
-          className="text-2xl"
+          className='text-2xl'
           aria-label='Increment Value'
           onClick={() => dispatch(increment())}
         >
