@@ -1,13 +1,20 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-import ErrorPage from "../compoments/error/ErrorPage";
-import Home from "../pages/Home";
-import Test from "../pages/Test";
+import { createBrowserRouter } from 'react-router-dom'
+import ErrorPage from '../compoments/error/ErrorPage'
+import Home from '../pages/Home'
+import Test from '../pages/Test'
 
-const RouterContainer = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Home />} errorElement={<ErrorPage />}>
-      <Route path="hehehe" element={<Test />} errorElement={<ErrorPage />} />
-    </Route>
-  )
-)
+const RouterContainer = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+    children: [
+      {
+        path: 'test',
+        element: <Test />,
+        errorElement: <ErrorPage />,
+      },
+    ],
+    errorElement: <ErrorPage />,
+  },
+])
 export default RouterContainer
