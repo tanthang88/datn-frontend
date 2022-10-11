@@ -1,61 +1,49 @@
-import { Container, ContainerFullWidth } from '../base/Container'
-import { NavLink } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { FaSearch } from 'react-icons/fa'
+import { Menu } from 'antd'
+import { FaUserCircle } from 'react-icons/fa'
+import { HiDocumentText } from 'react-icons/hi'
+import { FaShoppingCart } from 'react-icons/fa'
 import { HeaderTopItem } from './HeaderTopItem'
-import { MdAccountCircle } from 'react-icons/md'
-import { BsFillFileEarmarkPostFill } from 'react-icons/bs'
 
 export function HeaderTop() {
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const items = [
+    { label: 'Tin tức', key: 'tin-tuc', icon: <FaUserCircle /> }, // remember to pass the key prop
+    { label: 'item 2', key: 'item-2' }, // which is required
+    { label: 'item 3', key: 'item-3' },
+  ]
   return (
-    <ContainerFullWidth className='bg-red-600'>
-      <Container className='lf-header-wrap text-main flex flex-row justify-between items-center py-1'>
-        <div className='lf-logo'>
-          <NavLink to={'/'}>
-            <img
-              src='/src/assets/react.svg'
-              alt='main logo'
-              style={{ width: '151px', height: '40px' }}
-            />
-          </NavLink>
+    <div className='xl:container flex justify-between items-center h-full'>
+      <div className='w-3/12'>
+        <img src='src/assets/react.svg' alt='' />
+      </div>
+      <div className='w-6/12 py-2'>
+        <div className='pr-10'>
+          <input
+            type='text'
+            name=''
+            id=''
+            className='outline-0 h-10 w-full pl-2'
+          />
         </div>
-        <div className='lf-search w-5/12 h-10'>
-          <form onSubmit={handleSubmit(onSubmit)} className='relative'>
-            <input
-              className='w-full h-10 pl-2'
-              placeholder='Nhập tên điện thoại, máy tính, phụ kiện, ... cần tìm'
-              {...register('tim-kiem')}
-            />
-            <button
-              className='absolute right-0 h-full w-12 h-full text-xl bg-black text-white pl-3.5 opacity-80'
-              type='submit'
-            >
-              <FaSearch />
-            </button>
-          </form>
-        </div>
-        <ul className='flex flex-row gap-4 w-4/12 px-8'>
-          <li>
-            <HeaderTopItem
-              icon={<BsFillFileEarmarkPostFill />}
-              title='Thông tin hay'
-              linkTo='tin-tuc'
-            />
-          </li>
-          <li>
-            <HeaderTopItem
-              icon={<MdAccountCircle />}
-              title='Tài khoản của tôi'
-              linkTo='test'
-            />
-          </li>
-          <li>
-            <HeaderTopItem />
-          </li>
-        </ul>
-      </Container>
-    </ContainerFullWidth>
+      </div>
+      <ul className='flex justify-between h-14 pt-3 w-3/12 '>
+        <li>
+          <HeaderTopItem
+            title='Thông tin hay'
+            linkTo='/'
+            icon=<HiDocumentText />
+          />
+        </li>
+        <li>
+          <HeaderTopItem
+            title='Tài khoản của tôi'
+            linkTo='/'
+            icon=<FaUserCircle />
+          />
+        </li>
+        <li>
+          <HeaderTopItem title='Giỏ hàng' linkTo='/' icon=<FaShoppingCart /> />
+        </li>
+      </ul>
+    </div>
   )
 }

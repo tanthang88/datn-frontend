@@ -1,14 +1,12 @@
+/*@import '~antd/dist/antd.css';*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --primary: #f6891f;
-        --wheat: #ffd186;
-        --pale-orange: #ffa54e;
-    }
-    html {
-        font-family: Roboto, Arial, Helvetica, sans-serif;
-    }
+  :root {
+    --primary: #f6891f;
+    --wheat: #ffd186;
+    --pale-orange: #ffa54e;
+  }
 }
