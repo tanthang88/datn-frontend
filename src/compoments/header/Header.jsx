@@ -1,13 +1,17 @@
+import { Layout } from 'antd'
 import { HeaderTop } from './HeaderTop'
-import { Navigation } from './Nav'
+import '../../scss/header.scss'
+import { Navigation } from './Nav.jsx'
 
-const Header = () => {
-  return (
-    <header>
+const { Header } = Layout
+
+const MainHeader = () => (
+  <>
+    <Header className='h-14 header-top'>
       <HeaderTop />
-      <Navigation />
-    </header>
-  )
-}
+    </Header>
+    <Navigation />
+  </>
+)
 
-export default Header
+export default MainHeader

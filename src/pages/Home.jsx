@@ -1,9 +1,9 @@
-import Header from '../compoments/header/header'
-import MainLayout from '../compoments/base/MainLayout'
+import MainLayout from '../compoments/base/MainLayout.jsx'
 const Home = () => {
   return (
-    <MainLayout>
-    </MainLayout>
+    <div>
+      <h1>Home page</h1>
+    </div>
   )
 }
 

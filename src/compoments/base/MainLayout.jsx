@@ -1,12 +1,23 @@
-import { ContainerFullWidth, Container } from './Container.jsx'
-import Header from '../header/Header.jsx'
-export default function MainLayout(props) {
+import { Layout } from 'antd'
+import MainHeader from '../header/Header.jsx'
+import '../../App.css'
+import { Outlet } from 'react-router'
+
+const { Content, Footer } = Layout
+export default function MainLayout() {
   return (
-    <>
-      <Header />
-      <ContainerFullWidth>
-        <Container>{props.children}</Container>
-      </ContainerFullWidth>
-    </>
+    <Layout className='main-layout'>
+      <MainHeader />
+      <Content className='xl:container'>
+        <Outlet />
+      </Content>
+      <Footer
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        Footer
+      </Footer>
+    </Layout>
   )
 }
