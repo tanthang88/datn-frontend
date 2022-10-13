@@ -16,8 +16,8 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          'primary-color': '#F6891F',
-          'heading-color': '#f00',
+          'primary-color': '#ee4d2d',
+          'heading-color': '#fff',
           'font-family': 'Roboto, Arial, Helvetica, sans-serif',
         },
         javascriptEnabled: true,
