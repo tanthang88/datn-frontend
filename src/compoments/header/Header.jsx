@@ -7,7 +7,7 @@ const { Header } = Layout
 
 const MainHeader = () => (
   <>
-    <Header className='h-14 header-top'>
+    <Header className='header-top'>
       <HeaderTop />
     </Header>
     <Navigation />

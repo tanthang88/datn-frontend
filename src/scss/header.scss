@@ -1,4 +1,45 @@
-.header-top{
-  background: #cd1818;
-  max-height: 56px;
+.ant-layout-header.header-top{
+  height: fit-content;
+}
+.header-top {
+  background: var(--primary-gradient);
+}
+
+#nav {
+  .ant-menu > .ant-menu-item{
+    &-active{
+      border-bottom: 0;
+    }
+    a {
+      color: var(--white);
+    //  color: var(--white);
+     line-height: 14px;
+     font-size: 14px;
+     text-transform: uppercase;
+     font-weight: 500;
+   }
+   .ant-menu-item-icon{
+    color: var(--white);
+    font-size: 1.2rem;
+   }
+   &:hover::after{
+    border-bottom: 2px solid var(--white) !important;
+   }
+   &-selected::after{
+    border-bottom: 2px solid var(--white) !important;
+   }
+  }
+  ul{
+    li{
+      &:first-child{
+        padding-left: 0;
+        &::after{
+          left: 0;
+        }
+      }
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
 }

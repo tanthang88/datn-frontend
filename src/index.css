@@ -5,8 +5,10 @@
 
 @layer base {
   :root {
-    --primary: #f6891f;
-    --wheat: #ffd186;
-    --pale-orange: #ffa54e;
+    /*--primary: #f6891f;*/
+    --primary: #ee4d2d;
+    --primary-gradient: linear-gradient(var(--primary),#ff7337);
+    --primary-bg: #fef6f5;
+    --white: #FFFFFF;
   }
 }
