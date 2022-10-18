@@ -4,16 +4,7 @@ import '../../App.css'
 import { Outlet } from 'react-router'
 
 const { Content, Footer } = Layout
-const style = {
-  height: 40,
-  width: 40,
-  lineHeight: '40px',
-  borderRadius: 4,
-  backgroundColor: '#1088e9',
-  color: '#fff',
-  textAlign: 'center',
-  fontSize: 14,
-}
+
 export default function MainLayout() {
   return (
     <Layout className='main-layout'>
@@ -29,7 +20,7 @@ export default function MainLayout() {
         Footer
       </Footer>
       <BackTop>
-        <div style={style}>UP</div>
+        <div>UP</div>
       </BackTop>
     </Layout>
   )

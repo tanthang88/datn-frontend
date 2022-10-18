@@ -1,25 +1,33 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:80'
-const instance = axios.create({
-  baseURL: BASE_URL
+const publicRequest = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+  },
+  withCredentials: false,
+  responseType: 'json',
+  responseEncoding: 'utf8',
 })
-instance.interceptors.request.use(
+publicRequest.interceptors.request.use(
   function (config) {
     // create config before send
     return config
   },
   function (error) {
     return Promise.reject(error)
-  }
+  },
 )
 
-instance.interceptors.response.use(
+publicRequest.interceptors.response.use(
   function (response) {
     // create config before take
-    return response
+    return response.data
   },
   function (error) {
     return Promise.reject(error)
-  }
+  },
 )
+export { publicRequest }
