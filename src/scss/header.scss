@@ -4,7 +4,12 @@
 .header-top {
   background: var(--primary-gradient);
 }
-
+.background-white{
+  background-color: var(--white) !important;
+}
+.background-gradient{
+  background: var(--primary-gradient);
+}
 #nav {
   .ant-menu > .ant-menu-item{
     &-active{

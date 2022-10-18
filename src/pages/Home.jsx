@@ -57,11 +57,6 @@ const Home = () => {
       image: 'https://www.xtsmart.vn/vnt_upload/weblink/baner_4.png',
       link: 'fptshop.com.vn',
     },
-    // {
-    //   title: 'Tuần lễ Xiaomi giảm đến 3 triệu',
-    //   image: 'https://www.xtsmart.vn/vnt_upload/weblink/baner_4.png',
-    //   link: 'fptshop.com.vn',
-    // },
   ]
 
   return (
@@ -100,7 +95,7 @@ const Home = () => {
           <Col className='gutter-row' span={8}>
             <article className='flex flex-col gap-y-3'>
               {FeaturePost.map((ele, index) => (
-                <Link to='/test'>
+                <Link to='/test' key={index}>
                   <div
                     className='flex justify-start gap-x-2 items-center'
                     key={index}
