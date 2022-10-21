@@ -1,20 +1,24 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Form, Input, Row, Col, Divider } from 'antd'
+import { Button, Checkbox, Form, Input, Row, Col, Divider, message } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { publicRequest } from '../../api/axiosClient.js'
-import useLocalStorage from '../../hooks/useLocalStorage.js'
+import { handleLogin } from '../../services/Actions/login.js'
+import { useLocalStorage } from '../../hooks/useLocalStorage.js'
 
-const onFinish = (value) => {
-  publicRequest
-    .post('/client/login', value)
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((e) => console.log(e))
-}
 export default function LoginCompoment() {
   const [formLogin] = Form.useForm()
+  const [token, setToken] = useLocalStorage('access_token', null)
+  const submitForm = (formValue) => {
+    handleLogin(formValue).then(
+      (res) => {
+        setToken(res.access_token)
+        message.success('Đăng nhập thành công!', 2)
+      },
+      (err) => {
+        console.log(err)
+      },
+    )
+  }
   return (
     <section className='xl:container border-t-gray-400'>
       <Row justify={'center'}>
@@ -26,7 +30,7 @@ export default function LoginCompoment() {
           <Form
             form={formLogin}
             name='form-login'
-            onFinish={onFinish}
+            onFinish={submitForm}
             scrollToFirstError
           >
             <Form.Item
@@ -61,7 +65,7 @@ export default function LoginCompoment() {
                 },
               ]}
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className='site-form-item-icon' />}
                 type='password'
                 placeholder='Mật khẩu'
