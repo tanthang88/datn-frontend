@@ -1,4 +1,5 @@
 import axios from 'axios'
+const accessToken = JSON.parse(localStorage.getItem('access_token'))
 
 const publicRequest = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -7,13 +8,13 @@ const publicRequest = axios.create({
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
   },
-  withCredentials: false,
-  responseType: 'json',
-  responseEncoding: 'utf8',
 })
 publicRequest.interceptors.request.use(
   function (config) {
     // create config before send
+    accessToken != null
+      ? (config.headers.Authorization = `Bearer ${accessToken}`)
+      : ''
     return config
   },
   function (error) {
