@@ -2,8 +2,8 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input, Row, Col, Divider, message } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { handleLogin } from '../../services/Actions/login.js'
-import { useLocalStorage } from '../../hooks/useLocalStorage.js'
+import { handleLogin } from '../../../services/Actions/login.js'
+import { useLocalStorage } from '../../../hooks/useLocalStorage.js'
 
 export default function LoginCompoment() {
   const [formLogin] = Form.useForm()
@@ -96,7 +96,7 @@ export default function LoginCompoment() {
             <p className='text-center'>
               <span className='opacity-70'>Bạn chưa có tài khoản?</span>
               <span className='pl-1 text-main font-medium'>
-                <Link to={'/register'}>Đăng kí</Link>
+                <Link to={'/Compoments'}>Đăng kí</Link>
               </span>
             </p>
           </Form>

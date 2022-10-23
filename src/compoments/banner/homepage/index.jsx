@@ -9,7 +9,7 @@ import 'swiper/css/pagination'
 import { Link } from 'react-router-dom'
 import GridContentLayout from '../../base/GridContentLayout.jsx'
 
-export const MainBanner = (props) => {
+export const MainBanner = () => {
   const imageSlideItems = [
     {
       title: 'Item 1',
@@ -60,7 +60,7 @@ export const MainBanner = (props) => {
     },
   ]
   return (
-    <GridContentLayout gutter={24} classNameContainer={props.classNameContainer} classNameRow={props.classNameRow}>
+    <GridContentLayout classNameContainer='px-1 py-1 my-6' gutter={24}>
       <Col className='gutter-row' span={16}>
         <Swiper
           slidesPerView={1}

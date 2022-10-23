@@ -3,12 +3,12 @@ import { Row } from 'antd'
 const GridContentLayout = ({
   children,
   gutter,
-  classNameRow,
-  classNameContainer,
+  classNameRow = '',
+  classNameContainer = '',
 }) => {
   return (
     <section
-      className={`xl:container border-2 rounded-md shadow-md bg-white ${classNameContainer}`}
+      className={`xl:container rounded-md shadow-md bg-white ${classNameContainer}`}
     >
       <Row
         gutter={gutter}

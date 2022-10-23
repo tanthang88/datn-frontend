@@ -16,6 +16,9 @@ module.exports = {
       colors: {
         main: '#ee4d2d',
         'header-top': '#cd1818', // transparent: 'transparent',
+        'red-custom' : '#cd1817',
+        'price-main': '#cb1c22',
+        'price-mark': '#ef8573',
         // current: 'currentColor',
         // 'white': '#ffffff',
         // 'purple': '#3f3cbb',
