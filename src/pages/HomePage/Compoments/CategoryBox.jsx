@@ -1,25 +1,26 @@
-import GridContentLayout from '../../base/GridContentLayout.jsx'
+import GridContentLayout from '../../../compoments/base/GridContentLayout.jsx'
 import { Col } from 'antd'
+import { NavLink } from "react-router-dom";
 
 const data = [
   {
     title: 'Điện thoại',
     img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-mobile.png',
+    link: '/Compoments',
+  },
+  {
+    title: 'Laptop',
+    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-laptop.png',
     link: '/',
   },
   {
     title: 'Điện thoại',
-    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-mobile.png',
+    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-pc.png',
     link: '/',
   },
   {
     title: 'Điện thoại',
-    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-mobile.png',
-    link: '/',
-  },
-  {
-    title: 'Điện thoại',
-    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-mobile.png',
+    img: 'https://images.fpt.shop/unsafe/fit-in/60x60/filters:quality(90):fill(transparent)/fptshop.com.vn/Uploads/images/2022/iconcate/icon-tablet.png',
     link: '/',
   },
   {
@@ -65,16 +66,18 @@ const data = [
 ]
 export default function CategoryBox() {
   return (
-    <GridContentLayout>
+    <GridContentLayout gutter={16} classNameContainer='my-6'>
       {data &&
-        data.map((item) => (
-          <Col span={4}>
-            <div className='flex justify-center items-center flex-col p-3'>
-              <picture className='p-6 rounded-full bg-zinc-100'>
-                <img src={item.img} alt='' className='' />
-              </picture>
-              <div>{item.title}</div>
-            </div>
+        data.map((item, index) => (
+          <Col span={4} key={index} className='homepage__categories-list-item hover:shadow-lg'>
+            <NavLink to={item.link}>
+              <div className='flex justify-center items-center flex-col p-3 gap-3'>
+                <picture className='p-6 rounded-full bg-zinc-100'>
+                  <img src={item.img} alt='' className='' />
+                </picture>
+                <div className='text-black'>{item.title}</div>
+              </div>
+            </NavLink>
           </Col>
         ))}
     </GridContentLayout>

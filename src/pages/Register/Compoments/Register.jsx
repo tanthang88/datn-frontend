@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Form, Select, Input, Button, Divider, Col, Row, message } from 'antd'
-import { getCity, getDist } from '../../api/services/getAddressInformation'
-import { handleRegisterUser } from '../../services/Actions/register.js'
+import { getCity, getDist } from '../../../api/services/getAddressInformation.js'
+import { handleRegisterUser } from '../../../services/Actions/register.js'
 import { Link, useNavigate } from 'react-router-dom'
 
 const layout = {
@@ -181,7 +181,7 @@ export default function RegisterCompoment() {
           <p className='text-center'>
             <span>Bạn đã có tài khoản?</span>
             <span className='pl-1 text-main font-medium'>
-              <Link to={'/login'}>Đăng nhập ngay</Link>
+              <Link to={'/Compoments'}>Đăng nhập ngay</Link>
             </span>
           </p>
         </Col>

@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom'
 import ErrorPage from '../compoments/error/ErrorPage'
 import MainLayout from '../compoments/base/MainLayout'
-import Home from '../pages/Home'
+import HomePageContainer from '../pages/HomePage/HomePageContainer.jsx'
 import { Test } from '../pages/Test'
-import Register from '../pages/Register'
-import Login from '../pages/Login'
+import RegisterContainer from '../pages/Register/RegisterContainer.jsx'
+import LoginContainer from '../pages/Login/LoginContainer.jsx'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ const RouterContainer = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomePageContainer />,
         errorElement: <ErrorPage />,
       },
       {
@@ -25,13 +25,13 @@ const RouterContainer = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/register',
-    element: <Register />,
+    path: '/Compoments',
+    element: <RegisterContainer />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/login',
-    element: <Login />,
+    path: '/Compoments',
+    element: <LoginContainer />,
     errorElement: <ErrorPage />,
   },
 ])
@@ -40,7 +40,7 @@ export default RouterContainer
 //   return (
 //     <Routes>
 //       <Route path='/' element={<MainLayout />} errorElement={<ErrorPage />}>
-//         <Route index element={<Home />} errorElement={<ErrorPage />} />
+//         <Route index element={<HomePageContainer />} errorElement={<ErrorPage />} />
 //         <Route path='test' element={<Test />} errorElement={<ErrorPage />} />
 //       </Route>
 //     </Routes>

@@ -10,5 +10,8 @@
     --primary-gradient: linear-gradient(var(--primary),#ff7337);
     --primary-bg: #fef6f5;
     --white: #FFFFFF;
+    --black: #000;
+    --red: #cd1817;
+    --blue: #0168fa;
   }
 }
