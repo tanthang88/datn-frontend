@@ -4,13 +4,8 @@ import { SliderProducts } from '../../../compoments/slider/SliderProduct.jsx'
 import GridContentLayout from '../../../compoments/base/GridContentLayout.jsx'
 import { ProductItems } from './ProductItems.jsx'
 import { ImFire } from 'react-icons/im'
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '../../../services/Redux/couterSlice.jsx'
-import { Col } from "antd";
 
 export const SaleProducts = () => {
-  const count = useSelector((state) => state.counter.value)
-  const dispatch = useDispatch()
   return (
     <GridContentLayout classNameContainer='px-1 py-5 my-6'>
       <div className='w-full inline-flex items-baseline gap-2 px-3'>
@@ -18,21 +13,6 @@ export const SaleProducts = () => {
         <h1 className='mb-0 font-bold uppercase text-2xl text-red-custom leading-8'>
           khuyến mãi hot
         </h1>
-        <div>
-          <button
-            aria-label='Increment value'
-            onClick={() => dispatch(increment())}
-          >
-            Increment
-          </button>
-          <span>{count}</span>
-          <button
-            aria-label='Decrement value'
-            onClick={() => dispatch(decrement())}
-          >
-            Decrement
-          </button>
-        </div>
       </div>
       <SliderProducts
         slidesPerView={4}

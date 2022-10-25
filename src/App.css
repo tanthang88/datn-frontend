@@ -1,3 +1,46 @@
 .main-layout {
   background: #fff;
 }
+.ft__httt {
+  width: 145px;
+  height: 27px;
+  font-size: 13px;
+  background-image: url('https://fptshop.com.vn/Content/v4/images/iconft.png?v=20176');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+.ft__cer-one{
+     display: inline-block;
+     width: 40px;
+     height: 40px;
+     background-image: url('https://fptshop.com.vn/Content/v4/images/iconft.png?v=20176');
+     background-repeat: no-repeat;
+     background-position: -329px -32px;
+   }
+.ft__cer-two{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  background-image: url('https://fptshop.com.vn/Content/v4/images/iconft.png?v=20176');
+  background-repeat: no-repeat;
+  background-position: 0 -34px;
+}
+.ft__cer-two{
+    margin: -5px 0 -5px 5px;
+}
+.ft__cer-three{
+    display: inline-block;
+    width: 215px;
+    height: 45px;
+    background-image: url('https://fptshop.com.vn/Content/v4/images/iconft.png?v=20176');
+    background-repeat: no-repeat;
+    background-position: -104px -29px;
+}
+.ft__related-website{
+    display: inline-block;
+    width: 102px;
+    height: 30px;
+    background-image: url('https://fptshop.com.vn/Content/v4/images/iconft.png?v=20176');
+    background-repeat: no-repeat;
+    background-position: 0px -75px;
+}

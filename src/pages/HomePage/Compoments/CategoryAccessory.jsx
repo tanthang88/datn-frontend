@@ -64,19 +64,25 @@ const data = [
     link: '/',
   },
 ]
-export default function CategoryBox() {
+export default function CategoryAccessory() {
   return (
     <GridContentLayout gutter={16} classNameContainer='my-6'>
+      <div className='w-full inline-flex items-baseline gap-2 px-3'>
+        <h1 className='mx-5 my-5 font-bold uppercase text-2xl text-red-custom leading-8'>
+          phụ kiện hot
+        </h1>
+      </div>
       {data &&
         data.map((item, index) => (
           <Col
             span={4}
             key={index}
-            className='homepage__categories-list-item hover:shadow-lg'
+            className='hover:shadow-2xl'
+            style={{ border: '1px solid rgba(0,0,0,0.05)' }}
           >
             <NavLink to={item.link}>
               <div className='flex justify-center items-center flex-col p-3 gap-3'>
-                <picture className='p-6 rounded-full bg-zinc-100'>
+                <picture className='p-4'>
                   <img src={item.img} alt='' className='' />
                 </picture>
                 <div className='text-black'>{item.title}</div>
