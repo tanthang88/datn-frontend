@@ -3,6 +3,7 @@ import CategoryBox from './Compoments/CategoryBox.jsx'
 import { SaleProducts } from './Compoments/SaleProducts.jsx'
 import { SellingProducts } from './Compoments/SellingProducts.jsx'
 import { CategoryAbout } from './Compoments/CategoryAbout.jsx'
+import CategoryAccessory from './Compoments/CategoryAccessory.jsx'
 import '../../scss/homepage.scss'
 const HomePageContainer = () => {
   return (
@@ -22,6 +23,7 @@ const HomePageContainer = () => {
       <SaleProducts />
       <SellingProducts />
       <CategoryAbout />
+      <CategoryAccessory />
     </div>
   )
 }

@@ -13,7 +13,11 @@ export function HeaderTop() {
   return (
     <div className='xl:container flex justify-between items-center h-full'>
       <div className='w-3/12'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/1200px-FPT_logo_2010.svg.png' alt='' className='w-20'/>
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/1200px-FPT_logo_2010.svg.png'
+          alt=''
+          className='w-20'
+        />
       </div>
       <div className='w-6/12 py-2'>
         <div className='pr-10'>
@@ -30,18 +34,22 @@ export function HeaderTop() {
           <HeaderTopItem
             title='Thông tin hay'
             linkTo='/'
-            icon=<HiDocumentText />
+            icon={<HiDocumentText />}
           />
         </li>
         <li>
           <HeaderTopItem
             title='Tài khoản của tôi'
             linkTo='/'
-            icon=<FaUserCircle />
+            icon={<FaUserCircle />}
           />
         </li>
         <li>
-          <HeaderTopItem title='Giỏ hàng' linkTo='/' icon=<FaShoppingCart /> />
+          <HeaderTopItem
+            title='Giỏ hàng'
+            linkTo='/'
+            icon={<FaShoppingCart />}
+          />
         </li>
       </ul>
     </div>
