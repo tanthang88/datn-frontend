@@ -4,17 +4,14 @@ import { RouterProvider } from 'react-router-dom'
 import './index.css'
 // Router
 import RouterContainer from './router/root'
-// Redux
-import { store } from './services/Redux/store.js'
+// Reducers
+import { store } from './store/store.js'
 import { Provider } from 'react-redux'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={RouterContainer} />
-      {/*<BrowserRouter>*/}
-      {/*  <RouterContainer />*/}
-      {/*</BrowserRouter>*/}
     </Provider>
-  // </React.StrictMode>,
+  </React.StrictMode>,
 )

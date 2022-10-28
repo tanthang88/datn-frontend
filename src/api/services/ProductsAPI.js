@@ -1,6 +1,6 @@
 import { publicRequest } from '../axiosClient.js'
 
-export const productAPI = {
+export const ProductsAPI = {
   getAllProduct: async () => {
     try {
       return await publicRequest.get('product')
