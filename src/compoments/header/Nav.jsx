@@ -5,7 +5,11 @@ const navLinkItems = [
   {
     label: <Link to='/'>Điện thoại</Link>,
     key: 'trang-chu',
-    icon: <FiSmartphone />,
+    icon: (
+      <div>
+        <img src="https://img.icons8.com/ios/24/000000/iphone14-pro.png"/>
+      </div>
+    ),
   },
   {
     label: <Link to='/'>Laptop</Link>,

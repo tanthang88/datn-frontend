@@ -5,7 +5,16 @@ import { SellingProducts } from './Compoments/SellingProducts.jsx'
 import { CategoryAbout } from './Compoments/CategoryAbout.jsx'
 import CategoryAccessory from './Compoments/CategoryAccessory.jsx'
 import '../../scss/homepage.scss'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchListProducts } from '../../store/Services/ProductServices.js'
+
 const HomePageContainer = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchListProducts())
+  },[fetchListProducts()])
+
   return (
     <div
       className='py-10'
@@ -22,8 +31,8 @@ const HomePageContainer = () => {
       <CategoryBox />
       <SaleProducts />
       <SellingProducts />
-      <CategoryAbout />
       <CategoryAccessory />
+      <CategoryAbout />
     </div>
   )
 }
