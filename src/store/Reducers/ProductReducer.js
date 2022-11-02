@@ -5,23 +5,26 @@ const listProductsSlice = createSlice({
   initialState: {
     entities: {},
     isLoading: 'idle',
-    hasError: false,
+    hasError: '',
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchListProducts.pending, (state, action) => {
         state.isLoading = 'pending'
-        state.hasError = false
+        // state.hasError = false
       })
       .addCase(fetchListProducts.fulfilled, (state, action) => {
         state.entities = action.payload
         state.isLoading = 'succeeded'
-        state.hasError = false
+        state.hasError = null
       })
       .addCase(fetchListProducts.rejected, (state, action) => {
-        state.hasError = true
+        state.hasError = action.payload
         state.isLoading = 'failed'
       })
   },
 })
+export const selectProduct = (state) => state.productsList.entities
+export const selectLoading = (state) => state.productsList.isLoading
+export const selectErrorMessage = (state) => state.productsList.hasError
 export default listProductsSlice.reducer
