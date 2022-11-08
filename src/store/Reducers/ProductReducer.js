@@ -7,6 +7,12 @@ const listProductsSlice = createSlice({
     isLoading: 'idle',
     hasError: '',
   },
+  reducers: {
+    incrementQuantity(state, action) {
+      console.log(state, action)
+      state.entities.id++
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchListProducts.pending, (state, action) => {
@@ -27,4 +33,5 @@ const listProductsSlice = createSlice({
 export const selectProduct = (state) => state.productsList.entities
 export const selectLoading = (state) => state.productsList.isLoading
 export const selectErrorMessage = (state) => state.productsList.hasError
+export const { incrementQuantity } = listProductsSlice.actions
 export default listProductsSlice.reducer
