@@ -6,6 +6,7 @@ import { Test } from '../pages/Test'
 import RegisterContainer from '../pages/Register/RegisterContainer.jsx'
 import LoginContainer from '../pages/Login/LoginContainer.jsx'
 import Products from '../pages/ProductPage/Products.jsx'
+import PostPageContainer from '../pages/PostPage/PostPageContainer.jsx'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -25,6 +26,11 @@ const RouterContainer = createBrowserRouter([
       {
         path: 'product',
         element: <Products />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'post',
+        element: <PostPageContainer />,
         errorElement: <ErrorPage />,
       },
     ],

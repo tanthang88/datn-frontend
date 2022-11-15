@@ -2,6 +2,7 @@ import { Col, Row } from 'antd'
 import ProductFilter from './ProductFilter.jsx'
 import ProductSlider from './ProductSlider.jsx'
 import GridLayout from './GridLayout.jsx'
+import '../../scss/homepage.scss'
 
 const MainProduct = () => (
   <>
