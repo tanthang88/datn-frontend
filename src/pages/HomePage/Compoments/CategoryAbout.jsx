@@ -20,12 +20,19 @@ const listCategory = [
 ]
 export const CategoryAbout = () => {
   return (
-    <GridContentLayout classNameContainer='my-4 bg-transparent' gutter={[16,10]}>
+    <GridContentLayout
+      classNameContainer='my-4 bg-transparent'
+      gutter={[16, 10]}
+    >
       {listCategory.map((item, index) => (
         <Col span={8} className='' key={index}>
           <div>
             <Link to={item.link}>
-              <img className='object-cover rounded-md' src={item.image} alt='Category image' />
+              <img
+                className='object-cover rounded-md'
+                src={item.image}
+                alt='Category image'
+              />
             </Link>
           </div>
         </Col>
