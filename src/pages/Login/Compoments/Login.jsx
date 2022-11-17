@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input, Row, Col, Divider, message } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { handleLogin } from '../../../services/Actions/login.js'
+import { handleLogin } from '../../../store/Actions/AuthenticationActions.js'
 import { useLocalStorage } from '../../../hooks/useLocalStorage.js'
 
 export default function LoginCompoment() {

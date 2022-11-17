@@ -1,10 +1,8 @@
 import GridContentLayout from '../../../compoments/base/GridContentLayout.jsx'
 import { ProductItems } from './ProductItems.jsx'
-import { productAPI } from '../../../api/services/productApi.js'
 import { Col } from 'antd'
 
 export const SellingProducts = () => {
-  productAPI.getAllProduct().then((res) => console.log(res))
   return (
     <GridContentLayout gutter={[0, 24]} classNameContainer='px-4 py-4'>
       <div className='w-full inline-flex items-baseline gap-2 px-3'>

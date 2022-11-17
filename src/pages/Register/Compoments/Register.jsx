@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Form, Select, Input, Button, Divider, Col, Row, message } from 'antd'
-import { getCity, getDist } from '../../../api/services/getAddressInformation.js'
-import { handleRegisterUser } from '../../../services/Actions/register.js'
+import {
+  getCity,
+  getDist,
+} from '../../../api/services/GetAddressInformation.js'
+import { handleRegisterUser } from '../../../store/Actions/AuthenticationActions.js'
 import { Link, useNavigate } from 'react-router-dom'
 
 const layout = {

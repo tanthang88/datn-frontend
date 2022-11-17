@@ -3,6 +3,7 @@ import { Row } from 'antd'
 const GridContentLayout = ({
   children,
   gutter,
+  justify = 'center',
   classNameRow = '',
   classNameContainer = '',
 }) => {
@@ -12,7 +13,7 @@ const GridContentLayout = ({
     >
       <Row
         gutter={gutter}
-        justify='center'
+        justify={justify}
         align='top'
         className={classNameRow}
       >
