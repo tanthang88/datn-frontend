@@ -1,18 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchListProducts } from '../Services/ProductServices.js'
 const listProductsSlice = createSlice({
-  name: 'productList',
+  name: 'products',
   initialState: {
-    entities: {},
+    entities: [],
     isLoading: 'idle',
     hasError: '',
   },
-  reducers: {
-    incrementQuantity(state, action) {
-      console.log(state, action)
-      state.entities.id++
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchListProducts.pending, (state, action) => {
@@ -20,7 +15,7 @@ const listProductsSlice = createSlice({
         // state.hasError = false
       })
       .addCase(fetchListProducts.fulfilled, (state, action) => {
-        state.entities = action.payload
+        state.entities = action.payload.data.data
         state.isLoading = 'succeeded'
         state.hasError = null
       })
@@ -30,8 +25,8 @@ const listProductsSlice = createSlice({
       })
   },
 })
-export const selectProduct = (state) => state.productsList.entities
-export const selectLoading = (state) => state.productsList.isLoading
-export const selectErrorMessage = (state) => state.productsList.hasError
-export const { incrementQuantity } = listProductsSlice.actions
+export const selectProduct = (state) => state.products.entities
+export const selectLoading = (state) => state.products.isLoading
+export const selectErrorMessage = (state) => state.products.hasError
+// export const { getProductSelling } = listProductsSlice.actions
 export default listProductsSlice.reducer

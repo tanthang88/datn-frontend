@@ -6,7 +6,7 @@ import cartReducer from './Reducers/CartReducer.js'
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    productsList: productsListReducer,
+    products: productsListReducer,
     cart: cartReducer,
   },
 })

@@ -1,4 +1,4 @@
-import MainProduct from '../../compoments/products/Products.jsx'
+import MainProduct from '../../components/products/Products.jsx'
 
 export default function Products() {
   return (
