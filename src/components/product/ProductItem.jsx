@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-export const ProductItems = (props) => {
+export const ProductItem = (props) => {
   return (
     <section
       className='product-sale

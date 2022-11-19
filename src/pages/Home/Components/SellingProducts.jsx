@@ -1,5 +1,5 @@
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
-import { ProductItems } from './ProductItems.jsx'
+import { ProductItem } from '../../../components/product/ProductItem.jsx'
 import { Col } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -23,7 +23,7 @@ export const SellingProducts = () => {
       {productSelling &&
         productSelling.map((item, i) => (
           <Col span={6} key={i}>
-            <ProductItems data={item} />
+            <ProductItem data={item} />
           </Col>
         ))}
     </GridContentLayout>

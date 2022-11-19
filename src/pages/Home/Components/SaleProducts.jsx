@@ -2,7 +2,7 @@ import { SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import { SliderProducts } from '../../../components/slider/SliderProduct.jsx'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
-import { ProductItems } from './ProductItems.jsx'
+import { ProductItem } from '../../../components/product/ProductItem.jsx'
 import { ImFire } from 'react-icons/im'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -32,7 +32,7 @@ export const SaleProducts = () => {
         {productsSale &&
           productsSale.map((item, index) => (
             <SwiperSlide key={index}>
-              <ProductItems data={item} />
+              <ProductItem data={item} />
             </SwiperSlide>
           ))}
       </SliderProducts>
