@@ -1,8 +1,7 @@
 import React from 'react'
 import SortBy from './SortBy.jsx'
-import { Card, Col, Row } from 'antd'
-
-const { Meta } = Card
+import { ProductItem } from './ProductItem.jsx'
+import { Col, Row } from 'antd'
 
 export default function GridLayout() {
   return (
@@ -12,120 +11,24 @@ export default function GridLayout() {
           <SortBy />
         </Row>
         <div className='site-card-wrapper'>
-          <Row gutter={24}>
+          <Row>
             <Col span={8}>
-              <Card
-                className='text-center'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
             <Col span={8}>
-              <Card
-                className='text-center'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
             <Col span={8}>
-              <Card
-                className='text-center'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
             <Col span={8}>
-              <Card
-                className='text-center'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
             <Col span={8}>
-              <Card
-                className='text-center'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
             <Col span={8}>
-              <Card
-                className='text-center pt-1'
-                title='Apple iPhone 14 Pro Max'
-                bordered={false}
-                hoverable
-                style={{
-                  width: 280,
-                }}
-              >
-                {
-                  <img
-                    alt='example'
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWzbMPE__76boKKwBr36hlS6j2k2Umgswlmw&usqp=CAU'
-                  />
-                }
-                <Meta title='' />
-              </Card>
+              <ProductItem />
             </Col>
           </Row>
         </div>
