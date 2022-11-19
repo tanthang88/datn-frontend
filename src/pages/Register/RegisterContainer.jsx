@@ -1,4 +1,4 @@
-import LoginRegisterLayout from '../../compoments/base/LoginRegisterLayout.jsx'
+import LoginRegisterLayout from '../../components/base/LoginRegisterLayout.jsx'
 import RegisterCompoment from './Compoments/Register.jsx'
 
 export default function RegisterContainer() {

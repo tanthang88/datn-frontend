@@ -1,12 +1,11 @@
 import { Button, Divider, Form, Input, Modal, Select } from 'antd'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TbDiscount2 } from 'react-icons/tb'
 import {
   getCity,
   getDist,
 } from '../../../api/services/GetAddressInformation.js'
-
 const layoutFormBill = {
   labelCol: {
     span: 24,
@@ -30,9 +29,27 @@ const CartBill = () => {
   const submitFormBill = (formValue) => {
     console.log(formValue)
   }
+
   useEffect(() => {
     getListCity()
   }, [])
+  const calcTotalBill = () => {
+    let totalPrice = 0
+    // eslint-disable-next-line array-callback-return
+    Carts.filter((item) => {
+      totalPrice += item.product_price * item.product_quantity
+    })
+    return totalPrice
+  }
+  const calcTotalProductBill = () => {
+    let totalProduct = 0
+    // eslint-disable-next-line array-callback-return
+    Carts.map((item) => {
+      totalProduct += item.product_quantity
+    })
+    return totalProduct
+  }
+  calcTotalProductBill()
   return (
     <section className='bg-white'>
       <div className='px-6 py-4'>
@@ -130,9 +147,17 @@ const CartBill = () => {
           >
             <Input placeholder='Số nhà, đường,...' />
           </Form.Item>
+          <Form.Item name='bill' label='Bill' noStyle initialValue={Carts}>
+            <Input type='hidden' />
+          </Form.Item>
           <div className='flex flex-row justify-between px-6 pt-4'>
-            <p>Tổng thanh toán ({numberCart} sản phẩm)</p>
-            <p className='text-main text-lg'>19000000VND</p>
+            <p>Tổng thanh toán ({calcTotalProductBill()} sản phẩm)</p>
+            <p className='text-main text-2xl font-bold'>
+              {calcTotalBill().toLocaleString('vn-VN', {
+                style: 'currency',
+                currency: 'VND',
+              })}
+            </p>
           </div>
           <Divider
             className='border border-gray-400 my-0'
@@ -151,7 +176,7 @@ const CartBill = () => {
             <Modal
               title='Chọn mã giảm giá'
               centered
-              visible={modalDiscountCode}
+              open={modalDiscountCode}
               onOk={() => setModalDiscountCode(false)}
               onCancel={() => setModalDiscountCode(false)}
               cancelText={'TRỞ LẠI'}

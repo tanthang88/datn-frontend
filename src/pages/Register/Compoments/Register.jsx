@@ -184,7 +184,7 @@ export default function RegisterCompoment() {
           <p className='text-center'>
             <span>Bạn đã có tài khoản?</span>
             <span className='pl-1 text-main font-medium'>
-              <Link to={'/Compoments'}>Đăng nhập ngay</Link>
+              <Link to={'/Components'}>Đăng nhập ngay</Link>
             </span>
           </p>
         </Col>
