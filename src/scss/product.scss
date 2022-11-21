@@ -1,0 +1,23 @@
+p {
+  margin-bottom: 0px;
+}
+
+.ant-radio-button-wrapper {
+  height: 50px;
+  line-height: 20px;
+  padding: 5px 20px;
+}
+
+.content_hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 570px;
+}
+
+.show-more {
+  height: 100%;
+  margin-bottom: 0;
+  .btn-show {
+    display: none !important
+  }
+}
