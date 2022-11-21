@@ -12,7 +12,7 @@ export default function Comments({ comments }) {
         <form className='mb-6'>
           <div className='py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
             <label htmlFor='comment' className='sr-only'>
-              Your comment
+              Bình luận của bạn
             </label>
             <textarea
               id='comment'
@@ -29,12 +29,9 @@ export default function Comments({ comments }) {
             Bình luận
           </button>
         </form>
-        {comments.map((item, index) => (
-          <>
-            <article
-              key={index}
-              className='p-6 pb-1 mb-1 text-base bg-white rounded-lg dark:bg-gray-900'
-            >
+        {comments.map((item) => (
+          <div key={item.comment_id}>
+            <article className='p-6 pb-1 mb-1 text-base bg-white rounded-lg dark:bg-gray-900'>
               <footer className='flex justify-between items-center mb-2'>
                 <div className='flex items-center'>
                   <p className='inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white'>
@@ -59,7 +56,7 @@ export default function Comments({ comments }) {
             {item.children_comments &&
               item.children_comments.map((itemChild, indexChild) => (
                 <article
-                  key={indexChild}
+                  key={itemChild.comment_id}
                   className='p-3 mb-3 ml-12 text-base bg-white rounded-lg dark:bg-gray-900'
                 >
                   <footer className='flex justify-between items-center mb-2'>
@@ -85,7 +82,7 @@ export default function Comments({ comments }) {
                 </article>
               ))}
             <hr />
-          </>
+          </div>
         ))}
       </div>
     </section>

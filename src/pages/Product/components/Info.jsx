@@ -1,49 +1,74 @@
-import { Table } from 'antd'
 import React from 'react'
 
-export default function Info() {
-  const columns = [
+export default function Info({ configurations }) {
+  const {
+    config_battery: battery,
+    config_camera: camera,
+    config_cpu: cpu,
+    config_ram: ram,
+    config_screen: screen,
+    config_selfie: selfie,
+    config_system: system,
+  } = configurations
+
+  const listConfigs = [
     {
-      title: 'thông số',
-      dataIndex: 'name',
-      width: '20%',
+      id: 1,
+      title: 'Pin',
+      value: battery + 'mAh' || '',
     },
     {
-      title: 'chi tiết',
-      dataIndex: 'chinese',
+      id: 2,
+      title: 'Camera sau',
+      value: camera,
+    },
+    {
+      id: 3,
+      title: 'Camera trước',
+      value: selfie,
+    },
+    {
+      id: 4,
+      title: 'CPU',
+      value: cpu,
+    },
+    {
+      id: 5,
+      title: 'Ram',
+      value: ram,
+    },
+    {
+      id: 6,
+      title: 'Màn hình (INCH)',
+      value: screen,
+    },
+    {
+      id: 7,
+      title: 'Hệ điều hành',
+      value: system,
     },
   ]
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      chinese: 98,
-      math: 60,
-      english: 70,
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      chinese: 98,
-      math: 66,
-      english: 89,
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      chinese: 98,
-      math: 90,
-      english: 70,
-    },
-    {
-      key: '4',
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89,
-    },
-  ]
+
   return (
-    <Table columns={columns} bordered dataSource={data} pagination={false} />
+    <table className='border-collapse border border-slate-400 w-full'>
+      <thead>
+        <tr>
+          <th className='border border-slate-300 bg-slate-200 p-2 w-[150px]'>
+            Cấu hình
+          </th>
+          <th className='border border-slate-300 bg-slate-200 p-2'>
+            Thông số chi tiết
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {listConfigs.map((item) => (
+          <tr key={item.id}>
+            <td className='border border-slate-300 p-2'>{item.title}</td>
+            <td className='border border-slate-300 p-2'>{item.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }

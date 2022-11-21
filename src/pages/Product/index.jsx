@@ -11,7 +11,9 @@ import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
   fetchProductById,
+  fetchProductsRelated,
 } from '../../api/services/ProductsAPI'
+import LoadingProduct from '../../components/Loading/LoadingProduct'
 
 export default function Product() {
   const [value, setValue] = useState(1)
@@ -32,6 +34,10 @@ export default function Product() {
     fetchCommentsProduct(id).then((data) => {
       setComments(data)
     })
+
+    fetchProductsRelated(categoryId).then((data) => {
+      console.log('data related', data)
+    })
   }, [])
 
   const {
@@ -41,6 +47,8 @@ export default function Product() {
     product_desc: desc,
     product_image: image,
     product_images: images,
+    product_configurations: configurations,
+    category_parent_id: categoryId,
   } = product
 
   const onChange = (e) => {
@@ -52,7 +60,7 @@ export default function Product() {
     { title: 'Trang chủ', href: '/' },
     { title: 'sản phẩm', href: '/product' },
   ]
-  if (loading) return
+  if (loading) return <LoadingProduct open={loading} />
   return (
     <div className='xl:container 2xl:mx-auto lg:py-5 md:py-5 py-9'>
       <BreadCrumb links={links} />
@@ -75,24 +83,14 @@ export default function Product() {
               images.map((item, index) => (
                 <div
                   key={index}
-                  className='bg-gray-200 flex justify-center items-center py-4'
+                  className='bg-gray-200 flex justify-center items-center'
                 >
                   <img src={urlBackEnd + item.image} />
                 </div>
               ))}
           </div>
           <div className='w-full flex justify-start items-center'>
-            <div className='bg-slate-100 w-full p-4'>
-              {desc}
-              <ul>
-                <li>
-                  <p>
-                    13.3 inch, 1920 x 1080 Pixels, IPS LCD LED Backlit, True
-                  </p>
-                </li>
-              </ul>
-              <a>Xem chi tiết thông số kỹ thuật</a>
-            </div>
+            <div className='bg-slate-100 w-full p-4'>{desc}</div>
           </div>
         </div>
         <div className='w-full sm:w-96 md:w-8/12 lg:w-6/12'>
@@ -148,14 +146,14 @@ export default function Product() {
           </div>
         </div>
       </div>
-      {/* chi tiết */}
+
       <div className='w-full justify-center grid grid-cols-5 gap-6 pb-16'>
         <div
-          className={`col-span-3 mt-10 bg-slate-100 p-5 content_hidden relative
+          className={`col-span-3 mt-10 bg-white p-5 content_hidden relative
           ${isMoreContent ? 'show-more' : ''}`}
         >
           <button
-            className='absolute bottom-2 m-auto w-32 left-0 right-0 pointer text-xs text-gray-800 font-normal bg-white hover:bg-gray-400 font-bold py-2 px-4 rounded-lg btn-show'
+            className='absolute bottom-2 m-auto w-32 left-0 right-0 pointer text-xs text-gray-800 bg-white font-normal hover:bg-gray-400 font-bold py-2 px-4 rounded-lg btn-show'
             onClick={() => setIsMoreContent(!isMoreContent)}
           >
             Xem Thêm...
@@ -163,13 +161,13 @@ export default function Product() {
           <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
         <div className='col-span-2 mt-10'>
-          <div className='w-full bg-slate-100 p-5'>
+          <div className='w-full bg-white p-5'>
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
               Thông số kỹ thuật
             </h2>
-            <Info />
+            <Info configurations={configurations} />
           </div>
-          <div className='w-full bg-slate-100 p-5 mt-5'>
+          <div className='w-full bg-white p-5 mt-5'>
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
               Tin tức về iPhone 13 Pro Max
             </h2>

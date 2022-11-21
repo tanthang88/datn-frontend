@@ -15,3 +15,8 @@ export const fetchCommentsProduct = async (payload) => {
   const { data } = await publicRequest.get(`product/${payload}/list_comments`)
   return data
 }
+
+export const fetchProductsRelated = async (payload) => {
+  const { data } = await publicRequest.get(`product/categories/${payload}`)
+  return data
+}
