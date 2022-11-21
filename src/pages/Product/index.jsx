@@ -6,7 +6,7 @@ import Comments from './components/Comments'
 import Info from './components/Info'
 import Gift from './components/Gift'
 import BreadCrumb from '../../components/BreadCrumb'
-import { currency } from '../../util/currency'
+import { currency } from '../../utils/currency'
 import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
