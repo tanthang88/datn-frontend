@@ -1,6 +1,6 @@
 import React from 'react'
 import SortBy from './SortBy.jsx'
-import { ProductItem } from './ProductItem.jsx'
+import { ProductItem } from '../../../components/product/ProductItem.jsx'
 import { Col, Row } from 'antd'
 
 export default function GridLayout() {

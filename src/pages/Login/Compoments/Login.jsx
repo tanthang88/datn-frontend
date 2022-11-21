@@ -96,7 +96,7 @@ export default function LoginCompoment() {
             <p className='text-center'>
               <span className='opacity-70'>Bạn chưa có tài khoản?</span>
               <span className='pl-1 text-main font-medium'>
-                <Link to={'/Compoments'}>Đăng kí</Link>
+                <Link to={'/Components'}>Đăng kí</Link>
               </span>
             </p>
           </Form>

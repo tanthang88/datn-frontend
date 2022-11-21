@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import '../../../scss/product.scss'
+import '../../scss/product.scss'
 import { Radio } from 'antd'
 import ProductsCate from './components/ProductsCate'
 import Comments from './components/Comments'
 import Info from './components/Info'
 import Gift from './components/Gift'
-import BreadCrumb from '../../../compoments/BreadCrumb'
-import { currency } from '../../../util/currency'
+import BreadCrumb from '../../components/BreadCrumb'
+import { currency } from '../../util/currency'
 import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
   fetchProductById,
-} from '../../../api/services/ProductsAPI'
+} from '../../api/services/ProductsAPI'
 
 export default function Product() {
   const [value, setValue] = useState(1)

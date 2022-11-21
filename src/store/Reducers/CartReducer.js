@@ -62,11 +62,28 @@ const Cart = createSlice({
       state.Carts[action.payload.index].product_quantity = action.payload.value
       state.isLoading = false
     },
-    reducerQuantity: (state, action) => {
+    decreaseQuantity: (state, action) => {
       state.Carts[action.payload.index].product_quantity = action.payload.value
       // state.isLoading = false
     },
+    deleteProduct: (state, action) => {
+      const { id, quantity } = action.payload
+      console.log(id, quantity)
+      // state.Carts.map((item, index) => {
+      //   if (item.id === id) {
+      //     console.log('pk')
+      //   }
+      // })
+      // state.Carts.map((product) => {
+      //   console.log(state.Carts[1])
+      // })
+    },
   },
 })
-export const { loadingCart, increaseQuantity, reducerQuantity } = Cart.actions
+export const {
+  loadingCart,
+  increaseQuantity,
+  decreaseQuantity,
+  deleteProduct,
+} = Cart.actions
 export default Cart.reducer

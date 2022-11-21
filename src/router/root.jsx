@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
-import ErrorPage from '../compoments/error/ErrorPage'
-import MainLayout from '../compoments/base/MainLayout'
-import HomePageContainer from '../pages/HomePage/HomePageContainer.jsx'
+import ErrorPage from '../components/error/ErrorPage.jsx'
+import MainLayout from '../components/base/MainLayout'
+import HomePageContainer from '../pages/Home/HomePageContainer.jsx'
 import { Test } from '../pages/Test/Test.jsx'
 import RegisterContainer from '../pages/Register/RegisterContainer.jsx'
 import LoginContainer from '../pages/Login/LoginContainer.jsx'
-import Products from '../pages/ProductPage/Products.jsx'
+import ProductPageContainer from '../pages/ProductPage/ProductPageContainer.jsx'
 import PostPageContainer from '../pages/PostPage/PostPageContainer.jsx'
 import { CartContainer } from '../pages/Cart/CartContainer.jsx'
-import Product from '../pages/ProductPage/product'
+import Product from '../pages/product'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -30,8 +30,8 @@ const RouterContainer = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: 'products',
-        element: <Products />,
+        path: 'product',
+        element: <ProductPageContainer />,
         errorElement: <ErrorPage />,
       },
       {

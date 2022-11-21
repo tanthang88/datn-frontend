@@ -1,13 +1,14 @@
 import { Row, Col } from 'antd'
-import { Lazy, Navigation, Pagination, Scrollbar } from 'swiper'
+import { Lazy, Navigation, Pagination, Scrollbar, Autoplay, A11y } from 'swiper'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import 'swiper/css'
+import 'swiper/css/autoplay'
 import 'swiper/css/lazy'
 import 'swiper/css/navigation'
 import 'swiper/css/scrollbar'
 import 'swiper/css/pagination'
 import { Link } from 'react-router-dom'
-import GridContentLayout from '../../base/GridContentLayout.jsx'
+import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 
 export const MainBanner = () => {
   const imageSlideItems = [
@@ -70,8 +71,12 @@ export const MainBanner = () => {
           scrollbar={{
             hide: true,
           }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
           pagination={true}
-          modules={[Navigation, Scrollbar, Lazy, Pagination]}
+          modules={[Navigation, Scrollbar, Lazy, Pagination, Autoplay, A11y]}
           className='px-5 rounded-md'
         >
           {imageSlideItems.map((item, index) => (

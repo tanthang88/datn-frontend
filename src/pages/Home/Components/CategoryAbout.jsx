@@ -1,4 +1,4 @@
-import GridContentLayout from '../../../compoments/base/GridContentLayout.jsx'
+import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { Col } from 'antd'
 import { Link } from 'react-router-dom'
 const listCategory = [

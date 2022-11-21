@@ -1,4 +1,4 @@
-import { CartListProducts } from './Compoments/CartListProducts.jsx'
+import { CartListProducts } from './Components/CartListProducts.jsx'
 
 export const CartContainer = () => {
   return (

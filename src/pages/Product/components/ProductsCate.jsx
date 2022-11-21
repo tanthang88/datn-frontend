@@ -1,10 +1,9 @@
 import { SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
-import { SliderProducts } from '../../../../compoments/slider/SliderProduct.jsx'
-import GridContentLayout from '../../../../compoments/base/GridContentLayout.jsx'
-
+import { SliderProducts } from '../../../components/slider/SliderProduct.jsx'
+import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { ImFire } from 'react-icons/im'
-import Item from '../../../../compoments/products/Item'
+import Item from '../../../components/product/Item'
 
 export default function ProductsCate() {
   const handleClick = () => {}

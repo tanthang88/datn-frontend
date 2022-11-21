@@ -4,11 +4,12 @@ import { CartEmpty } from './CartEmpty.jsx'
 import CartBill from './CartBill.jsx'
 import { Col, InputNumber, Table } from 'antd'
 import { RiCloseCircleFill } from 'react-icons/ri'
-import GridContentLayout from '../../../compoments/base/GridContentLayout.jsx'
+import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import CartReducer, {
   increaseQuantity,
   loadingCart,
-  reducerQuantity,
+  decreaseQuantity,
+  deleteProduct,
 } from '../../../store/Reducers/CartReducer.js'
 import { CartBillSuccess } from './CartBillSuccess'
 
@@ -17,7 +18,7 @@ const { Column } = Table
 export const CartListProducts = () => {
   const dispatch = useDispatch()
 
-  const { Carts, isLoading } = useSelector((state) => state.cart)
+  const { Carts, isLoading, numberCart } = useSelector((state) => state.cart)
   // const [loading, setLoading] = useState(false)
   const locale = {
     emptyText: <CartEmpty />,
@@ -45,11 +46,12 @@ export const CartListProducts = () => {
     dispatch(loadingCart)
     dispatch(increaseQuantity({ index, value }))
   }
-  const reducerQuantityCart = (value, index) => {
-    dispatch(reducerQuantity({ index, value }))
+  const decreaseQuantityCart = (value, index) => {
+    dispatch(decreaseQuantity({ index, value }))
   }
-  // if (isLoading === 'pending') return <p>Loading...</p>
 
+  // if (isLoading === 'pending') return <p>Loading...</p>
+  if (numberCart === 0) return <CartEmpty />
   return (
     <GridContentLayout justify='' classNameContainer='bg-main2'>
       <Col span={12}>
@@ -79,17 +81,13 @@ export const CartListProducts = () => {
                   id='cart__product'
                   className='flex flex-row gap-1 cursor-pointer'
                   onClick={(e) => {
-                    console.log(e.target.getAttribute('data-id'))
+                    const idProduct = product.id
+                    const quantityProduct = product.product_quantity
+                    dispatch(deleteProduct(idProduct, quantityProduct))
                   }}
                 >
-                  <RiCloseCircleFill
-                    size={18}
-                    fill={'#cccccc'}
-                    data-id={product.id}
-                  />
-                  <span style={{ color: '#cccccc' }} data-id={product.id}>
-                    Xóa
-                  </span>
+                  <RiCloseCircleFill size={18} fill={'#cccccc'} />
+                  <span style={{ color: '#cccccc' }}>Xóa</span>
                 </div>
               </section>
             )}
@@ -106,8 +104,16 @@ export const CartListProducts = () => {
           />
           <Column
             title='Đơn Giá'
-            dataIndex='product_price'
+            // dataIndex='product_price'
             key='product_price'
+            render={(cart) => (
+              <span className='text-main font-bold'>
+                {cart.product_price.toLocaleString('vn-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                })}
+              </span>
+            )}
           />
           <Column
             title='Số Lượng'
@@ -120,10 +126,9 @@ export const CartListProducts = () => {
                 size={'large'}
                 defaultValue={product.product_quantity}
                 onStep={function (value, handle) {
-                  console.log(_, index)
                   handle.type === 'up'
                     ? increaseQuantityCart(value, index)
-                    : reducerQuantityCart(value, index)
+                    : decreaseQuantityCart(value, index)
                 }}
               />
             )}
