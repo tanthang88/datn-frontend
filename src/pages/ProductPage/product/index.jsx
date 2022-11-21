@@ -1,13 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../scss/product.scss'
 import { Radio } from 'antd'
-import { ProductCategory } from './components/ProductCategory'
+import ProductsCate from './components/ProductsCate'
 import Comments from './components/Comments'
 import Info from './components/Info'
 import Gift from './components/Gift'
 import BreadCrumb from '../../../compoments/BreadCrumb'
+import { currency } from '../../../util/currency'
+import { useParams } from 'react-router'
+import {
+  fetchCommentsProduct,
+  fetchProductById,
+} from '../../../api/services/ProductsAPI'
+
 export default function Product() {
   const [value, setValue] = useState(1)
+  const [product, setProduct] = useState({})
+  const [comments, setComments] = useState([])
+  const [isMoreContent, setIsMoreContent] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const urlBackEnd = 'http://127.0.0.1:8000'
+  const { id } = useParams()
+
+  useEffect(() => {
+    setLoading(true)
+    fetchProductById(id)
+      .then((data) => {
+        setProduct(data)
+      })
+      .finally(() => setLoading(false))
+    fetchCommentsProduct(id).then((data) => {
+      setComments(data)
+    })
+  }, [])
+
+  const {
+    product_title: title,
+    product_content: content,
+    product_price: price,
+    product_desc: desc,
+    product_image: image,
+    product_images: images,
+  } = product
 
   const onChange = (e) => {
     console.log('radio checked', e.target.value)
@@ -15,88 +49,56 @@ export default function Product() {
   }
 
   const links = [
-    { title: 'Home', href: '/' },
-    { title: 'Produc', href: '/home' },
+    { title: 'Trang chủ', href: '/' },
+    { title: 'sản phẩm', href: '/product' },
   ]
+  if (loading) return
   return (
     <div className='xl:container 2xl:mx-auto lg:py-5 md:py-5 py-9'>
       <BreadCrumb links={links} />
+      {console.log('product', product)}
+
       <div className='pt-5 pb-5 grid grid-cols-4 gap-2'>
         <div className='col-span-3'>
-          <h1 className='text-2xl'>
-            Laptop Gigabyte Gaming G5 GD-51VN123SO i5 11400H/16GB/512GB/15
-            FHD/GeForce RTX 3050 4GB/Win 11
-          </h1>
+          <h1 className='text-2xl'>{title}</h1>
         </div>
 
         <div className='col-span-1 rating'></div>
       </div>
       <div className='flex justify-center lg:flex-row flex-col gap-8'>
-        {/* <!-- Description Div --> */}
         <div className='w-full sm:w-96 md:w-8/12  lg:w-6/12 flex flex-col lg:gap-6 sm:gap-6 gap-4'>
           <div className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'>
-            <img
-              src='https://i.ibb.co/bRg2CJj/sam-moqadam-kvmds-Tr-GOBM-unsplash-removebg-preview-1.png'
-              alt='Wooden Chair Previw'
-              className='h-96'
-            />
+            <img src={urlBackEnd + image} alt='' className='h-96' />
           </div>
           <div className='w-full grid lg:flex-row grid-cols-4 gap-6'>
-            <div className='bg-gray-200 flex justify-center items-center py-4'>
-              <img
-                src='https://i.ibb.co/0jX1zmR/sam-moqadam-kvmds-Tr-GOBM-unsplash-removebg-preview-1-1.png'
-                alt='Wooden chair - preview 1'
-              />
-            </div>
-            <div className='bg-gray-100 flex justify-center items-center py-4'>
-              <img
-                src='https://i.ibb.co/7zv1N5Q/sam-moqadam-kvmds-Tr-GOBM-unsplash-removebg-preview-2.png'
-                alt='Wooden chair - preview 2'
-              />
-            </div>
-            <div className='bg-gray-100 flex justify-center items-center py-4'>
-              <img
-                src='https://i.ibb.co/0jX1zmR/sam-moqadam-kvmds-Tr-GOBM-unsplash-removebg-preview-1-1.png'
-                alt='Wooden chair- preview 3'
-              />
-            </div>
-            <div className='bg-gray-100 flex justify-center items-center py-4'>
-              <img
-                src='https://i.ibb.co/0jX1zmR/sam-moqadam-kvmds-Tr-GOBM-unsplash-removebg-preview-1-1.png'
-                alt='Wooden chair- preview 3'
-              />
-            </div>
+            {images &&
+              images.map((item, index) => (
+                <div
+                  key={index}
+                  className='bg-gray-200 flex justify-center items-center py-4'
+                >
+                  <img src={urlBackEnd + item.image} />
+                </div>
+              ))}
           </div>
           <div className='w-full flex justify-start items-center'>
             <div className='bg-slate-100 w-full p-4'>
+              {desc}
               <ul>
                 <li>
                   <p>
                     13.3 inch, 1920 x 1080 Pixels, IPS LCD LED Backlit, True
                   </p>
                 </li>
-                <li>
-                  <p>Celeron</p>
-                </li>
-                <li>
-                  <p>8 GB</p>
-                </li>
-                <li>
-                  <p>SSD 256 GB</p>
-                </li>
-                <li>
-                  <p>Intel UHD Graphics 600</p>
-                </li>
               </ul>
-              <a id='A_18'>Xem chi tiết thông số kỹ thuật</a>
+              <a>Xem chi tiết thông số kỹ thuật</a>
             </div>
           </div>
         </div>
         <div className='w-full sm:w-96 md:w-8/12 lg:w-6/12'>
           <span className='font-semibold text-3xl leading-7 text-rose-700'>
-            19.490.000₫
+            {currency(price)}
           </span>
-          <del className='text-sm'> 20.490.000₫</del>
           {/* bảng giá */}
           <div className='mt-7'>
             <Radio.Group defaultValue='a' buttonStyle='solid'>
@@ -118,8 +120,6 @@ export default function Product() {
               </Radio.Button>
             </Radio.Group>
           </div>
-
-          {/* color choose */}
           <div className='w-full mt-4'>
             <Radio.Group onChange={onChange} value={value}>
               <Radio value={1}>Đỏ</Radio>
@@ -128,7 +128,7 @@ export default function Product() {
               <Radio value={4}>Đen</Radio>
             </Radio.Group>
           </div>
-          {/* quà tặng */}
+          {/* quà tặng khi mua hàng */}
           <Gift />
           <div className='w-full py-5'>
             <button className='w-full bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-center'>
@@ -149,14 +149,20 @@ export default function Product() {
         </div>
       </div>
       {/* chi tiết */}
-      <div className='w-full justify-center grid grid-cols-2 gap-8'>
-        <div className='col-span-1 mt-10 bg-slate-100 p-5'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          ratione delectus qui consequatur eos ipsum atque ipsam adipisci? Odit
-          quidem exercitationem provident dolor impedit aperiam nihil ex ratione
-          quos pariatur!
+      <div className='w-full justify-center grid grid-cols-5 gap-6 pb-16'>
+        <div
+          className={`col-span-3 mt-10 bg-slate-100 p-5 content_hidden relative
+          ${isMoreContent ? 'show-more' : ''}`}
+        >
+          <button
+            className='absolute bottom-2 m-auto w-32 left-0 right-0 pointer text-xs text-gray-800 font-normal bg-white hover:bg-gray-400 font-bold py-2 px-4 rounded-lg btn-show'
+            onClick={() => setIsMoreContent(!isMoreContent)}
+          >
+            Xem Thêm...
+          </button>
+          <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
-        <div className='col-span-1 mt-10'>
+        <div className='col-span-2 mt-10'>
           <div className='w-full bg-slate-100 p-5'>
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
               Thông số kỹ thuật
@@ -191,8 +197,8 @@ export default function Product() {
         </div>
       </div>
 
-      <Comments />
-      <ProductCategory />
+      <Comments comments={comments} />
+      <ProductsCate />
     </div>
   )
 }

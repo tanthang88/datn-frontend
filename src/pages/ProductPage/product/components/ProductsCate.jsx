@@ -6,10 +6,8 @@ import GridContentLayout from '../../../../compoments/base/GridContentLayout.jsx
 import { ImFire } from 'react-icons/im'
 import Item from '../../../../compoments/products/Item'
 
-export const ProductCategory = () => {
-  const handleClick = () => {
-    console.log('đang click')
-  }
+export default function ProductsCate() {
+  const handleClick = () => {}
   return (
     <GridContentLayout classNameContainer='px-1 py-5 my-6'>
       <div className='w-full inline-flex items-baseline gap-2 px-3'>
