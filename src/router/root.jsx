@@ -8,7 +8,7 @@ import LoginContainer from '../pages/Login/LoginContainer.jsx'
 import ProductPageContainer from '../pages/ProductPage/ProductPageContainer.jsx'
 import PostPageContainer from '../pages/PostPage/PostPageContainer.jsx'
 import { CartContainer } from '../pages/Cart/CartContainer.jsx'
-import Product from '../pages/product'
+import Product from '../pages/Product'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -30,9 +30,13 @@ const RouterContainer = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: 'product',
+        path: 'dien-thoai/:id',
         element: <ProductPageContainer />,
         errorElement: <ErrorPage />,
+        // loader: ({ request, params }) => {
+        //   console.log(request)
+        //   console.log(params)
+        // },
       },
       {
         path: 'product/:id',

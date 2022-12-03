@@ -10,7 +10,7 @@ import CartReducer, {
   loadingCart,
   decreaseQuantity,
   deleteProduct,
-} from '../../../store/Reducers/CartReducer.js'
+} from '../../../store/Reducers/CartSlice.js'
 import { CartBillSuccess } from './CartBillSuccess'
 
 const { Column } = Table

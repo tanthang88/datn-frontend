@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export const Footer = () => {
   return (
-    <Row className='xl:container'>
+    <Row className='xl:container pt-2'>
       <Col span={6}>
         <p>
           <Link to={'/'}>
@@ -54,12 +54,16 @@ export const Footer = () => {
         <ul>
           <li>
             <h3 className='font-bold'>Tư vấn mua hàng (Miễn phí)</h3>
-            <a href='tel:18006601' className='font-bold text-2xl'>18006601</a>
+            <a href='tel:18006601' className='font-bold text-2xl'>
+              18006601
+            </a>
             <span> (Nhánh 1)</span>
           </li>
           <li>
             <h3 className='font-bold'>Hỗ trợ kĩ thuật</h3>
-            <a href='tel:18006601' className='font-bold text-2xl'>18006601</a>
+            <a href='tel:18006601' className='font-bold text-2xl'>
+              18006601
+            </a>
             <span> (Nhánh 2)</span>
           </li>
           <li>
@@ -69,7 +73,7 @@ export const Footer = () => {
           <li className='mt-4'>
             <div className='ft__cer-one'></div>
             <div className='ft__cer-two'>
-              <a href="http://online.gov.vn/Home/WebDetails/21883"></a>
+              <a href='http://online.gov.vn/Home/WebDetails/21883'></a>
             </div>
           </li>
         </ul>
@@ -77,8 +81,12 @@ export const Footer = () => {
       <Col span={6}>
         <ul>
           <li>
-            <h3 className='font-bold'>Góp ý khiếu nại dịch vụ (8h00 - 22h00)</h3>
-            <a href='tel:18006616' className='font-bold text-2xl'>18006616</a>
+            <h3 className='font-bold'>
+              Góp ý khiếu nại dịch vụ (8h00 - 22h00)
+            </h3>
+            <a href='tel:18006616' className='font-bold text-2xl'>
+              18006616
+            </a>
           </li>
           <li className='mt-4'>
             <h3 className='font-bold'>Chứng nhận</h3>
@@ -86,7 +94,10 @@ export const Footer = () => {
           </li>
           <li>
             <h3>Website cùng tập đoàn</h3>
-            <a href="https://nhathuoclongchau.com" className='ft__related-website'></a>
+            <a
+              href='https://nhathuoclongchau.com'
+              className='ft__related-website'
+            ></a>
           </li>
         </ul>
       </Col>

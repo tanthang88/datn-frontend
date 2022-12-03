@@ -1,12 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Form, Select, Input, Button, Divider, Col, Row, message } from 'antd'
+import {
+  Form,
+  Select,
+  Input,
+  Button,
+  Divider,
+  Col,
+  Row,
+  Spin,
+  message,
+} from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 import {
   getCity,
   getDist,
 } from '../../../api/services/GetAddressInformation.js'
-import { handleRegisterUser } from '../../../store/Actions/AuthenticationActions.js'
+import { registerUser } from '../../../store/Services/UserServices.js'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { useSelector, useDispatch } from 'react-redux'
 const layout = {
   labelCol: {
     span: 24,
@@ -15,41 +26,65 @@ const layout = {
     span: 24,
   },
 }
+const antIconLoading = (
+  <LoadingOutlined
+    style={{
+      fontSize: 24,
+      color: 'white',
+    }}
+    spin
+  />
+)
 export default function RegisterCompoment() {
-  // const navigate = useNavigate()
   const [formRegister] = Form.useForm()
   const [listCity, setListCity] = useState(null)
   const [listDist, setListDist] = useState(null)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { loading, error, success, userInfo } = useSelector(
+    (state) => state.user,
+  )
+  useEffect(
+    function () {
+      if (error != null) message.error(error, 1)
+      if (success) {
+        message.success('Đăng kí tài khoản thành công', 2)
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
+      }
+      // if (userInfo) navigate('/user-profile')
+    },
+    [navigate, error, success, userInfo],
+  )
+
   const getListCity = async () => {
     setListCity(await getCity())
   }
   const getValueCity = async (IDCity) => {
     setListDist(await getDist(IDCity))
   }
-  const submitForm = (formValues) => {
-    handleRegisterUser(formValues).then((res) => {
-      if (res.data.status === 1) {
-        message.success('Đăng kí tài khoản thành công!', 2)
-      }
-    })
-  }
   useEffect(() => {
     getListCity()
   }, [])
+  // if (loading) return <Spinner open={loading} />
   return (
     <section className='xl:container border-t-gray-400'>
+      {/* {loading ? <Spinner open={loading} /> : ''} */}
       <Row justify='center'>
         <Col
           span={8}
           className='rounded-lg border-2 px-5 py-5 bg-white shadow-lg shadow-neutral-500/40'
         >
-          <h1 className='font-light text-black text-xl text-left'>Đăng ký</h1>
+          {/* <Spin /> */}
+          {/* <Spinner open={loading} /> */}
+          <h1 className='font-light text-black text-xl text-left'>Đăng Ký</h1>
           <Form
             {...layout}
             layout='vertical'
             form={formRegister}
             name='form-register'
-            onFinish={submitForm}
+            onFinish={(data) => dispatch(registerUser(data))}
             scrollToFirstError
           >
             <Form.Item
@@ -83,7 +118,7 @@ export default function RegisterCompoment() {
                 },
               ]}
             >
-              <Input />
+              <Input autoComplete='email' />
             </Form.Item>
             <Form.Item
               name='password'
@@ -100,7 +135,7 @@ export default function RegisterCompoment() {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password autoComplete='current-password' />
             </Form.Item>
             <Form.Item
               name='city_id'
@@ -161,6 +196,14 @@ export default function RegisterCompoment() {
                 htmlType='submit'
                 className='w-full uppercase'
               >
+                {loading ? (
+                  <Spin
+                    indicator={antIconLoading}
+                    style={{ marginRight: '.5rem' }}
+                  />
+                ) : (
+                  ''
+                )}
                 Đăng Ký
               </Button>
             </Form.Item>
@@ -184,7 +227,7 @@ export default function RegisterCompoment() {
           <p className='text-center'>
             <span>Bạn đã có tài khoản?</span>
             <span className='pl-1 text-main font-medium'>
-              <Link to={'/Components'}>Đăng nhập ngay</Link>
+              <Link to={'/login'}>Đăng nhập ngay</Link>
             </span>
           </p>
         </Col>

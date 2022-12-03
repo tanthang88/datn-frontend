@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ProductsAPI } from '../../api/services/ProductsAPI.js'
 
-export const fetchListProducts = createAsyncThunk(
-  'products/fetchListProducts',
+export const fetchListCategoriesProduct = createAsyncThunk(
+  'products/fetchListCategoriesProduct',
   async (params, { rejectWithValue }) => {
     try {
-      return await ProductsAPI.getAllProduct()
+      return await ProductsAPI.getProductCategories()
     } catch (e) {
       console.log(e)
       console.log(rejectWithValue(e.response.data))

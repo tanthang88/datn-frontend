@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-export function HeaderTopItem({ title, icon, linkTo }) {
+export function HeaderTopItem({ title, icon, linkTo, classCtn = '' }) {
   return (
     <NavLink to={linkTo}>
       <div className='flex justify-center flex-col items-center'>

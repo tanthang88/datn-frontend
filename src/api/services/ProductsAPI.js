@@ -4,6 +4,14 @@ export const ProductsAPI = {
   getAllProduct: async () => {
     return await publicRequest.get('product')
   },
+  getProductCategories: async () => {
+    return await publicRequest.get('product/categories')
+  },
+  getProductOfCategoriesByID: async (ID) => {
+    const { data } = await publicRequest.get(`product/categories/${ID}`)
+    console.log(data)
+    return data
+  },
 }
 
 export const fetchProductById = async (payload) => {
