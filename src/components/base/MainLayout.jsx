@@ -30,7 +30,10 @@ export default function MainLayout() {
         </div>
       </BackTop>
       <section>
-        <p className='text-center mb-0 py-2' style={{fontSize: '10px', color:'#6d6d6d', background: '#fff'}}>
+        <p
+          className='text-center mb-0 py-2'
+          style={{ fontSize: '10px', color: '#6d6d6d', background: '#fff' }}
+        >
           © 2007 - 2022 Công Ty Cổ Phần Bán Lẻ Kỹ Thuật Số FPT / Địa chỉ: 261 -
           263 Khánh Hội, P2, Q4, TP. Hồ Chí Minh / GPĐKKD số 0311609355 do Sở
           KHĐT TP.HCM cấp ngày 08/03/2012. GP số 47/GP-TTĐT do sở TTTT TP HCM

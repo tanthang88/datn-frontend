@@ -1,12 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import mkcert from 'vite-plugin-mkcert'
-import { createStyleImportPlugin, AntdResolve } from 'vite-plugin-style-import'
+import { AntdResolve, createStyleImportPlugin } from 'vite-plugin-style-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      include: '**/*.jsx',
+      jsxRuntime: 'classic',
+    }),
     mkcert(),
     createStyleImportPlugin({
       resolves: [AntdResolve()],

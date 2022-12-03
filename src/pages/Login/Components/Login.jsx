@@ -1,24 +1,32 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input, Row, Col, Divider, message } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { handleLogin } from '../../../store/Actions/AuthenticationActions.js'
-import { useLocalStorage } from '../../../hooks/useLocalStorage.js'
+import React, { useEffect } from 'react'
+import { loginUser } from '../../../store/Services/UserServices.js'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { isEmpty } from 'lodash'
 
 export default function LoginCompoment() {
   const [formLogin] = Form.useForm()
-  const [token, setToken] = useLocalStorage('access_token', null)
-  const submitForm = (formValue) => {
-    handleLogin(formValue).then(
-      (res) => {
-        setToken(res.access_token)
-        message.success('Đăng nhập thành công!', 2)
-      },
-      (err) => {
-        console.log(err)
-      },
-    )
-  }
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { loading, error, userInfo } = useSelector((state) => state.user)
+  useEffect(
+    function () {
+      if (error != null) message.error(error, 2)
+      if (error === null && !isEmpty(userInfo)) {
+        message.success('Đăng nhập thành công!')
+        setTimeout(() => {
+          navigate('/')
+        }, 2000)
+      }
+      // if (userInfo) {
+      //   navigate('/user-profile')
+      // }
+    },
+    [loading, error, userInfo],
+  )
+
   return (
     <section className='xl:container border-t-gray-400'>
       <Row justify={'center'}>
@@ -26,11 +34,11 @@ export default function LoginCompoment() {
           span={8}
           className='rounded-lg border-2 px-5 py-5 bg-white shadow-lg shadow-neutral-500/40'
         >
-          <h1 className='font-light text-black text-xl text-left'>Đăng nhập</h1>
+          <h1 className='font-light text-black text-xl text-left'>Đăng Nhập</h1>
           <Form
             form={formLogin}
             name='form-login'
-            onFinish={submitForm}
+            onFinish={(values) => dispatch(loginUser(values))}
             scrollToFirstError
           >
             <Form.Item
@@ -96,7 +104,7 @@ export default function LoginCompoment() {
             <p className='text-center'>
               <span className='opacity-70'>Bạn chưa có tài khoản?</span>
               <span className='pl-1 text-main font-medium'>
-                <Link to={'/Components'}>Đăng kí</Link>
+                <Link to={'/register'}>Đăng kí</Link>
               </span>
             </p>
           </Form>

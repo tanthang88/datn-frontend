@@ -8,11 +8,13 @@ import '../../scss/homepage.scss'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchListProducts } from '../../store/Services/ProductServices.js'
+import { fetchListCategoriesProduct } from '../../store/Services/ProductCategoryServices.js'
 
 const HomePageContainer = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchListProducts())
+    dispatch(fetchListCategoriesProduct())
   })
 
   return (

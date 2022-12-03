@@ -1,5 +1,5 @@
 import LoginRegisterLayout from '../../components/base/LoginRegisterLayout.jsx'
-import LoginCompoment from './Compoments/Login.jsx'
+import LoginCompoment from './Components/Login.jsx'
 
 export default function LoginContainer() {
   return (
