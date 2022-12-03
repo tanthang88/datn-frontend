@@ -1,4 +1,5 @@
 import React from 'react'
+import { currency } from '../../../utils/currency'
 export default function index({ name, price, imgUrl, callback }) {
   return (
     <section className='product-sale'>
@@ -23,7 +24,7 @@ export default function index({ name, price, imgUrl, callback }) {
           {name}
         </a>
         <p className='process rounded-full relative bg-price-mark text-white'>
-          {price}
+          {currency(price)}
           <span className='bg-price-main absolute '></span>
         </p>
       </div>
