@@ -11,7 +11,7 @@ const userToken = localStorage.getItem('access_token')
   : null
 const initialState = {
   loading: false,
-  userInfo: {}, // for user object
+  userInfo: null, // for user object
   userToken, // for storing the JWT
   error: null,
   success: false, // for monitoring the registration process.
@@ -57,10 +57,11 @@ const userSlice = createSlice({
       state.error = null
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
-      localStorage.setItem('access_token', null)
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('persist:root')
       state.loading = false
       state.success = false
-      state.userInfo = {}
+      state.userInfo = null
       state.userToken = null
     },
     [logoutUser.rejected]: (state, { payload }) => {
