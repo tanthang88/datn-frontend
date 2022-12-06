@@ -1,5 +1,4 @@
 import axios from 'axios'
-const accessToken = JSON.parse(localStorage.getItem('access_token'))
 
 const publicRequest = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -7,16 +6,16 @@ const publicRequest = axios.create({
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
+    withCredentials: true,
   },
 })
 publicRequest.interceptors.request.use(
   function (config) {
-    // create config before send
-    accessToken != null
-      ? (config.headers.Authorization = `Bearer ${accessToken}`)
-      : ''
+    const TOKEN = JSON.parse(localStorage.getItem('access_token'))
+    config.headers.Authorization = TOKEN ? `Bearer ${TOKEN}` : ''
     return config
   },
+
   function (error) {
     return Promise.reject(error)
   },
@@ -24,7 +23,6 @@ publicRequest.interceptors.request.use(
 
 publicRequest.interceptors.response.use(
   function (response) {
-    // create config before take
     return response.data
   },
   function (error) {
