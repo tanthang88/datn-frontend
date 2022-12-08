@@ -12,6 +12,7 @@ import CartReducer, {
   deleteProduct,
 } from '../../../store/Reducers/CartSlice.js'
 import { CartBillSuccess } from './CartBillSuccess'
+import { currency } from '../../../utils/currency.js'
 
 const { Column } = Table
 
@@ -108,10 +109,11 @@ export const CartListProducts = () => {
             key='product_price'
             render={(cart) => (
               <span className='text-main font-bold'>
-                {cart.product_price.toLocaleString('vn-VN', {
+                {/* {cart.product_price.toLocaleString('vn-VN', {
                   style: 'currency',
                   currency: 'VND',
-                })}
+                })} */}
+                {currency(cart.product_price)}
               </span>
             )}
           />

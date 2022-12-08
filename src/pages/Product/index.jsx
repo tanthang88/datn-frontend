@@ -1,8 +1,8 @@
+import first from 'lodash/first'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
 import '../../scss/product.scss'
-import { Radio } from 'antd'
+import { message, Radio } from 'antd'
 import Comments from './components/Comments'
 import Info from './components/Info'
 import Gift from './components/Gift'
@@ -12,27 +12,51 @@ import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
   fetchProductById,
+  fetchProductByPropertiesId,
   fetchProductsRelated,
 } from '../../api/services/ProductsAPI'
 import LoadingProduct from '../../components/Loading/LoadingProduct'
 import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'
+import { addProduct } from '../../store/Reducers/CartSlice'
 
 export default function Product() {
-  const [value, setValue] = useState(1)
   const [product, setProduct] = useState({})
   const [productsRelated, setProductsRelated] = useState([])
   const [comments, setComments] = useState([])
+  const [messageApi, contextHolder] = message.useMessage()
   const [isMoreContent, setIsMoreContent] = useState(false)
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
-  const user = useSelector((state) => state.user)
+  const { userInfo } = useSelector((state) => state.user)
+  const [listCapacities, setListCapacities] = useState([])
+  const [listColors, setListColors] = useState([])
+  const dispatch = useDispatch()
+
+  const [data, setData] = useState({
+    propertyCapacity: '',
+    propertyColor: '',
+  })
 
   useEffect(() => {
     setLoading(true)
     fetchProductById(id)
       .then((data) => {
         setProduct(data)
+        if (data.properties) {
+          setListCapacities(
+            data.properties.filter(
+              ({ propertie_slug: name }) => name === 'dung-luong',
+              [],
+            ),
+          )
+          setListColors(
+            data.properties.filter(
+              ({ propertie_slug: name }) => name === 'mau-sac',
+              [],
+            ),
+          )
+        }
       })
       .finally(() => setLoading(false))
 
@@ -48,13 +72,47 @@ export default function Product() {
     })
   }
 
-  const onChangeProperty = (e) => {
-    console.log('radio checked', e.target.value)
-    setValue(e.target.value)
+  const handleGetProduct = () => {
+    if (loading) return
+    // eslint-disable-next-line no-use-before-define
+    const slugFirst = first(product.properties).propertie_slug
+    const params = {
+      id: slugFirst === 'mau-sac' ? data.propertyColor : data.propertyCapacity,
+      id_link:
+        slugFirst === 'mau-sac' ? data.propertyCapacity : data.propertyColor,
+    }
+    fetchProductByPropertiesId(id, params)
+      .then((data) => {
+        setProduct({
+          ...product,
+          product_price: data.price,
+          product_image: data.img,
+          product_images: null,
+        })
+      })
+      .catch(() => {
+        console.log('thất bại')
+      })
+  }
+  useEffect(() => {
+    handleGetProduct()
+  }, [data])
+
+  const onChangeCapacity = ({ target: { value } }) => {
+    setData({ ...data, propertyCapacity: value })
+  }
+  function onChangeColor({ target: { value } }) {
+    setData({ ...data, propertyColor: value })
   }
 
   const handleBuyNow = (e) => {
-    console.log('click')
+    if (userInfo) {
+      return dispatch(addProduct(product))
+    }
+    messageApi.open({
+      type: 'error',
+      content: 'Chưa đăng nhập, chưa thể đặt hàng...',
+    })
   }
 
   const links = [
@@ -70,22 +128,11 @@ export default function Product() {
     product_image: image,
     product_images: images,
     product_configurations: configurations,
-    properties,
   } = product
 
-  const listCapacities = properties.filter(
-    ({ propertie_slug: name }) => name === 'dung-luong',
-    [],
-  )
-
-  const listColors = properties.filter(
-    ({ propertie_slug: name }) => name === 'mau-sac',
-    [],
-  )
-
-  console.log('user', user)
   return (
     <div className='xl:container 2xl:mx-auto lg:py-5 md:py-5 py-9'>
+      {contextHolder}
       <BreadCrumb links={links} />
       <div className='pt-5 pb-5 grid grid-cols-4 gap-2'>
         <div className='col-span-3'>
@@ -121,9 +168,9 @@ export default function Product() {
           {/* bảng giá */}
           <div className='mt-7'>
             <Radio.Group
-              defaultValue=''
+              value={data?.propertyCapacity || ''}
               buttonStyle='solid'
-              onChange={onChangeProperty}
+              onChange={onChangeCapacity}
             >
               {listCapacities.map((property, index) => (
                 <Radio.Button value={property.id} key={index}>
@@ -134,7 +181,10 @@ export default function Product() {
             </Radio.Group>
           </div>
           <div className='w-full mt-4'>
-            <Radio.Group onChange={onChangeProperty}>
+            <Radio.Group
+              onChange={onChangeColor}
+              value={data?.propertyColor || ''}
+            >
               {listColors.map((property, index) => (
                 <Radio key={index} value={property.id}>
                   {property.propertie_value}
@@ -184,7 +234,7 @@ export default function Product() {
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
               Thông số kỹ thuật
             </h2>
-            <Info configurations={configurations} />
+            {configurations && <Info configurations={configurations} />}
           </div>
           <div className='w-full bg-white p-5 mt-5'>
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>

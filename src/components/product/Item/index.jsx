@@ -1,12 +1,9 @@
 import React from 'react'
 import { currency } from '../../../utils/currency'
-export default function index({ name, price, imgUrl, callback }) {
+export default function index({ name, price, imgUrl, callback, value }) {
   return (
     <section className='product-sale'>
-      <div
-        className='product__sale-img--separator relative text-center cursor-pointer'
-        onClick={callback}
-      >
+      <div className='product__sale-img--separator relative text-center cursor-pointer'>
         <img
           style={{ objectFit: 'contain' }}
           src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/9/30/638001723906730223_tagline-desk-270x210.png'
@@ -19,7 +16,7 @@ export default function index({ name, price, imgUrl, callback }) {
       <div className='product__sale-info my-3'>
         <a
           className='text-base overflow-hidden uppercase font-bold'
-          onClick={callback}
+          href={`/product/${value}`}
         >
           {name}
         </a>

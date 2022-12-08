@@ -28,7 +28,16 @@ export const fetchProductsRelated = async (payload) => {
   const { data } = await publicRequest.get(`product/${payload}/related`)
   return data
 }
+
 export const createComment = async (id, payload) => {
   const { data } = await publicRequest.post(`product/${id}/comment`, payload)
+  return data
+}
+
+export const fetchProductByPropertiesId = async (id, payload) => {
+  const { data } = await publicRequest.get(
+    `product/variantion/${id}/propertie`,
+    { params: payload },
+  )
   return data
 }
