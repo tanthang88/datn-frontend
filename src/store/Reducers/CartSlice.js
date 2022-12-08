@@ -1,55 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
-import _ from 'lodash'
+import { createSlice, current } from '@reduxjs/toolkit'
+
 const initialState = {
-  numberCart: 5,
+  numberCart: 0,
   isLoading: false,
-  Carts: [
-    {
-      id: 1,
-      product_img:
-        'https://cdn.tgdd.vn/Products/Images/42/289702/iphone-14-pro-max-bac-thumb-600x600.jpg',
-      product_name: 'Iphone 14 Pro Max 512GB',
-      product_price: 43990000,
-      product_color: 'Xanh lá',
-      product_quantity: 1,
-    },
-    {
-      id: 2,
-      product_img:
-        'https://cdn.tgdd.vn/Products/Images/42/289702/iphone-14-pro-max-bac-thumb-600x600.jpg',
-      product_name: 'Iphone 14 Pro Max 512GB',
-      product_price: 43990000,
-      product_color: 'Xanh lá',
-      product_quantity: 3,
-    },
-    {
-      id: 3,
-      product_img:
-        'https://cdn.tgdd.vn/Products/Images/42/289702/iphone-14-pro-max-bac-thumb-600x600.jpg',
-      product_name: 'Iphone 14 Pro Max 512GB',
-      product_price: 43990000,
-      product_color: 'Xanh lá',
-      product_quantity: 2,
-    },
-    {
-      id: 4,
-      product_img:
-        'https://cdn.tgdd.vn/Products/Images/42/289702/iphone-14-pro-max-bac-thumb-600x600.jpg',
-      product_name: 'Iphone 14 Pro Max 512GB',
-      product_price: 43990000,
-      product_color: 'Xanh lá',
-      product_quantity: 4,
-    },
-    {
-      id: 5,
-      product_img:
-        'https://cdn.tgdd.vn/Products/Images/42/289702/iphone-14-pro-max-bac-thumb-600x600.jpg',
-      product_name: 'Iphone 14 Pro Max 512GB',
-      product_price: 43990000,
-      product_color: 'Xanh lá',
-      product_quantity: 1,
-    },
-  ],
+  amountCart: 0,
+  Carts: [],
 }
 const Cart = createSlice({
   name: 'cart',
@@ -78,6 +33,36 @@ const Cart = createSlice({
       //   console.log(state.Carts[1])
       // })
     },
+    addProduct: (state, { payload }) => {
+      const { id, product_price: price } = payload
+      const { Carts } = current(state)
+      if (!Carts.length) {
+        state.products.push(payload)
+        state.numberCart += 1
+        state.amountCart += price
+        return
+      }
+      const checkID = Carts.find((item) => item.id === id)
+      if (checkID) {
+        // eslint-disable-next-line array-callback-return
+        Carts.map((item, index) => {
+          if (item.id === id) {
+            const updateItem = {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+            state.Carts[index] = updateItem
+            state.amountCart += price * updateItem.quantity
+            // eslint-disable-next-line no-useless-return, array-callback-return
+            return
+          }
+        })
+        return
+      }
+      state.Carts.push({ ...payload, quantity: 1 })
+      state.numberCart += 1
+      state.amountCart += price
+    },
   },
 })
 export const {
@@ -85,5 +70,6 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   deleteProduct,
+  addProduct,
 } = Cart.actions
 export default Cart.reducer

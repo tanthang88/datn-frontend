@@ -6,7 +6,6 @@ import { ImFire } from 'react-icons/im'
 import Item from '../../../components/product/Item'
 
 export default function Related({ productsRelated }) {
-  const handleClick = () => {}
   return (
     <GridContentLayout classNameContainer='px-1 py-5 my-6'>
       <div className='w-full inline-flex items-baseline gap-2 px-3'>
@@ -25,9 +24,9 @@ export default function Related({ productsRelated }) {
         {productsRelated.map((item, index) => (
           <SwiperSlide key={index}>
             <Item
+              value={item.id}
               price={item.product_price}
               name={item.product_title}
-              callback={handleClick}
               imgUrl={item.product_image}
             />
           </SwiperSlide>
