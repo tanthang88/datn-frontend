@@ -1,34 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Segmented, Select } from 'antd'
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
+import { fetchProductSort } from '../../../api/services/ProductsAPI.js'
 
 const { Option } = Select
 const handleChange = (value) => {
   console.log(value)
 }
 
-export default function SortBy() {
+const SortBy = () => {
+  const [dataSort, setDataSort] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchProductSort()
+      setDataSort(data)
+    }
+    getData()
+    console.log(dataSort)
+  }, [])
   return (
     <>
       <Row gutter={80}>
         <Col span={17}>
-          <Segmented
-            options={[
-              'Bán chạy nhất',
-              'Trả góp 0%',
-              'Giá thấp',
-              'Giá cao',
-              'Ưu đãi online',
-            ]}
-          />
+          {dataSort &&
+            dataSort.map((item, i) => (
+              <Segmented key={i} options={[item.sort_title]} />
+            ))}
         </Col>
         <Col span={4}>
           <Select
             className='mr-4'
             labelInValue
             defaultValue={{
-              value: 'bán chạy',
-              label: 'Bán chạy nhất',
+              value: '',
+              label: 'Mặc định',
             }}
             style={{
               width: 120,
@@ -39,12 +45,14 @@ export default function SortBy() {
               className='font-bold text-black text-sm border-y-gray-400'
               value='aaa'
             >
-              Bán chạy nhất
+              Mặc định
             </Option>
-            <Option value='bbb'>Trả góp 0%</Option>
-            <Option value='ccc'>Giá thấp</Option>
-            <Option value='ddd'>Giá cao</Option>
-            <Option value='eee'>Ưu đãi online</Option>
+            {dataSort &&
+              dataSort.map((item, i) => (
+                <Option name={item.sort_name} key={i} value={item.sort_value}>
+                  {item.sort_title}
+                </Option>
+              ))}
           </Select>
         </Col>
         <Col span={3}>
@@ -65,3 +73,4 @@ export default function SortBy() {
     </>
   )
 }
+export default SortBy

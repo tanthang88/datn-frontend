@@ -28,3 +28,13 @@ export const fetchProductsRelated = async (payload) => {
   const { data } = await publicRequest.get(`product/categories/${payload}`)
   return data
 }
+
+export const fetchProductFilter = async (payload) => {
+  const { data } = await publicRequest.get(`product/filter/`, payload)
+  return data
+}
+
+export const fetchProductSort = async (payload) => {
+  const { data } = await publicRequest.get(`product/sort/`)
+  return data
+}

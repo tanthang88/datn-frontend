@@ -20,8 +20,7 @@ export default function CategoryAccessory() {
           phụ kiện hot
         </h1>
       </div>
-      {productCategories &&
-          productCategories.map((item, index) => (
+      {productCategories && productCategories.map((item, index) => (
           <Col
             span={4}
             key={index}

@@ -35,7 +35,7 @@ export default function Product() {
       setComments(data)
     })
 
-    fetchProductsRelated(categoryId).then((data) => {
+    fetchProductsRelated(categoryId).then((data) => {x``
       console.log('data related', data)
     })
   }, [])
