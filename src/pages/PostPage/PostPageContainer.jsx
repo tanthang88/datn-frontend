@@ -6,7 +6,6 @@ import ListPost from './Components/ListPost.jsx'
 import NewPost from './Components/NewPost'
 import SalePost from './Components/SalePost.jsx'
 
-
 const PostPageContainer = () => {
   return (
     <>

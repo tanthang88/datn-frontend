@@ -1,106 +1,65 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Checkbox, Col, Row } from 'antd'
+import { fetchProductFilter } from '../../../api/services/ProductsAPI.js'
+import {useSearchParams} from 'react-router-dom'
 
 const onChange = (checkedValues) => {
   console.log('checked = ', checkedValues)
 }
 
-const ProductFilter = () => (
-  <Checkbox.Group
-    style={{
-      width: '100%',
-    }}
-    onChange={onChange}
-    defaultValue={['aaa', 'bbb', 'ccc']}
-  >
-    <div>
-      <h1 className='font-bold text-black text-base pt-5'>Hãng sản xuất</h1>
-      <Row>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='aaa'>Tất cả</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='iPhone'>iPhone</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Samsung'>Samsung</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='OPPO'>OPPO</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Xiaomi'>Xiaomi</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Vivo'>Vivo</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Asus'>Asus</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Nokia'>Nokia</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Masstel'>Masstel</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Realme'>Realme</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={10}>
-          <Checkbox value='Techno'>Techno</Checkbox>
-        </Col>
-      </Row>
-      <br />
-      <h1 className='font-bold text-black text-base pt-2'>Mức giá</h1>
-      <Row>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='bbb'>Tất cả</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='<2tr'>Dưới 2 triệu</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='2-4tr'>Từ 2 - 4 triệu</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='4-7tr'>Từ 4 - 7 triệu</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='7-13tr'>Từ 7 - 13 triệu</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='>13tr'>Trên 13 triệu</Checkbox>
-        </Col>
-      </Row>
-      <br />
-      <h1 className='font-bold text-black text-base pt-2'>
-        Tính năng đặc biệt
-      </h1>
-      <Row>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='ccc'>Tất cả</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='vantay'>Bảo mật vân tay</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='FaceID'>Nhận diện khuôn mặt</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='chongnuoc'>Chống nước & bụi</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='sacnhanh'>Sạc nhanh</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='>5g'>Hỗ trợ 5g</Checkbox>
-        </Col>
-        <Col className='leading-loose' span={24}>
-          <Checkbox value='>0day'>Sạc không dây</Checkbox>
-        </Col>
-      </Row>
-    </div>
-  </Checkbox.Group>
-)
+const ProductFilter = () => {
+  const [dataFilter, setDataFilter] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchProductFilter()
+      setDataFilter(data)
+    }
+    getData()
+  }, [])
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const price = searchParams.get('price')
+  const battery = searchParams.get('battery')
+  console.warn(price)
+  return (
+    <Checkbox.Group
+      style={{
+        width: '100%',
+      }}
+      onChange={onChange}
+      defaultValue={['aaa', 'bbb', 'ccc']}
+    >
+      <div>
+        {dataFilter &&
+          dataFilter.map((item, i) => (
+            <div key={i}>
+              <h1 className='font-bold text-black text-base pt-5'>
+                {item.filter_title}
+              </h1>
+              <Row>
+                <Col className='leading-loose' span={12}>
+                  <Checkbox value={item.filter_name}>Tất cả</Checkbox>
+                </Col>
+                {item.fields.map((field, index) => (
+                  <Col key={index} className='leading-loose' span={24}>
+                    <Checkbox
+                      onClick={() =>
+                        setSearchParams({ price: field.field_value })
+                      }
+                      value={field.field_value}
+                    >
+                      {field.field_label}
+                    </Checkbox>
+                  </Col>
+                ))}
+              </Row>
+              <br />
+            </div>
+          ))}
+      </div>
+    </Checkbox.Group>
+  )
+}
 
 export default ProductFilter
