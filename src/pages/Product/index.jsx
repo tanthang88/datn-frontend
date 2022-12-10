@@ -1,7 +1,8 @@
+import first from 'lodash/first'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import '../../scss/product.scss'
-import { Radio } from 'antd'
-import ProductsCate from './components/ProductsCate'
+import { message, Radio } from 'antd'
 import Comments from './components/Comments'
 import Info from './components/Info'
 import Gift from './components/Gift'
@@ -11,35 +12,114 @@ import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
   fetchProductById,
+  fetchProductByPropertiesId,
   fetchProductsRelated,
 } from '../../api/services/ProductsAPI'
 import LoadingProduct from '../../components/Loading/LoadingProduct'
+import Related from './components/Related'
+import { URL_BACKEND } from '../../config/constants'
+import { addProduct } from '../../store/Reducers/CartSlice'
 
 export default function Product() {
-  const [value, setValue] = useState(1)
   const [product, setProduct] = useState({})
+  const [productsRelated, setProductsRelated] = useState([])
   const [comments, setComments] = useState([])
+  const [messageApi, contextHolder] = message.useMessage()
   const [isMoreContent, setIsMoreContent] = useState(false)
   const [loading, setLoading] = useState(true)
-  const urlBackEnd = 'http://127.0.0.1:8000'
   const { id } = useParams()
+  const { userInfo } = useSelector((state) => state.user)
+  const [listCapacities, setListCapacities] = useState([])
+  const [listColors, setListColors] = useState([])
+  const dispatch = useDispatch()
+
+  const [data, setData] = useState({
+    propertyCapacity: '',
+    propertyColor: '',
+  })
 
   useEffect(() => {
     setLoading(true)
     fetchProductById(id)
       .then((data) => {
         setProduct(data)
+        if (data.properties) {
+          setListCapacities(
+            data.properties.filter(
+              ({ propertie_slug: name }) => name === 'dung-luong',
+              [],
+            ),
+          )
+          setListColors(
+            data.properties.filter(
+              ({ propertie_slug: name }) => name === 'mau-sac',
+              [],
+            ),
+          )
+        }
       })
       .finally(() => setLoading(false))
-    fetchCommentsProduct(id).then((data) => {
-      setComments(data)
-    })
 
-    fetchProductsRelated(categoryId).then((data) => {x``
-      console.log('data related', data)
+    getListComments()
+    fetchProductsRelated(id).then((data) => {
+      setProductsRelated(data)
     })
   }, [])
 
+  const getListComments = () => {
+    fetchCommentsProduct(id).then((data) => {
+      setComments(data)
+    })
+  }
+
+  const handleGetProduct = () => {
+    if (loading) return
+    // eslint-disable-next-line no-use-before-define
+    const slugFirst = first(product.properties).propertie_slug
+    const params = {
+      id: slugFirst === 'mau-sac' ? data.propertyColor : data.propertyCapacity,
+      id_link:
+        slugFirst === 'mau-sac' ? data.propertyCapacity : data.propertyColor,
+    }
+    fetchProductByPropertiesId(id, params)
+      .then((data) => {
+        setProduct({
+          ...product,
+          product_price: data.price,
+          product_image: data.img,
+          product_images: null,
+        })
+      })
+      .catch(() => {
+        console.log('thất bại')
+      })
+  }
+  useEffect(() => {
+    handleGetProduct()
+  }, [data])
+
+  const onChangeCapacity = ({ target: { value } }) => {
+    setData({ ...data, propertyCapacity: value })
+  }
+  function onChangeColor({ target: { value } }) {
+    setData({ ...data, propertyColor: value })
+  }
+
+  const handleBuyNow = (e) => {
+    if (userInfo) {
+      return dispatch(addProduct(product))
+    }
+    messageApi.open({
+      type: 'error',
+      content: 'Chưa đăng nhập, chưa thể đặt hàng...',
+    })
+  }
+
+  const links = [
+    { title: 'Trang chủ', href: '/' },
+    { title: 'sản phẩm', href: '/product' },
+  ]
+  if (loading) return <LoadingProduct open={loading} />
   const {
     product_title: title,
     product_content: content,
@@ -48,24 +128,12 @@ export default function Product() {
     product_image: image,
     product_images: images,
     product_configurations: configurations,
-    category_parent_id: categoryId,
   } = product
 
-  const onChange = (e) => {
-    console.log('radio checked', e.target.value)
-    setValue(e.target.value)
-  }
-
-  const links = [
-    { title: 'Trang chủ', href: '/' },
-    { title: 'sản phẩm', href: '/product' },
-  ]
-  if (loading) return <LoadingProduct open={loading} />
   return (
     <div className='xl:container 2xl:mx-auto lg:py-5 md:py-5 py-9'>
+      {contextHolder}
       <BreadCrumb links={links} />
-      {console.log('product', product)}
-
       <div className='pt-5 pb-5 grid grid-cols-4 gap-2'>
         <div className='col-span-3'>
           <h1 className='text-2xl'>{title}</h1>
@@ -76,7 +144,7 @@ export default function Product() {
       <div className='flex justify-center lg:flex-row flex-col gap-8'>
         <div className='w-full sm:w-96 md:w-8/12  lg:w-6/12 flex flex-col lg:gap-6 sm:gap-6 gap-4'>
           <div className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'>
-            <img src={urlBackEnd + image} alt='' className='h-96' />
+            <img src={URL_BACKEND + image} alt='' className='h-96' />
           </div>
           <div className='w-full grid lg:flex-row grid-cols-4 gap-6'>
             {images &&
@@ -85,7 +153,7 @@ export default function Product() {
                   key={index}
                   className='bg-gray-200 flex justify-center items-center'
                 >
-                  <img src={urlBackEnd + item.image} />
+                  <img src={URL_BACKEND + item.image} />
                 </div>
               ))}
           </div>
@@ -99,41 +167,42 @@ export default function Product() {
           </span>
           {/* bảng giá */}
           <div className='mt-7'>
-            <Radio.Group defaultValue='a' buttonStyle='solid'>
-              <Radio.Button value='a'>
-                <b>128GB</b>
-                <p>27.9000.000đ</p>
-              </Radio.Button>
-              <Radio.Button value='b'>
-                <b>128GB</b>
-                <p>27.9000.000đ</p>
-              </Radio.Button>
-              <Radio.Button value='c'>
-                <b>128GB</b>
-                <p>27.9000.000đ</p>
-              </Radio.Button>
-              <Radio.Button value='d'>
-                <b>128GB</b>
-                <p>27.9000.000đ</p>
-              </Radio.Button>
+            <Radio.Group
+              value={data?.propertyCapacity || ''}
+              buttonStyle='solid'
+              onChange={onChangeCapacity}
+            >
+              {listCapacities.map((property, index) => (
+                <Radio.Button value={property.id} key={index}>
+                  <p>{property.propertie_name}</p>
+                  <b>{property.propertie_value}</b>
+                </Radio.Button>
+              ))}
             </Radio.Group>
           </div>
           <div className='w-full mt-4'>
-            <Radio.Group onChange={onChange} value={value}>
-              <Radio value={1}>Đỏ</Radio>
-              <Radio value={2}>Xanh</Radio>
-              <Radio value={3}>Vàng</Radio>
-              <Radio value={4}>Đen</Radio>
+            <Radio.Group
+              onChange={onChangeColor}
+              value={data?.propertyColor || ''}
+            >
+              {listColors.map((property, index) => (
+                <Radio key={index} value={property.id}>
+                  {property.propertie_value}
+                </Radio>
+              ))}
             </Radio.Group>
           </div>
           {/* quà tặng khi mua hàng */}
           <Gift />
           <div className='w-full py-5'>
-            <button className='w-full bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-center'>
+            <button
+              className='w-full bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-center'
+              onClick={handleBuyNow}
+            >
               <div className='text-2xl'>Mua ngay</div>
               <p className='mb-0'>Giao hàng miễn phí hoặc nhận tại shop</p>
             </button>
-            <div className='grid grid-cols-2 gap-1 mt-1'>
+            {/* <div className='grid grid-cols-2 gap-1 mt-1'>
               <button className='w-full grid-col-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center'>
                 <div className='text-xl'>Trả góp 0%</div>
                 <p className='mb-0'>Duyệt nhanh qua điện thoại</p>
@@ -142,7 +211,7 @@ export default function Product() {
                 <div className='text-xl'>Trả góp qua thẻ</div>
                 <p className='mb-0'>ATM nội địa</p>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -165,7 +234,7 @@ export default function Product() {
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
               Thông số kỹ thuật
             </h2>
-            <Info configurations={configurations} />
+            {configurations && <Info configurations={configurations} />}
           </div>
           <div className='w-full bg-white p-5 mt-5'>
             <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
@@ -195,8 +264,12 @@ export default function Product() {
         </div>
       </div>
 
-      <Comments comments={comments} />
-      <ProductsCate />
+      <Comments
+        comments={comments}
+        getListComments={getListComments}
+        productId={id}
+      />
+      <Related productsRelated={productsRelated} />
     </div>
   )
 }

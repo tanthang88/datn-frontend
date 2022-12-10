@@ -20,9 +20,6 @@ export default function LoginCompoment() {
           navigate('/')
         }, 2000)
       }
-      // if (userInfo) {
-      //   navigate('/user-profile')
-      // }
     },
     [loading, error, userInfo],
   )

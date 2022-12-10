@@ -11,10 +11,9 @@ export const ProductItem = (props) => {
         <img
           style={{ objectFit: 'contain' }}
           src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/14/638040405020658246_frame-cate-270x210.png'
-          // src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/9/30/638001723906730223_tagline-desk-270x210.png'
           alt=''
         />
-        <NavLink to={'/'}>
+        <NavLink to={`/product/${props.data?.id}`}>
           <div className='product__sale-img text-center'>
             <img
               className='object-cover'
@@ -26,7 +25,9 @@ export const ProductItem = (props) => {
       </div>
       <div className='product__sale-info my-3'>
         <h3 className='text-base overflow-hidden uppercase font-bold'>
-          <NavLink to={'/'}>{props.data?.product_title}</NavLink>
+          <NavLink to={`/product/${props.data?.id}`}>
+            {props.data?.product_title}
+          </NavLink>
         </h3>
         <p className='process rounded-full relative bg-price-mark text-white'>
           {new Intl.NumberFormat('vi-VN', {
