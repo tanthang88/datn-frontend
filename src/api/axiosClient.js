@@ -3,8 +3,8 @@ import axios from 'axios'
 const publicRequest = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
+    Accept: 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
     withCredentials: true,
   },

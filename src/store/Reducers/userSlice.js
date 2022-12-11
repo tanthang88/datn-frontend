@@ -20,7 +20,12 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    updateUserInfo: (state, { payload }) => {
+      state.loading = false
+      state.userInfo = payload
+    },
+  },
   extraReducers: {
     // Register
     [registerUser.pending]: (state) => {
@@ -70,5 +75,5 @@ const userSlice = createSlice({
     },
   },
 })
-
+export const { updateUserInfo } = userSlice.actions
 export default userSlice.reducer

@@ -38,7 +38,7 @@ export function HeaderTop() {
       items={[
         {
           key: '1',
-          label: <Link to={'/'}>Quản lý tài khoản</Link>,
+          label: <Link to={'/user'}>Quản lý tài khoản</Link>,
           icon: <UserOutlined />,
         },
         {
