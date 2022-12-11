@@ -11,6 +11,7 @@ export const REGEX = {
 
 export const TIME_FORMAT = 'HH:mm'
 export const DATE_FORMAT = 'dd/MM/yyyy'
+export const DATE_FORMAT_NUMBER = 'DD/MM/YYYY'
 export const DATETIME_FORMAT = 'dd/MM/yyyy HH:mm'
 export const DATE_FORMAT_BE = 'yyyy-MM-dd'
 export const DATETIME_FORMAT_BE = 'yyyy-MM-dd HH:mm'

@@ -9,6 +9,9 @@ import ProductPageContainer from '../pages/ProductPage/ProductPageContainer.jsx'
 import PostPageContainer from '../pages/PostPage/PostPageContainer.jsx'
 import { CartContainer } from '../pages/Cart/CartContainer.jsx'
 import Product from '../pages/Product'
+import User from '../pages/User/index.jsx'
+import PrivateUserRoute from './PrivateUserRoute.jsx'
+import React from 'react'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -51,6 +54,21 @@ const RouterContainer = createBrowserRouter([
         path: 'cart',
         element: <CartContainer />,
         hasErrorBoundary: true,
+        errorElement: <ErrorPage />,
+      },
+    ],
+    errorElement: <ErrorPage />,
+  },
+  {
+    element: (
+      <PrivateUserRoute>
+        <MainLayout />
+      </PrivateUserRoute>
+    ),
+    children: [
+      {
+        path: 'user',
+        element: <User />,
         errorElement: <ErrorPage />,
       },
     ],
