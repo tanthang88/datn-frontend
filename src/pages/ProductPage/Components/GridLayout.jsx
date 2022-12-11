@@ -8,13 +8,11 @@ import { ProductsAPI } from '../../../api/services/ProductsAPI.js'
 export default function GridLayout() {
   const [dataProduct, setDataProduct] = useState([])
   const { id } = useParams()
-  console.log(id)
   const getData = async () => {
     setDataProduct(await ProductsAPI.getProductOfCategoriesByID(id))
   }
   useEffect(function () {
     getData()
-    console.log(dataProduct)
   }, [])
   return (
     <>

@@ -9,7 +9,6 @@ export const ProductsAPI = {
   },
   getProductOfCategoriesByID: async (ID) => {
     const { data } = await publicRequest.get(`product/categories/${ID}`)
-    console.log(data)
     return data
   },
 }

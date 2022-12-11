@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd'
+import { Row, Col, Skeleton } from 'antd'
 import { Lazy, Navigation, Pagination, Scrollbar, Autoplay, A11y } from 'swiper'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import 'swiper/css'
@@ -9,60 +9,43 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/pagination'
 import { Link } from 'react-router-dom'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
+import { publicRequest } from '../../../api/axiosClient.js'
+import { useState, useEffect } from 'react'
+import _ from 'lodash'
 
 export const MainBanner = () => {
-  const imageSlideItems = [
-    {
-      title: 'Item 1',
-      image:
-        'https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/8/638008349489523366_F_H1_800x300.jpg',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Item 2',
-      image:
-        'https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/4/638004801120320356_F-H1_800x300.png',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Item 3',
-      image:
-        'https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/9/30/638001639645634427_F-H1_800x300.png',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Item 4',
-      image:
-        'https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/4/638005013843857351_F-H1_800x300.png',
-      link: 'fptshop.com.vn',
-    },
-  ]
+  const [sliderHome, setSliderHome] = useState([])
+  const [newPosts, setNewPosts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const FeaturePost = [
-    {
-      title: 'Tuần lễ Xiaomi giảm đến 3 triệu',
-      image: 'https://www.xtsmart.vn/vnt_upload/weblink/baner_1.png',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Tuần lễ Xiaomi giảm đến 3 triệu',
-      image: 'https://www.xtsmart.vn/vnt_upload/weblink/Artboard_1_copy_1.png',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Tuần lễ Xiaomi giảm đến 3 triệu',
-      image: 'https://www.xtsmart.vn/vnt_upload/weblink/baner_3.png',
-      link: 'fptshop.com.vn',
-    },
-    {
-      title: 'Tuần lễ Xiaomi giảm đến 3 triệu',
-      image: 'https://www.xtsmart.vn/vnt_upload/weblink/baner_4.png',
-      link: 'fptshop.com.vn',
-    },
-  ]
+  useEffect(() => {
+    const getBanner = async () => {
+      const resultSL = await publicRequest.get('slider')
+      const dataSL = resultSL?.data.filter((item) => item.type === 'trang-chu')
+      setSliderHome(dataSL)
+      setLoading(false)
+    }
+    const getNewPosts = async () => {
+      const result = await publicRequest.get('post/all')
+      const dataNewPosts = _.slice(result?.data, 0, 4)
+      setNewPosts(dataNewPosts)
+      setLoading(false)
+    }
+    getBanner()
+    getNewPosts()
+    console.log(newPosts)
+  }, [])
   return (
     <GridContentLayout classNameContainer='px-1 py-1 my-6' gutter={24}>
       <Col className='gutter-row' span={16}>
+        {loading && (
+          <Skeleton
+            active={loading}
+            paragraph={{
+              rows: 4,
+            }}
+          />
+        )}
         <Swiper
           slidesPerView={1}
           loop={true}
@@ -79,37 +62,51 @@ export const MainBanner = () => {
           modules={[Navigation, Scrollbar, Lazy, Pagination, Autoplay, A11y]}
           className='px-5 rounded-md'
         >
-          {imageSlideItems.map((item, index) => (
-            <SwiperSlide key={index}>
-              <Link to='/test'>
-                <img src={item.image} alt='' className='w-full' />
-              </Link>
-            </SwiperSlide>
-          ))}
+          {sliderHome &&
+            sliderHome.map((item, index) => (
+              <SwiperSlide key={index}>
+                <Link to={item.link} target={'_blank'} rel='noreferrer'>
+                  <img
+                    src={import.meta.env.VITE_BACKEND_SITE_URL + item.image}
+                    alt=''
+                    className='w-full'
+                  />
+                </Link>
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Col>
       <Col className='gutter-row' span={8}>
         <article className='flex flex-col gap-y-3'>
-          {FeaturePost.map((ele, index) => (
-            <Link to='/test' key={index}>
-              <div
-                className='flex justify-start gap-x-2 items-center'
-                key={index}
+          {loading && (
+            <Skeleton
+              active={loading}
+              paragraph={{
+                rows: 4,
+              }}
+            />
+          )}
+          {newPosts &&
+            newPosts.map((item, i) => (
+              <Link
+                to={'/post/' + item.post_category_slug + '/' + item.id}
+                key={i}
               >
-                <img
-                  src={ele.image}
-                  alt=''
-                  className='object-cover rounded-lg w-16 h-16'
-                />
-                <p
-                  className='text-black font-semibold mb-0 py-1 '
-                  style={{ fontSize: '15px' }}
-                >
-                  {ele.title}
-                </p>
-              </div>
-            </Link>
-          ))}
+                <div className='flex justify-start gap-x-2 items-center'>
+                  <img
+                    src={import.meta.env.VITE_BACKEND_SITE_URL + item.post_img}
+                    alt=''
+                    className='object-cover rounded-lg w-16 h-16'
+                  />
+                  <p
+                    className='text-black font-semibold mb-0 py-1 '
+                    style={{ fontSize: '15px' }}
+                  >
+                    {item.post_title}
+                  </p>
+                </div>
+              </Link>
+            ))}
         </article>
       </Col>
     </GridContentLayout>
