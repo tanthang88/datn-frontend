@@ -1,4 +1,5 @@
 import { CartListProducts } from './Components/CartListProducts.jsx'
+import '../../scss/cart.scss'
 
 export const CartContainer = () => {
   return (

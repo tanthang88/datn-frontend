@@ -1,0 +1,21 @@
+.cart__discountcode {
+  .ant-space-item {
+    border: 1px solid #CCCCCC;
+    border-bottom-right-radius: .5rem;
+    border-top-right-radius: .5rem;
+    box-shadow: 0.125rem 0.125rem 0.3125rem rgb(0 0 0 / 7%);
+  }
+
+  label.ant-radio-wrapper {
+    width: 100%;
+    margin-right: 0;
+    padding-right: .5rem;
+    align-items: center;
+    flex-direction: row-reverse;
+
+    span.ant-radio + * {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}

@@ -101,13 +101,14 @@ export default function Product() {
   const onChangeCapacity = ({ target: { value } }) => {
     setData({ ...data, propertyCapacity: value })
   }
+
   function onChangeColor({ target: { value } }) {
     setData({ ...data, propertyColor: value })
   }
 
   const handleBuyNow = (e) => {
     if (userInfo) {
-      return dispatch(addProduct(product))
+      return dispatch(addProduct({ product, info: data }))
     }
     messageApi.open({
       type: 'error',

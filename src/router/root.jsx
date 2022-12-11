@@ -33,13 +33,14 @@ const RouterContainer = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: 'dien-thoai/:id',
+        path: 'category/:id',
         element: <ProductPageContainer />,
         errorElement: <ErrorPage />,
-        // loader: ({ request, params }) => {
-        //   console.log(request)
-        //   console.log(params)
-        // },
+      },
+      {
+        path: 'accessory/:id',
+        // element: <ProductPageContainer />,
+        // errorElement: <ErrorPage />,
       },
       {
         path: 'product/:id',
@@ -49,6 +50,14 @@ const RouterContainer = createBrowserRouter([
       {
         path: 'post',
         element: <PostPageContainer />,
+      },
+      {
+        path: 'post/:category_id',
+        // element: <PostPageContainer />,
+      },
+      {
+        path: 'post/:category_slug/:id',
+        // element: <PostPageContainer />,
       },
       {
         path: 'cart',

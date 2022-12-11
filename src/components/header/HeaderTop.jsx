@@ -96,26 +96,6 @@ export function HeaderTop() {
               icon={<FaUserCircle />}
             />
           ) : (
-            // <HeaderTopItem
-            //   style={{ marginTop: '-20px' }}
-            //   title={
-            //     <span className='text-white'>
-            //       <span className='font-semibold'> {userInfo.name}</span>
-            //     </span>
-            //   }
-            //   linkTo='/user-profile'
-            //   icon={
-            // !isEmpty(userInfo.avatar) ? (
-            //   <Avatar
-            //     src={
-            //       import.meta.env.VITE_BACKEND_SITE_URL + userInfo.avatar
-            //     }
-            //   />
-            // ) : (
-            // <FaUserCircle />
-            // )
-            //   }
-            // />
             <Dropdown overlay={menu}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space className='flex align-center'>
