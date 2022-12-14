@@ -40,6 +40,7 @@ export const FormUpdate = ({
   listDist,
   onChangeCity,
   form,
+  setIsEdit,
 }) => {
   const refFile = useRef()
   const dispatch = useDispatch()
@@ -128,6 +129,9 @@ export const FormUpdate = ({
           type: 'success',
           content: 'Cập nhật thành công',
         })
+        setTimeout(() => {
+          setIsEdit(false)
+        }, 1500)
       })
       .catch(() => {
         messageApi.open({
@@ -152,7 +156,6 @@ export const FormUpdate = ({
     listType: 'picture',
     showUploadList: true,
   })
-
   return (
     <>
       {contextHolder}

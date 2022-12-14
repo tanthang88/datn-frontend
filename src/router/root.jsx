@@ -12,6 +12,9 @@ import Product from '../pages/Product'
 import User from '../pages/User/index.jsx'
 import PrivateUserRoute from './PrivateUserRoute.jsx'
 import React from 'react'
+import Bill from '../pages/Bill'
+import BillDetail from '../pages/Bill/Detail'
+import { URL } from '../config/constants.js'
 
 const RouterContainer = createBrowserRouter([
   {
@@ -76,8 +79,18 @@ const RouterContainer = createBrowserRouter([
     ),
     children: [
       {
-        path: 'user',
+        path: URL.USER,
         element: <User />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: URL.BILL,
+        element: <Bill />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: `${URL.BILL}/detail/:id`,
+        element: <BillDetail />,
         errorElement: <ErrorPage />,
       },
     ],

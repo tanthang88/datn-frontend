@@ -1,4 +1,9 @@
-export const URL_BACKEND = 'http://127.0.0.1:8000'
+export const URL_BACKEND = import.meta.env.VITE_BACKEND_SITE_URL
+export const URL = {
+  HOME: '/',
+  BILL: '/bill',
+  USER: '/user',
+}
 
 export const REGEX = {
   PASSWORD: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
@@ -15,3 +20,26 @@ export const DATE_FORMAT_NUMBER = 'DD/MM/YYYY'
 export const DATETIME_FORMAT = 'dd/MM/yyyy HH:mm'
 export const DATE_FORMAT_BE = 'yyyy-MM-dd'
 export const DATETIME_FORMAT_BE = 'yyyy-MM-dd HH:mm'
+
+export const LIST_BILL_STATUS = [
+  {
+    name: 'Chờ xác nhận',
+    value: 0,
+  },
+  {
+    name: 'Đã xác nhận',
+    value: 1,
+  },
+  {
+    name: 'Đang giao hàng',
+    value: 2,
+  },
+  {
+    name: 'Giao hàng thành công',
+    value: 3,
+  },
+  {
+    name: 'Huỷ đơn',
+    value: 4,
+  },
+]
