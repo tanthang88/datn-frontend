@@ -1,10 +1,12 @@
 import { Avatar, Col, Form, Row, Select } from 'antd'
 import React from 'react'
-import { UserOutlined } from '@ant-design/icons'
+import { UserOutlined, EditOutlined } from '@ant-design/icons'
 import { DATE_FORMAT, URL_BACKEND } from '../../../config/constants'
 import { format } from 'date-fns'
+import { OverlaySpinner } from '../../../components/Loading/OverlaySpinner'
+import PropTypes from 'prop-types'
 
-const FormDetail = ({ dataUser, loading, listCity, listDist }) => {
+const FormDetail = ({ dataUser, loading, listCity, listDist, setIsEdit }) => {
   const {
     address,
     avatar,
@@ -16,12 +18,20 @@ const FormDetail = ({ dataUser, loading, listCity, listDist }) => {
     city_id: cityId,
     dist_id: distId,
   } = dataUser
-  if (loading) return
+  if (loading) return <OverlaySpinner open={loading} />
 
   return (
     <section className='bg-white mt-6 px-5 py-3.5 rounded-lg shadow-md'>
       <h1 className='text-xl font-sans text-zinc-600'>Hồ sơ của tôi</h1>
-      <p className='mb-4'>Quản lý thông tin hồ sơ</p>
+
+      <div className='mb-4 flex'>
+        <div>Quản lý thông tin hồ sơ</div>
+        <a className='ml-3' onClick={() => setIsEdit(true)}>
+          Sửa hồ sơ
+          <EditOutlined />
+        </a>
+      </div>
+      <span></span>
       <hr />
       <Form>
         <Row>
@@ -98,5 +108,11 @@ const FormDetail = ({ dataUser, loading, listCity, listDist }) => {
     </section>
   )
 }
-
+FormDetail.propTypes = {
+  dataUser: PropTypes.objectOf(Object),
+  loading: PropTypes.bool,
+  listCity: PropTypes.array,
+  listDist: PropTypes.array,
+  setIsEdit: PropTypes.func,
+}
 export default FormDetail
