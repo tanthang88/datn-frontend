@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/Services/UserServices.js'
 import { isEmpty } from 'lodash'
+import { URL } from '../../config/constants'
 
 const onSearch = (value) => console.log(value)
 
@@ -38,12 +39,12 @@ export function HeaderTop() {
       items={[
         {
           key: '1',
-          label: <Link to={'/user'}>Quản lý tài khoản</Link>,
+          label: <Link to={URL.USER}>Quản lý tài khoản</Link>,
           icon: <UserOutlined />,
         },
         {
           key: '2',
-          label: <Link to={'/'}>Đơn hàng của tôi</Link>,
+          label: <Link to={URL.BILL}>Đơn hàng của tôi</Link>,
           icon: <ShoppingOutlined />,
         },
         {
