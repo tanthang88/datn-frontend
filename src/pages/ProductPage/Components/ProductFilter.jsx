@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Checkbox, Col, Row } from 'antd'
 import { fetchProductFilter } from '../../../api/services/ProductsAPI.js'
-import {useSearchParams} from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 const onChange = (checkedValues) => {
   console.log('checked = ', checkedValues)
@@ -20,7 +20,6 @@ const ProductFilter = () => {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const price = searchParams.get('price')
-  const battery = searchParams.get('battery')
   console.warn(price)
   return (
     <Checkbox.Group
