@@ -5,15 +5,7 @@ import { Col, Row } from 'antd'
 import { useParams } from 'react-router'
 import { ProductsAPI } from '../../../api/services/ProductsAPI.js'
 
-export default function GridLayout() {
-  const [dataProduct, setDataProduct] = useState([])
-  const { id } = useParams()
-  const getData = async () => {
-    setDataProduct(await ProductsAPI.getProductOfCategoriesByID(id))
-  }
-  useEffect(function () {
-    getData()
-  }, [])
+export default function GridLayout({ dataProduct }) {
   return (
     <>
       <section className='bg-white mt-6 px-2 py-2 rounded-lg'>
@@ -22,24 +14,12 @@ export default function GridLayout() {
         </Row>
         <div className='site-card-wrapper'>
           <Row>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
+            {dataProduct &&
+              dataProduct.map((item, index) => (
+                <Col span={8} key={index}>
+                  <ProductItem data={item} />
+                </Col>
+              ))}
           </Row>
         </div>
       </section>
