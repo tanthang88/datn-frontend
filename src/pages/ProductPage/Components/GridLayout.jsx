@@ -1,45 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import SortBy from './SortBy.jsx'
 import { ProductItem } from '../../../components/product/ProductItem.jsx'
 import { Col, Row } from 'antd'
-import { useParams } from 'react-router'
-import { ProductsAPI } from '../../../api/services/ProductsServices.js'
 
-export default function GridLayout() {
-  const [dataProduct, setDataProduct] = useState([])
-  const { id } = useParams()
-  const getData = async () => {
-    setDataProduct(await ProductsAPI.getProductOfCategoriesByID(id))
-  }
-  useEffect(function () {
-    getData()
-  }, [])
+export default function GridLayout({
+  productsList,
+  setProductsList,
+  dataSearch,
+  setDataSearch,
+}) {
   return (
     <>
       <section className='bg-white mt-6 px-2 py-2 rounded-lg'>
         <Row className='pb-6 pt-4'>
-          <SortBy />
+          <SortBy
+            setProductsList={setProductsList}
+            setDataSearch={setDataSearch}
+            dataSearch={dataSearch}
+          />
         </Row>
         <div className='site-card-wrapper'>
           <Row>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
-            <Col span={8}>
-              <ProductItem />
-            </Col>
+            {productsList.data
+              ? productsList.data.map((item, index) => (
+                  <Col span={8} key={index}>
+                    <ProductItem data={item} />
+                  </Col>
+                ))
+              : ''}
           </Row>
         </div>
       </section>

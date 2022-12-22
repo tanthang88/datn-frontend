@@ -1,74 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row, Segmented, Select } from 'antd'
-import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
 import { fetchProductSort } from '../../../api/services/ProductsServices.js'
+import { Row, Select } from 'antd'
 
 const { Option } = Select
-const handleChange = (value) => {
-  console.log(value)
-}
 
-const SortBy = () => {
+const SortBy = ({ setDataSearch, dataSearch }) => {
   const [dataSort, setDataSort] = useState([])
 
+  const handleChange = (data) => {
+    setDataSearch({
+      ...dataSearch,
+      order_by: data.title,
+      order_type: data.value,
+    })
+  }
   useEffect(() => {
     const getData = async () => {
       const data = await fetchProductSort()
       setDataSort(data)
     }
     getData()
-    console.log(dataSort)
   }, [])
   return (
     <>
-      <Row gutter={80}>
-        <Col span={17}>
+      <Row className='w-full justify-end'>
+        <Select
+          className='mr-4 flex items-end justify-end w-40'
+          labelInValue
+          placeholder='Sắp xếp'
+          onChange={handleChange}
+        >
           {dataSort &&
-            dataSort.map((item, i) => (
-              <Segmented key={i} options={[item.sort_title]} />
+            dataSort.map((item, index) => (
+              <Option
+                title={item.sort_name}
+                key={item.id}
+                value={item.field_value}
+              >
+                {item.sort_title}
+              </Option>
             ))}
-        </Col>
-        <Col span={4}>
-          <Select
-            className='mr-4'
-            labelInValue
-            defaultValue={{
-              value: '',
-              label: 'Mặc định',
-            }}
-            style={{
-              width: 120,
-            }}
-            onChange={handleChange}
-          >
-            <Option
-              className='font-bold text-black text-sm border-y-gray-400'
-              value='aaa'
-            >
-              Mặc định
-            </Option>
-            {dataSort &&
-              dataSort.map((item, i) => (
-                <Option name={item.sort_name} key={i} value={item.sort_value}>
-                  {item.sort_title}
-                </Option>
-              ))}
-          </Select>
-        </Col>
-        <Col span={3}>
-          <Segmented
-            options={[
-              {
-                value: 'Kanban',
-                icon: <AppstoreOutlined />,
-              },
-              {
-                value: 'List',
-                icon: <BarsOutlined />,
-              },
-            ]}
-          />
-        </Col>
+        </Select>
       </Row>
     </>
   )

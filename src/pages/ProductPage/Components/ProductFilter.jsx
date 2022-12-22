@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Checkbox, Col, Row } from 'antd'
-import { fetchProductFilter } from '../../../api/services/ProductsServices.js'
-import { useSearchParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Radio, Col, Row } from 'antd'
+import { fetchProductFilter } from '../../../api/services/ProductsServices'
 
-const onChange = (checkedValues) => {
-  console.log('checked = ', checkedValues)
-}
-
-const ProductFilter = () => {
+const ProductFilter = ({ setDataSearch, dataSearch }) => {
   const [dataFilter, setDataFilter] = useState([])
 
+  const onChange = (e) => {
+    if (e.target.checked) {
+      return setDataSearch({ ...dataSearch, [e.target.label]: e.target.value })
+    }
+    setDataSearch({ ...dataSearch, [e.target.label]: '' })
+  }
   useEffect(() => {
     const getData = async () => {
       const data = await fetchProductFilter()
@@ -18,47 +19,40 @@ const ProductFilter = () => {
     getData()
   }, [])
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const price = searchParams.get('price')
-  const battery = searchParams.get('battery')
-  console.warn(price)
   return (
-    <Checkbox.Group
-      style={{
-        width: '100%',
-      }}
-      onChange={onChange}
-      defaultValue={['aaa', 'bbb', 'ccc']}
-    >
-      <div>
-        {dataFilter &&
-          dataFilter.map((item, i) => (
-            <div key={i}>
+    <div>
+      {dataFilter &&
+        dataFilter.map((item, i) => (
+          <div key={i}>
+            <Radio.Group
+              style={{
+                width: '100%',
+              }}
+              name={item.filter_name}
+            >
               <h1 className='font-bold text-black text-base pt-5'>
                 {item.filter_title}
               </h1>
               <Row>
-                <Col className='leading-loose' span={12}>
-                  <Checkbox value={item.filter_name}>Tất cả</Checkbox>
-                </Col>
                 {item.fields.map((field, index) => (
                   <Col key={index} className='leading-loose' span={24}>
-                    <Checkbox
-                      onClick={() =>
-                        setSearchParams({ price: field.field_value })
-                      }
+                    <Radio
+                      label={item.filter_name}
+                      name={item.filter_name}
+                      onChange={onChange}
                       value={field.field_value}
+                      checked={true}
                     >
                       {field.field_label}
-                    </Checkbox>
+                    </Radio>
                   </Col>
                 ))}
               </Row>
               <br />
-            </div>
-          ))}
-      </div>
-    </Checkbox.Group>
+            </Radio.Group>
+          </div>
+        ))}
+    </div>
   )
 }
 
