@@ -4,7 +4,7 @@ import ProductSlider from './Components/ProductSlider.jsx'
 import GridLayout from './Components/GridLayout.jsx'
 import '../../scss/homepage.scss'
 import { useEffect, useState } from 'react'
-import { fetchProductsByCategoryFilter } from '../../api/services/ProductsAPI.js'
+import { fetchProductsByCategoryFilter } from '../../api/services/ProductsServices'
 import { useParams } from 'react-router'
 
 const iniDataSearch = {
