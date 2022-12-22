@@ -85,6 +85,12 @@ const CartBill = () => {
     //   }
     // })
   }
+
+  const onChangeInputVoucher = (e) => {
+    e.target.value !== ''
+      ? setBtnSubmitVoucher(false)
+      : setBtnSubmitVoucher(true)
+  }
   const getDataDiscountCode = async () => {
     let data = await getListDiscountCode()
     data = data.map((item) => {
@@ -98,11 +104,7 @@ const CartBill = () => {
     })
     setListDiscountCode(data)
   }
-  const onChangeInputVoucher = (e) => {
-    e.target.value !== ''
-      ? setBtnSubmitVoucher(false)
-      : setBtnSubmitVoucher(true)
-  }
+
   const submitFormBill = (formValue) => {
     console.log(formValue)
   }

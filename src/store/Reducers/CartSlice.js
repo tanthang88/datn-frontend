@@ -1,5 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit'
-import _ from 'lodash'
+import pick from 'lodash/pick.js'
 import { verifyDiscountCode } from '../Services/CartServices.js'
 
 const initialState = {
@@ -17,7 +17,6 @@ const Cart = createSlice({
   initialState,
   reducers: {
     setTransportFee: (state, { payload }) => {
-      const { transportFee } = current(state)
       state.transportFee = payload
       // state.amountCart -= transportFee
       // state.amountCart += payload
@@ -68,13 +67,12 @@ const Cart = createSlice({
         ? (state.amountCart = 0)
         : (state.amountCart -=
             state.Carts[ID].product_price * state.Carts[ID].quantity)
-
       state.Carts = state.Carts.filter((item, index) => index !== payload.index)
     },
     addProduct: (state, { payload }) => {
       const { propertyCapacity, propertyColor } = payload.info
       const { id, product_price: price } = payload.product
-      const dataProduct = _.pick(payload.product, [
+      const dataProduct = pick(payload.product, [
         'id',
         'product_title',
         'product_image',

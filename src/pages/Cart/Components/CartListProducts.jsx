@@ -7,10 +7,10 @@ import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import {
   changeProperties,
-  decreaseQuantity,
-  deleteProduct,
   increaseQuantity,
   loadingCart,
+  decreaseQuantity,
+  deleteProduct,
 } from '../../../store/Reducers/CartSlice.js'
 import { CartBillSuccess } from './CartBillSuccess'
 import { currency } from '../../../utils/currency.js'
