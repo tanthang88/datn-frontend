@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Segmented, Select } from 'antd'
+import { Col, Row, Segmented, Select } from 'antd'
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
-import { fetchProductSort } from '../../../api/services/ProductsAPI.js'
+import { fetchProductSort } from '../../../api/services/ProductsServices.js'
 
 const { Option } = Select
 const handleChange = (value) => {

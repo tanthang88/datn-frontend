@@ -1,6 +1,6 @@
-import { Row, Col, Skeleton } from 'antd'
-import { Lazy, Navigation, Pagination, Scrollbar, Autoplay, A11y } from 'swiper'
-import { SwiperSlide, Swiper } from 'swiper/react'
+import { Col, Skeleton } from 'antd'
+import { A11y, Autoplay, Lazy, Navigation, Pagination, Scrollbar } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/lazy'
@@ -10,7 +10,7 @@ import 'swiper/css/pagination'
 import { Link } from 'react-router-dom'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { publicRequest } from '../../../api/axiosClient.js'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import _ from 'lodash'
 
 export const MainBanner = () => {
@@ -33,7 +33,6 @@ export const MainBanner = () => {
     }
     getBanner()
     getNewPosts()
-    console.log(newPosts)
   }, [])
   return (
     <GridContentLayout classNameContainer='px-1 py-1 my-6' gutter={24}>

@@ -14,7 +14,7 @@ import {
   fetchProductById,
   fetchProductByPropertiesId,
   fetchProductsRelated,
-} from '../../api/services/ProductsAPI'
+} from '../../api/services/ProductsServices.js'
 import LoadingProduct from '../../components/Loading/LoadingProduct'
 import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'

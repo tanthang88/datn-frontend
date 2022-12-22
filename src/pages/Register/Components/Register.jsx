@@ -1,23 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
-  Form,
-  Select,
-  Input,
   Button,
-  Divider,
   Col,
-  Row,
-  Spin,
+  Divider,
+  Form,
+  Input,
   message,
+  Row,
+  Select,
+  Spin,
 } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-import {
-  getCity,
-  getDist,
-} from '../../../api/services/GetAddressInformation.js'
+import { getCity, getDist } from '../../../api/services/CountryServices.js'
 import { registerUser } from '../../../store/Services/UserServices.js'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+
 const layout = {
   labelCol: {
     span: 24,

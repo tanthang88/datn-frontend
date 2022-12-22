@@ -3,7 +3,7 @@ import SortBy from './SortBy.jsx'
 import { ProductItem } from '../../../components/product/ProductItem.jsx'
 import { Col, Row } from 'antd'
 import { useParams } from 'react-router'
-import { ProductsAPI } from '../../../api/services/ProductsAPI.js'
+import { ProductsAPI } from '../../../api/services/ProductsServices.js'
 
 export default function GridLayout() {
   const [dataProduct, setDataProduct] = useState([])

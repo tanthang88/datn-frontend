@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Button, Form, Input, message, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { UserOutlined } from '@ant-design/icons'
-import { createComment } from '../../../api/services/ProductsAPI'
+import { createComment } from '../../../api/services/ProductsServices.js'
 import { DATETIME_FORMAT, REGEX, URL_BACKEND } from '../../../config/constants'
 import { format } from 'date-fns'
 

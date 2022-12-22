@@ -1,16 +1,31 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 import _ from 'lodash'
+import { verifyDiscountCode } from '../Services/CartServices.js'
 
 const initialState = {
   numberCart: 0,
   isLoading: false,
   amountCart: 0,
+  transportFee: 0,
   Carts: [],
+  checkDiscount: false,
+  saveMoneyDiscount: 0,
+  discountMessage: null,
 }
 const Cart = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    setTransportFee: (state, { payload }) => {
+      const { transportFee } = current(state)
+      state.transportFee = payload
+      // state.amountCart -= transportFee
+      // state.amountCart += payload
+    },
+    resetDiscountCode: (state, { payload }) => {
+      state.checkDiscount = false
+      state.saveMoneyDiscount = 0
+    },
     loadingCart: (state) => {
       state.isLoading = !state.isLoading
     },
@@ -28,11 +43,32 @@ const Cart = createSlice({
       state.amountCart -= price
       state.isLoading = false
     },
+    changeProperties: (state, { payload }) => {
+      const { index, productID, colorID, capacityID } = payload
+      const check = state.Carts.findIndex(function (cart) {
+        return (
+          cart.id === productID &&
+          cart.color_id === colorID &&
+          cart.capacity_id === capacityID
+        )
+      })
+      console.log(check)
+      if (check !== -1) {
+        console.log(check)
+        state.numberCart -= 1
+        state.Carts[index].quantity += state.Carts[check].quantity
+        state.amountCart += state.Carts[check].product_price
+        state.Carts = state.Carts.filter((item, i) => i !== check)
+      }
+    },
     deleteProduct: (state, { payload }) => {
       const ID = payload.index
       state.numberCart = state.numberCart - 1
-      state.amountCart -=
-        state.Carts[ID].product_price * state.Carts[ID].quantity
+      state.numberCart === 0
+        ? (state.amountCart = 0)
+        : (state.amountCart -=
+            state.Carts[ID].product_price * state.Carts[ID].quantity)
+
       state.Carts = state.Carts.filter((item, index) => index !== payload.index)
     },
     addProduct: (state, { payload }) => {
@@ -45,6 +81,22 @@ const Cart = createSlice({
         'product_price',
         'properties',
       ])
+      dataProduct.prop_attr_color = []
+      dataProduct.prop_attr_capacity = []
+      dataProduct?.properties.forEach((prop) => {
+        const label = prop?.propertie_value
+        prop.propertie_slug === 'mau-sac'
+          ? dataProduct.prop_attr_color.push({
+              slug: prop?.propertie_slug,
+              label: label.charAt(0).toUpperCase() + label.slice(1),
+              value: prop?.id,
+            })
+          : dataProduct.prop_attr_capacity.push({
+              slug: prop?.propertie_slug,
+              label: label.charAt(0).toUpperCase() + label.slice(1) + ' GB',
+              value: prop?.id,
+            })
+      })
       const { Carts } = current(state)
       if (!Carts.length) {
         state.Carts.push({
@@ -75,8 +127,7 @@ const Cart = createSlice({
               quantity: item.quantity + 1,
             }
             state.Carts[index] = updateItem
-            state.amountCart += price * updateItem.quantity
-            // eslint-disable-next-line no-useless-return, array-callback-return
+            state.amountCart = price * updateItem.quantity
           }
         })
         return
@@ -91,9 +142,33 @@ const Cart = createSlice({
       state.amountCart += price
     },
   },
+  extraReducers: {
+    [verifyDiscountCode.pending]: (state, { payload }) => {
+      state.isLoading = true
+      state.saveMoneyDiscount = 0
+    },
+    [verifyDiscountCode.fulfilled]: (state, { payload }) => {
+      const { success, message } = payload[0]
+      if (payload[0]?.data) {
+        const result = payload[0]?.data
+        state.amountCart = result.total
+        state.saveMoneyDiscount = result.save_money
+      }
+      state.checkDiscount = success
+      state.discountMessage = message
+      state.isLoading = false
+    },
+    [verifyDiscountCode.rejected]: (state, { payload }) => {
+      state.isLoading = false
+      state.saveMoneyDiscount = 0
+    },
+  },
 })
 export const {
+  setTransportFee,
+  resetDiscountCode,
   loadingCart,
+  changeProperties,
   increaseQuantity,
   decreaseQuantity,
   deleteProduct,

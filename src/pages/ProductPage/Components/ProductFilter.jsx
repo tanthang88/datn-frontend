@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Checkbox, Col, Row } from 'antd'
-import { fetchProductFilter } from '../../../api/services/ProductsAPI.js'
-import {useSearchParams} from 'react-router-dom'
+import { fetchProductFilter } from '../../../api/services/ProductsServices.js'
+import { useSearchParams } from 'react-router-dom'
 
 const onChange = (checkedValues) => {
   console.log('checked = ', checkedValues)
