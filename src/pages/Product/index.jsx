@@ -108,7 +108,11 @@ export default function Product() {
 
   const handleBuyNow = (e) => {
     if (userInfo) {
-      return dispatch(addProduct({ product, info: data }))
+      dispatch(addProduct({ product, info: data }))
+      return messageApi.open({
+        type: 'success',
+        content: 'Sản phẩm đã được thêm vào giỏ hàng',
+      })
     }
     messageApi.open({
       type: 'error',
@@ -203,16 +207,6 @@ export default function Product() {
               <div className='text-2xl'>Mua ngay</div>
               <p className='mb-0'>Giao hàng miễn phí hoặc nhận tại shop</p>
             </button>
-            {/* <div className='grid grid-cols-2 gap-1 mt-1'>
-              <button className='w-full grid-col-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center'>
-                <div className='text-xl'>Trả góp 0%</div>
-                <p className='mb-0'>Duyệt nhanh qua điện thoại</p>
-              </button>
-              <button className='w-full grid-col-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center'>
-                <div className='text-xl'>Trả góp qua thẻ</div>
-                <p className='mb-0'>ATM nội địa</p>
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

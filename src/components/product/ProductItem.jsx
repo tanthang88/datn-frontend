@@ -26,7 +26,7 @@ export const ProductItem = (props) => {
       <div className='product__sale-info my-3'>
         <h3 className='text-base overflow-hidden uppercase font-bold'>
           <NavLink to={`/product/${props.data?.id}`}>
-            {props.data?.product_title}
+            {props.data?.product_title || props.data?.product_name}
           </NavLink>
         </h3>
         <p className='process rounded-full relative bg-price-mark text-white'>
