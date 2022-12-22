@@ -50,3 +50,10 @@ export const fetchProductSort = async (payload) => {
   const { data } = await publicRequest.get(`product/sort/`)
   return data
 }
+
+export const fetchProductsByCategoryFilter = async (id, payload) => {
+  const { data } = await publicRequest.get(`product/filter/${id}/filter`, {
+    params: payload,
+  })
+  return data
+}
