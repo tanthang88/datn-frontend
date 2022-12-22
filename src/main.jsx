@@ -5,7 +5,7 @@ import './index.css'
 // Router
 import RouterContainer from './router/root'
 // Reducers
-import { store, persistor } from './store/store.js'
+import { persistor, store } from './store/store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 

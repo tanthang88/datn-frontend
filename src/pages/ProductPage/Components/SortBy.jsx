@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { fetchProductSort } from '../../../api/services/ProductsServices.js'
 import { Row, Select } from 'antd'
-import { fetchProductSort } from '../../../api/services/ProductsAPI.js'
 
 const { Option } = Select
 
