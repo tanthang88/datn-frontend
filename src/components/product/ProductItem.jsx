@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { URL_BACKEND } from '../../config/constants'
 
 export const ProductItem = (props) => {
   return (
@@ -9,7 +10,7 @@ export const ProductItem = (props) => {
     >
       <div className='product__sale-img--separator relative text-center'>
         <img
-          style={{ objectFit: 'contain' }}
+          style={{ objectFit: 'contain', backgroundColor: '#fdfdfd' }}
           src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/14/638040405020658246_frame-cate-270x210.png'
           alt=''
         />
@@ -17,7 +18,7 @@ export const ProductItem = (props) => {
           <div className='product__sale-img text-center'>
             <img
               className='object-cover'
-              src={props.data?.product_image}
+              src={URL_BACKEND + props.data?.product_image}
               alt=''
             />
           </div>

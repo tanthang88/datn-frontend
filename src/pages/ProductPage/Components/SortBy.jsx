@@ -23,7 +23,7 @@ const SortBy = ({ setDataSearch, dataSearch }) => {
   }, [])
   return (
     <>
-      <Row className='w-full justify-end'>
+      <Row className='w-full justify-end p-5'>
         <Select
           className='mr-4 flex items-end justify-end w-40'
           labelInValue
