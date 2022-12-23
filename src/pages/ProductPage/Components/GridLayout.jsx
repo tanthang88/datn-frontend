@@ -1,36 +1,29 @@
 import React from 'react'
-import SortBy from './SortBy.jsx'
 import { ProductItem } from '../../../components/product/ProductItem.jsx'
-import { Col, Row } from 'antd'
+import { Col, Empty, Row } from 'antd'
+import { OverlaySpinner } from '../../../components/Loading/OverlaySpinner.jsx'
+import isEmpty from 'lodash/isEmpty'
 
-export default function GridLayout({
-  productsList,
-  setProductsList,
-  dataSearch,
-  setDataSearch,
-}) {
+export default function GridLayout({ productsList, loading }) {
+  if (loading) return <OverlaySpinner open={loading} />
   return (
     <>
-      <section className='bg-white mt-6 px-2 py-2 rounded-lg'>
-        <Row className='pb-6 pt-4'>
-          <SortBy
-            setProductsList={setProductsList}
-            setDataSearch={setDataSearch}
-            dataSearch={dataSearch}
-          />
-        </Row>
-        <div className='site-card-wrapper'>
-          <Row>
-            {productsList.data
-              ? productsList.data.map((item, index) => (
-                  <Col span={8} key={index}>
-                    <ProductItem data={item} />
-                  </Col>
-                ))
-              : ''}
-          </Row>
-        </div>
-      </section>
+      <Row className='site-card-wrapper'>
+        {!isEmpty(productsList.data) ? (
+          productsList.data.map((item, index) => (
+            <Col span={8} key={index}>
+              <ProductItem data={item} />
+            </Col>
+          ))
+        ) : (
+          <Col span={24} className='justify-center items-center p-20'>
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={<span>Không tìm thấy sản phẩm</span>}
+            ></Empty>
+          </Col>
+        )}
+      </Row>
     </>
   )
 }

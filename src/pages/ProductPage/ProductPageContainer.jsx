@@ -6,6 +6,8 @@ import '../../scss/homepage.scss'
 import { useEffect, useState } from 'react'
 import { fetchProductsByCategoryFilter } from '../../api/services/ProductsServices'
 import { useParams } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import SortBy from './Components/SortBy.jsx'
 
 const iniDataSearch = {
   price: '',
@@ -15,21 +17,24 @@ const iniDataSearch = {
   order_type: 'desc',
 }
 const MainProduct = () => {
+  const { pathname } = useLocation()
   const { id } = useParams()
   const [dataSearch, setDataSearch] = useState(iniDataSearch)
-
   const [productsList, setProductsList] = useState([])
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     getDataProductFilter(dataSearch)
-  }, [dataSearch])
+  }, [pathname, dataSearch])
 
   const getDataProductFilter = (data) => {
+    setLoading(true)
     fetchProductsByCategoryFilter(id, data)
       .then((data) => {
         setProductsList(data)
       })
       .catch(() => {})
-      .finally(() => {})
+      .finally(() => setLoading(false))
   }
   return (
     <>
@@ -47,12 +52,18 @@ const MainProduct = () => {
               dataSearch={dataSearch}
             />
           </Col>
-          <Col span={18}>
+          <Col span={18} className='bg-white mt-6 mb-16 px-2 py-2 rounded-lg'>
+            <SortBy
+              setProductsList={setProductsList}
+              setDataSearch={setDataSearch}
+              dataSearch={dataSearch}
+            />
             <GridLayout
               productsList={productsList}
               setProductsList={setProductsList}
               setDataSearch={setDataSearch}
               dataSearch={dataSearch}
+              loading={loading}
             />
           </Col>
         </Row>
