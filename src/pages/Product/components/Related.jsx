@@ -4,6 +4,7 @@ import { SliderProducts } from '../../../components/slider/SliderProduct.jsx'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { ImFire } from 'react-icons/im'
 import Item from '../../../components/product/Item'
+import { URL_BACKEND } from '../../../config/constants'
 
 export default function Related({ productsRelated }) {
   return (
@@ -27,7 +28,7 @@ export default function Related({ productsRelated }) {
               value={item.id}
               price={item.product_price}
               name={item.product_title}
-              imgUrl={item.product_image}
+              imgUrl={URL_BACKEND + item.product_image}
             />
           </SwiperSlide>
         ))}
