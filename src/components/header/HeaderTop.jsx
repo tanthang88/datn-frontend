@@ -87,7 +87,7 @@ export function HeaderTop() {
         <li>
           <HeaderTopItem
             title='Thông tin hay'
-            linkTo='/post'
+            linkTo='/tin-tuc'
             icon={<HiDocumentText />}
           />
         </li>

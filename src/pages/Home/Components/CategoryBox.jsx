@@ -22,7 +22,7 @@ export default function CategoryBox() {
             key={index}
             className='homepage__categories-list-item hover:shadow-lg'
           >
-            <NavLink to={'dien-thoai/' + item.category_slug}>
+            <NavLink to={'category/' + item.category_slug}>
               <div className='flex justify-center items-center flex-col p-3 gap-3'>
                 <picture className='p-6 rounded-full bg-zinc-100'>
                   <img

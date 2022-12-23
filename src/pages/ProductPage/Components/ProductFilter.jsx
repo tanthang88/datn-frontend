@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Radio, Col, Row } from 'antd'
-import { fetchProductFilter } from '../../../api/services/ProductsAPI.js'
+import { fetchProductFilter } from '../../../api/services/ProductsServices'
 
 const ProductFilter = ({ setDataSearch, dataSearch }) => {
   const [dataFilter, setDataFilter] = useState([])

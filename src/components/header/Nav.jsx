@@ -1,15 +1,10 @@
-import { Link } from 'react-router-dom'
-import { Menu } from 'antd'
-import {
-  DiApple,
-  BsPhone,
-  FaHeadphonesAlt,
-  GiBatteryPackAlt,
-  MdOutlineEarbudsBattery,
-} from 'react-icons/all.js'
-import { useSelector } from 'react-redux'
+import slice from 'lodash/slice'
 import { useEffect, useState } from 'react'
-import _ from 'lodash'
+import { NavLink } from 'react-router-dom'
+import { Menu } from 'antd'
+import { BsPhone, MdOutlineEarbudsBattery } from 'react-icons/all.js'
+import { useSelector } from 'react-redux'
+import { URL } from '../../config/constants'
 
 function convertData(item) {
   const categoryChild = item.children.map((item) => {
@@ -22,10 +17,16 @@ function convertData(item) {
   })
   return categoryChild.map((children) => {
     let icon = <BsPhone />
-    let label = <Link to={'category/' + children.id}>{children.label}</Link>
+    let label = (
+      <NavLink to={URL.CATEGORY + '/' + children.id}>{children.label}</NavLink>
+    )
     if (item.category_slug === 'phu-kien') {
       icon = <MdOutlineEarbudsBattery />
-      label = <Link to={'accessory/' + children.id}>{children.label}</Link>
+      label = (
+        <NavLink to={URL.ACCESSORY + '/' + children.id}>
+          {children.label}
+        </NavLink>
+      )
     }
 
     return {
@@ -45,7 +46,7 @@ const Navigation = () => {
     data.map((item) => {
       return dataResult.push(...item)
     })
-    dataResult = _.slice(dataResult, 0, 10)
+    dataResult = slice(dataResult, 0, 10)
     setDataMenuItems(dataResult)
   }, [productCate])
 
@@ -56,7 +57,6 @@ const Navigation = () => {
           mode='horizontal'
           items={dataMenuItems}
           style={{
-            // height: '100%',
             backgroundColor: 'transparent',
             borderBottom: 'none',
           }}

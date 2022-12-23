@@ -14,7 +14,7 @@ import {
   fetchProductById,
   fetchProductByPropertiesId,
   fetchProductsRelated,
-} from '../../api/services/ProductsAPI'
+} from '../../api/services/ProductsServices.js'
 import LoadingProduct from '../../components/Loading/LoadingProduct'
 import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'
@@ -148,7 +148,10 @@ export default function Product() {
       </div>
       <div className='flex justify-center lg:flex-row flex-col gap-8'>
         <div className='w-full sm:w-96 md:w-8/12  lg:w-6/12 flex flex-col lg:gap-6 sm:gap-6 gap-4'>
-          <div className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'>
+          <div
+            className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'
+            style={{ backgroundColor: '#fdfdfd' }}
+          >
             <img src={URL_BACKEND + image} alt='' className='h-96' />
           </div>
           <div className='w-full grid lg:flex-row grid-cols-4 gap-6'>

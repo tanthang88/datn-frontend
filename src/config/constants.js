@@ -3,6 +3,8 @@ export const URL = {
   HOME: '/',
   BILL: '/bill',
   USER: '/user',
+  CATEGORY: '/category',
+  ACCESSORY: '/accessory',
 }
 
 export const REGEX = {
