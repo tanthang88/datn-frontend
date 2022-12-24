@@ -21,9 +21,6 @@ const HomePageContainer = () => {
     <div
       className='py-10'
       style={{
-        // backgroundImage:
-        //   'url("https://images.fpt.shop/unsafe/fit-in/filters:quality(80):fill(transparent)/fptshop.com.vn/Uploads/Originals/2022/10/7/638007057411228462_desk-header-bg.png")',
-        // backgroundColor: 'rgb(12, 14, 41)',
         backgroundImage:
           'url("https://images.fpt.shop/unsafe/fit-in/filters:quality(80):fill(transparent)/fptshop.com.vn/Uploads/Originals/2022/11/14/638040405039065739_desk-header-bg.png")',
         backgroundColor: 'rgb(190, 23, 0)',

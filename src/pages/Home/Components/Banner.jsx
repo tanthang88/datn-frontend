@@ -11,7 +11,9 @@ import { Link } from 'react-router-dom'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { publicRequest } from '../../../api/axiosClient.js'
 import { useEffect, useState } from 'react'
-import _ from 'lodash'
+import slice from 'lodash/slice'
+import { fetchSliderByType } from '../../../api/services/SliderServices.js'
+import { LIST_TYPE_SLIDER } from '../../../config/constants.js'
 
 export const MainBanner = () => {
   const [sliderHome, setSliderHome] = useState([])
@@ -20,17 +22,18 @@ export const MainBanner = () => {
 
   useEffect(() => {
     const getBanner = async () => {
-      const resultSL = await publicRequest.get('slider')
-      const dataSL = resultSL?.data.filter((item) => item.type === 'trang-chu')
-      setSliderHome(dataSL)
-      setLoading(false)
+      fetchSliderByType(LIST_TYPE_SLIDER.PROMOTION).then((data) => {
+        const dataNewSlider = slice(data, 0, 8)
+        setSliderHome(dataNewSlider)
+      })
     }
     const getNewPosts = async () => {
       const result = await publicRequest.get('post/all')
-      const dataNewPosts = _.slice(result?.data, 0, 4)
+      const dataNewPosts = slice(result?.data, 0, 4)
       setNewPosts(dataNewPosts)
       setLoading(false)
     }
+
     getBanner()
     getNewPosts()
   }, [])

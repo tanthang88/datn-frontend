@@ -15,7 +15,7 @@ export default function Info({ configurations }) {
     {
       id: 1,
       title: 'Pin',
-      value: battery + 'mAh' || '',
+      value: battery,
     },
     {
       id: 2,
