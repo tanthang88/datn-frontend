@@ -57,3 +57,8 @@ export const fetchProductsByCategoryFilter = async (id, payload) => {
   })
   return data
 }
+
+export const fetchPost = async () => {
+  const { data } = await publicRequest.get(`post/all`)
+  return data
+}

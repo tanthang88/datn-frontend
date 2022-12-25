@@ -55,3 +55,5 @@ export const LIST_TYPE_SLIDER = {
   PRODUCT: 1,
   ACCESSORY: 2,
 }
+
+export const OUTSTANDING = 1
