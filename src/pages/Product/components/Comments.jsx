@@ -101,7 +101,7 @@ export default function Comments({ productId, comments, getListComments }) {
   return (
     <>
       {contextHolder}
-      <section className='bg-white dark:bg-gray-900 py-8 lg:py-16'>
+      <section className='bg-white py-8 lg:py-16'>
         <div className='w-full mx-auto px-4'>
           <Form
             form={form}
@@ -127,10 +127,10 @@ export default function Comments({ productId, comments, getListComments }) {
 
           {comments.map((item) => (
             <div key={item.comment_id}>
-              <article className='p-6 pb-1 mb-1 text-base bg-white rounded-lg dark:bg-gray-900'>
+              <article className='p-6 pb-1 mb-1 text-base bg-white rounded-lg '>
                 <footer className='flex justify-between items-center mb-2'>
                   <div className='flex items-center'>
-                    <p className='inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white'>
+                    <p className='inline-flex items-center mr-3 text-sm text-gray-900 '>
                       <img
                         className='mr-2 w-6 h-6 rounded-full'
                         src={URL_BACKEND + item.avatar}
@@ -138,33 +138,31 @@ export default function Comments({ productId, comments, getListComments }) {
                       />
                       {item.comment_name}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-gray-600'>
                       <time dateTime='2022-02-08' title='February 8th, 2022'>
                         {format(new Date(item.comment_date), DATETIME_FORMAT)}
                       </time>
                     </p>
                   </div>
                 </footer>
-                <p className='text-gray-500 dark:text-gray-400'>
-                  {item.comment_content}
-                </p>
+                <p className='text-gray-500'>{item.comment_content}</p>
               </article>
               {item.children_comments &&
                 item.children_comments.map((itemChild) => (
                   <article
                     key={itemChild.comment_id + item.comment_id}
-                    className='p-3 mb-3 ml-12 text-base bg-white rounded-lg dark:bg-gray-900'
+                    className='p-3 mb-3 ml-12 text-base bg-white rounded-lg'
                   >
                     <footer className='flex justify-between items-center mb-2'>
                       <div className='flex items-center'>
-                        <p className='inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white'>
+                        <p className='inline-flex items-center mr-3 text-sm text-gray-900'>
                           <img
                             className='mr-2 w-6 h-6 rounded-full'
                             src={URL_BACKEND + item.avatar}
                           />
                           {itemChild.comment_name}
                         </p>
-                        <p className='text-sm text-gray-600 dark:text-gray-400'>
+                        <p className='text-sm text-gray-600'>
                           <time
                             dateTime='2022-02-12'
                             title='February 12th, 2022'
@@ -174,9 +172,7 @@ export default function Comments({ productId, comments, getListComments }) {
                         </p>
                       </div>
                     </footer>
-                    <p className='text-gray-500 dark:text-gray-400'>
-                      {itemChild.comment_content}
-                    </p>
+                    <p className='text-gray-500'>{itemChild.comment_content}</p>
                   </article>
                 ))}
               <hr />

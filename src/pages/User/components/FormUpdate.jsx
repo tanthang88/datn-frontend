@@ -170,7 +170,7 @@ export const FormUpdate = ({
                 <div className='flex items-center justify-end py-3'>
                   <p className='text-sm text-zinc-500'>Email</p>
                 </div>
-                <div className='col-span-2 py-3'>trung0910@gmail</div>
+                <div className='col-span-2 py-3'>{get(dataUser, 'email')}</div>
                 <div className='flex items-start justify-end py-4'>
                   <p className='text-sm text-zinc-500'>Tên</p>
                 </div>
@@ -200,11 +200,7 @@ export const FormUpdate = ({
                   <p className='text-sm text-zinc-500'>Giới tính</p>
                 </div>
                 <div className='col-span-2 py-3'>
-                  <Form.Item
-                    style={{ margin: '0px' }}
-                    name='gender'
-                    // defaultValue={defaultValue.gender}
-                  >
+                  <Form.Item style={{ margin: '0px' }} name='gender'>
                     <Radio.Group>
                       <Radio value={0}> Nam </Radio>
                       <Radio value={1}> Nữ </Radio>
