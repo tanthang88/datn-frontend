@@ -41,11 +41,11 @@ const ProductPageContainer = () => {
       .finally(() => setLoading(false))
   }
   useEffect(() => {
-    const typeId = pathname.includes(URL.CATEGORY)
+    const typeValue = pathname.includes(URL.CATEGORY)
       ? LIST_TYPE_SLIDER.PRODUCT
       : LIST_TYPE_SLIDER.ACCESSORY
 
-    fetchSliderByType(typeId).then((data) => {
+    fetchSliderByType(typeValue).then((data) => {
       const dataNewSlider = slice(data, 0, 8)
       setSliders(dataNewSlider)
     })
