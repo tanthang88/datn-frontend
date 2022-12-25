@@ -1,236 +1,85 @@
-import { Col, Radio, Row } from 'antd'
+import slice from 'lodash/slice'
+import { Col, Row } from 'antd'
+import ProductFilter from './Components/ProductFilter.jsx'
 import ProductSlider from './Components/ProductSlider.jsx'
 import GridLayout from './Components/GridLayout.jsx'
 import '../../scss/homepage.scss'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { fetchProductsByCategoryFilter } from '../../api/services/ProductsServices'
 import { useParams } from 'react-router'
-import {
-  fetchProductByFilterId,
-  fetchProductFilter,
-  ProductsAPI,
-} from '../../api/services/ProductsAPI.js'
-import { createSearchParams, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import SortBy from './Components/SortBy.jsx'
+import { fetchSliderByType } from '../../api/services/SliderServices.js'
+import { LIST_TYPE_SLIDER, URL } from '../../config/constants.js'
 
-const MainProduct = () => {
-  const [dataProduct, setDataProduct] = useState([])
-  const [dataFilter, setDataFilter] = useState([])
+const iniDataSearch = {
+  price: '',
+  battery: '',
+  screen: '',
+  order_by: '',
+  order_type: 'desc',
+}
+const ProductPageContainer = () => {
+  const { pathname } = useLocation()
   const { id } = useParams()
-  const getData = async () => {
-    const data = await ProductsAPI.getProductOfCategoriesByID(id)
-    setDataProduct(data?.data)
-  }
-  const getDataFilter = async () => {
-    const data = await fetchProductFilter()
-    setDataFilter(data)
-  }
-  useEffect(function () {
-    getData()
-  }, [])
-
-  const [dataProductByFilter, setDataProductByFilter] = useState([])
+  const [dataSearch, setDataSearch] = useState(iniDataSearch)
+  const [productsList, setProductsList] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [sliders, setSliders] = useState([])
 
   useEffect(() => {
-    const getDataFilter = async () => {
-      const data = await fetchProductByFilterId(id)
-      setDataProductByFilter(data)
-    }
-    getDataFilter()
-  }, [])
+    getDataProductFilter(dataSearch)
+  }, [pathname, dataSearch])
 
-  useEffect(function () {}, [])
-
-  useEffect(() => {
-    getDataFilter()
-  }, [])
-
-  const [searchParams, setSearchParams] = useSearchParams()
-  const price = searchParams.get('price')
-  const battery = searchParams.get('battery')
-  const screen = searchParams.get('screen')
-  const camera = searchParams.get('camera')
-
-  function onChange(e) {
-    // eslint-disable-next-line no-unused-expressions
-    setSearchParams(
-      createSearchParams({
-        price: e.target.target.value,
-        battery: e.target.target.value,
-        screen: e.target.target.value,
-        camera: e.target.target.value,
-      }),
-    )
+  const getDataProductFilter = (data) => {
+    setLoading(true)
+    fetchProductsByCategoryFilter(id, data)
+      .then((data) => {
+        setProductsList(data)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }
+  useEffect(() => {
+    const typeId = pathname.includes(URL.CATEGORY)
+      ? LIST_TYPE_SLIDER.PRODUCT
+      : LIST_TYPE_SLIDER.ACCESSORY
 
-  console.log(price, battery, screen, camera)
+    fetchSliderByType(typeId).then((data) => {
+      const dataNewSlider = slice(data, 0, 8)
+      setSliders(dataNewSlider)
+    })
+  }, [])
+
   return (
     <>
       <section className='xl:container'>
         <Row gutter={24} className='pt-12'>
           <Col span={24}>
-            <ProductSlider />
+            <ProductSlider sliders={sliders} />
           </Col>
         </Row>
         <Row gutter={24}>
           <Col span={6}>
-            <Radio.Group
-              style={{
-                width: '100%',
-              }}
-              name={(dataFilter[0] && dataFilter[0].filter_name) || undefined}
-              defaultValue={
-                (dataFilter[0] && dataFilter[0].filter_name) || undefined
-              }
-            >
-              <div>
-                <div>
-                  <h1 className='font-bold text-black text-base pt-5'></h1>
-                  <Row>
-                    <Col className='leading-loose' span={12}>
-                      <Radio
-                        value={
-                          (dataFilter[0] && dataFilter[0].filter_name) ||
-                          undefined
-                        }
-                      >
-                        Tất cả
-                      </Radio>
-                    </Col>
-                    {dataFilter[0] &&
-                      dataFilter[0]?.fields.map((field, index) => (
-                        <Col key={index} className='leading-loose' span={24}>
-                          <Radio
-                            onChange={onChange()}
-                            value={field.field_value}
-                          >
-                            {field.field_label}
-                          </Radio>
-                        </Col>
-                      ))}
-                  </Row>
-                  <br />
-                </div>
-              </div>
-            </Radio.Group>
-            <Radio.Group
-              style={{
-                width: '100%',
-              }}
-              name={(dataFilter[1] && dataFilter[1].filter_name) || undefined}
-              defaultValue={
-                (dataFilter[1] && dataFilter[1].filter_name) || undefined
-              }
-            >
-              <div>
-                <div>
-                  <h1 className='font-bold text-black text-base pt-5'></h1>
-                  <Row>
-                    <Col className='leading-loose' span={12}>
-                      <Radio
-                        value={
-                          (dataFilter[1] && dataFilter[1].filter_name) ||
-                          undefined
-                        }
-                      >
-                        Tất cả
-                      </Radio>
-                    </Col>
-                    {dataFilter[1] &&
-                      dataFilter[1]?.fields.map((field, index) => (
-                        <Col key={index} className='leading-loose' span={24}>
-                          <Radio
-                            onChange={onChange()}
-                            value={field.field_value}
-                          >
-                            {field.field_label}
-                          </Radio>
-                        </Col>
-                      ))}
-                  </Row>
-                  <br />
-                </div>
-              </div>
-            </Radio.Group>
-            <Radio.Group
-              style={{
-                width: '100%',
-              }}
-              name={(dataFilter[2] && dataFilter[2].filter_name) || undefined}
-              defaultValue={
-                (dataFilter[2] && dataFilter[2].filter_name) || undefined
-              }
-            >
-              <div>
-                <div>
-                  <h1 className='font-bold text-black text-base pt-5'></h1>
-                  <Row>
-                    <Col className='leading-loose' span={12}>
-                      <Radio
-                        value={
-                          (dataFilter[2] && dataFilter[2].filter_name) ||
-                          undefined
-                        }
-                      >
-                        Tất cả
-                      </Radio>
-                    </Col>
-                    {dataFilter[2] &&
-                      dataFilter[2]?.fields.map((field, index) => (
-                        <Col key={index} className='leading-loose' span={24}>
-                          <Radio
-                            onChange={onChange()}
-                            value={field.field_value}
-                          >
-                            {field.field_label}
-                          </Radio>
-                        </Col>
-                      ))}
-                  </Row>
-                  <br />
-                </div>
-              </div>
-            </Radio.Group>
-            <Radio.Group
-              style={{
-                width: '100%',
-              }}
-              name={(dataFilter[3] && dataFilter[3].filter_name) || undefined}
-              defaultValue={
-                (dataFilter[3] && dataFilter[3].filter_name) || undefined
-              }
-            >
-              <div>
-                <div>
-                  <h1 className='font-bold text-black text-base pt-5'></h1>
-                  <Row>
-                    <Col className='leading-loose' span={12}>
-                      <Radio
-                        value={
-                          (dataFilter[3] && dataFilter[3].filter_name) ||
-                          undefined
-                        }
-                      >
-                        Tất cả
-                      </Radio>
-                    </Col>
-                    {dataFilter[3] &&
-                      dataFilter[3]?.fields.map((field, index) => (
-                        <Col key={index} className='leading-loose' span={24}>
-                          <Radio
-                            onChange={onChange()}
-                            value={field.field_value}
-                          >
-                            {field.field_label}
-                          </Radio>
-                        </Col>
-                      ))}
-                  </Row>
-                  <br />
-                </div>
-              </div>
-            </Radio.Group>
+            <ProductFilter
+              setProductsList={setProductsList}
+              setDataSearch={setDataSearch}
+              dataSearch={dataSearch}
+            />
           </Col>
-          <Col span={18}>
-            <GridLayout dataProduct={dataProduct} />
+          <Col span={18} className='bg-white mt-6 mb-16 px-2 py-2 rounded-lg'>
+            <SortBy
+              setProductsList={setProductsList}
+              setDataSearch={setDataSearch}
+              dataSearch={dataSearch}
+            />
+            <GridLayout
+              productsList={productsList}
+              setProductsList={setProductsList}
+              setDataSearch={setDataSearch}
+              dataSearch={dataSearch}
+              loading={loading}
+            />
           </Col>
         </Row>
       </section>
@@ -238,4 +87,4 @@ const MainProduct = () => {
   )
 }
 
-export default MainProduct
+export default ProductPageContainer

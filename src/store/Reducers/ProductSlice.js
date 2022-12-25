@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchListProducts } from '../Services/ProductServices.js'
+
 const listProductsSlice = createSlice({
   name: 'products',
   initialState: {
@@ -12,7 +13,6 @@ const listProductsSlice = createSlice({
     builder
       .addCase(fetchListProducts.pending, (state, action) => {
         state.isLoading = 'pending'
-        // state.hasError = false
       })
       .addCase(fetchListProducts.fulfilled, (state, action) => {
         state.entities = action.payload.data.data
@@ -25,8 +25,4 @@ const listProductsSlice = createSlice({
       })
   },
 })
-export const selectProduct = (state) => state.products.entities
-export const selectLoading = (state) => state.products.isLoading
-export const selectErrorMessage = (state) => state.products.hasError
-// export const { getProductSelling } = listProductsSlice.actions
 export default listProductsSlice.reducer

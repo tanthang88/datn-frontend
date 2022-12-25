@@ -26,13 +26,17 @@ export default function CategoryAccessory() {
             className='hover:shadow-2xl'
             style={{ border: '1px solid rgba(0,0,0,0.05)' }}
           >
-            <NavLink to={'phu-kien/' + item.category_slug}>
+            <NavLink to={'accessory/' + item.category_slug}>
               <div className='flex justify-center items-center flex-col p-3 gap-3'>
                 <picture className='p-4'>
                   <img
                     src={
                       import.meta.env.VITE_BACKEND_SITE_URL +
-                      item.category_image} alt='' className='w-11 h-11 object-cover' />
+                      item.category_image
+                    }
+                    alt=''
+                    className='w-11 h-11 object-cover'
+                  />
                 </picture>
                 <div className='text-black'>{item.category_name}</div>
               </div>

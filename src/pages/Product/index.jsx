@@ -14,7 +14,7 @@ import {
   fetchProductById,
   fetchProductByPropertiesId,
   fetchProductsRelated,
-} from '../../api/services/ProductsAPI'
+} from '../../api/services/ProductsServices.js'
 import LoadingProduct from '../../components/Loading/LoadingProduct'
 import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'
@@ -108,7 +108,11 @@ export default function Product() {
 
   const handleBuyNow = (e) => {
     if (userInfo) {
-      return dispatch(addProduct({ product, info: data }))
+      dispatch(addProduct({ product, info: data }))
+      return messageApi.open({
+        type: 'success',
+        content: 'Sản phẩm đã được thêm vào giỏ hàng',
+      })
     }
     messageApi.open({
       type: 'error',
@@ -144,7 +148,10 @@ export default function Product() {
       </div>
       <div className='flex justify-center lg:flex-row flex-col gap-8'>
         <div className='w-full sm:w-96 md:w-8/12  lg:w-6/12 flex flex-col lg:gap-6 sm:gap-6 gap-4'>
-          <div className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'>
+          <div
+            className=' w-full lg:w-full bg-gray-100 flex justify-center items-center'
+            style={{ backgroundColor: '#fdfdfd' }}
+          >
             <img src={URL_BACKEND + image} alt='' className='h-96' />
           </div>
           <div className='w-full grid lg:flex-row grid-cols-4 gap-6'>
@@ -203,16 +210,6 @@ export default function Product() {
               <div className='text-2xl'>Mua ngay</div>
               <p className='mb-0'>Giao hàng miễn phí hoặc nhận tại shop</p>
             </button>
-            {/* <div className='grid grid-cols-2 gap-1 mt-1'>
-              <button className='w-full grid-col-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center'>
-                <div className='text-xl'>Trả góp 0%</div>
-                <p className='mb-0'>Duyệt nhanh qua điện thoại</p>
-              </button>
-              <button className='w-full grid-col-1 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-center'>
-                <div className='text-xl'>Trả góp qua thẻ</div>
-                <p className='mb-0'>ATM nội địa</p>
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

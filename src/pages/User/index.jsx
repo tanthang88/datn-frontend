@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import FormDetail from './components/FormDetail'
 import { FormUpdate } from './components/FormUpdate'
 import { getProfileUser } from '../../api/services/UserService'
-import { getDist } from '../../api/services/GetAddressInformation'
+import { getDist } from '../../api/services/CountryServices.js'
 import LayoutManage from '../../components/Main/LayoutManage'
 
 export default function User() {

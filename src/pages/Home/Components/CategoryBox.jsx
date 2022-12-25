@@ -3,6 +3,7 @@ import { Col } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { URL, URL_BACKEND } from '../../../config/constants.js'
 
 export default function CategoryBox() {
   const [productCategories, setProductCategories] = useState([])
@@ -22,15 +23,12 @@ export default function CategoryBox() {
             key={index}
             className='homepage__categories-list-item hover:shadow-lg'
           >
-            <NavLink to={'dien-thoai/' + item.category_slug}>
+            <NavLink to={`${URL.CATEGORY}/${item.id}`}>
               <div className='flex justify-center items-center flex-col p-3 gap-3'>
                 <picture className='p-6 rounded-full bg-zinc-100'>
                   <img
-                    src={
-                      import.meta.env.VITE_BACKEND_SITE_URL +
-                      item.category_image
-                    }
-                    alt=''
+                    src={URL_BACKEND + item.category_image}
+                    alt={item.category_slug}
                     className='w-16 h-16 object-cover'
                   />
                 </picture>

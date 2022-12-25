@@ -1,114 +1,116 @@
-import { createBrowserRouter } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { BrowserRouter, useRoutes } from 'react-router-dom'
 import ErrorPage from '../components/error/ErrorPage.jsx'
 import MainLayout from '../components/base/MainLayout'
-import HomePageContainer from '../pages/Home/HomePageContainer.jsx'
-import { Test } from '../pages/Test/Test.jsx'
-import RegisterContainer from '../pages/Register/RegisterContainer.jsx'
-import LoginContainer from '../pages/Login/LoginContainer.jsx'
-import ProductPageContainer from '../pages/ProductPage/ProductPageContainer.jsx'
-import PostPageContainer from '../pages/PostPage/PostPageContainer.jsx'
-import { CartContainer } from '../pages/Cart/CartContainer.jsx'
-import Product from '../pages/Product'
-import User from '../pages/User/index.jsx'
+import { OverlaySpinner } from '../components/Loading/OverlaySpinner.jsx'
 import PrivateUserRoute from './PrivateUserRoute.jsx'
-import React from 'react'
-import Bill from '../pages/Bill'
-import BillDetail from '../pages/Bill/Detail'
 import { URL } from '../config/constants.js'
+const ProductPageContainer = React.lazy(() =>
+  import('../pages/ProductPage/ProductPageContainer.jsx'),
+)
+const Register = React.lazy(() =>
+  import('../pages/Register/RegisterContainer.jsx'),
+)
+const Home = React.lazy(() => import('../pages/Home/HomePageContainer.jsx'))
+const Post = React.lazy(() => import('../pages/PostPage/PostPageContainer.jsx'))
+const Cart = React.lazy(() => import('../pages/Cart/CartContainer.jsx'))
+const User = React.lazy(() => import('../pages/User/index.jsx'))
+const Bill = React.lazy(() => import('../pages/Bill'))
+const Login = React.lazy(() => import('../pages/Login/LoginContainer.jsx'))
+const BillDetail = React.lazy(() => import('../pages/Bill/Detail'))
+const ProductDetail = React.lazy(() => import('../pages/Product'))
 
-const RouterContainer = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePageContainer />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: 'test/:testParams',
-        element: <Test />,
-        loader: ({ request, params }) => {
-          console.log(request)
-          console.log(params)
+const Pages = () =>
+  useRoutes([
+    {
+      path: URL.HOME,
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+          errorElement: <ErrorPage />,
         },
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: 'category/:id',
-        element: <ProductPageContainer />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: 'accessory/:id',
-        // element: <ProductPageContainer />,
-        // errorElement: <ErrorPage />,
-      },
-      {
-        path: 'product/:id',
-        element: <Product />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: 'post',
-        element: <PostPageContainer />,
-      },
-      {
-        path: 'post/:category_id',
-        // element: <PostPageContainer />,
-      },
-      {
-        path: 'post/:category/:id',
-        element: <PostPageContainer />,
-      },
-      {
-        path: 'post/:category_slug/:id',
-        // element: <PostPageContainer />,
-      },
-      {
-        path: 'cart',
-        element: <CartContainer />,
-        hasErrorBoundary: true,
-        errorElement: <ErrorPage />,
-      },
-    ],
-    errorElement: <ErrorPage />,
-  },
-  {
-    element: (
-      <PrivateUserRoute>
-        <MainLayout />
-      </PrivateUserRoute>
-    ),
-    children: [
-      {
-        path: URL.USER,
-        element: <User />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: URL.BILL,
-        element: <Bill />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: `${URL.BILL}/detail/:id`,
-        element: <BillDetail />,
-        errorElement: <ErrorPage />,
-      },
-    ],
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/register',
-    element: <RegisterContainer />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/login',
-    element: <LoginContainer />,
-    errorElement: <ErrorPage />,
-  },
-])
+        {
+          path: `${URL.CATEGORY}/:id`,
+          element: <ProductPageContainer />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `${URL.ACCESSORY}/:id`,
+          element: <ProductPageContainer />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `${URL.PRODUCT}/:id`,
+          element: <ProductDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: URL.POST,
+          element: <Post />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `${URL.POST}/:category/:id`,
+          element: <Post />,
+        },
+        {
+          path: `${URL.POST}/:category_slug/:id`,
+          element: <Post />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: URL.CART,
+          element: <Cart />,
+          errorElement: <ErrorPage />,
+        },
+      ],
+      errorElement: <ErrorPage />,
+    },
+    {
+      element: (
+        <PrivateUserRoute>
+          <MainLayout />
+        </PrivateUserRoute>
+      ),
+      children: [
+        {
+          path: URL.USER,
+          element: <User />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: URL.BILL,
+          element: <Bill />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `${URL.BILL}/detail/:id`,
+          element: <BillDetail />,
+          errorElement: <ErrorPage />,
+        },
+      ],
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: URL.REGISTER,
+      element: <Register />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: URL.LOGIN,
+      element: <Login />,
+      errorElement: <ErrorPage />,
+    },
+  ])
+function RouterContainer() {
+  return (
+    <Suspense fallback={<OverlaySpinner open />}>
+      <BrowserRouter>
+        <Pages />
+      </BrowserRouter>
+    </Suspense>
+  )
+}
 export default RouterContainer

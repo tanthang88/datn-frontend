@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/Services/UserServices.js'
 import { isEmpty } from 'lodash'
-import { URL } from '../../config/constants'
+import { URL, URL_BACKEND } from '../../config/constants'
 
 const onSearch = (value) => console.log(value)
 
@@ -61,11 +61,13 @@ export function HeaderTop() {
   return (
     <div className='xl:container flex justify-between items-center h-full'>
       <div className='w-3/12'>
-        <img
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/1200px-FPT_logo_2010.svg.png'
-          alt=''
-          className='w-20'
-        />
+        <Link to={URL.HOME}>
+          <img
+            src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/1200px-FPT_logo_2010.svg.png'
+            alt=''
+            className='w-20'
+          />
+        </Link>
       </div>
 
       <div className='w-5/12 px-3'>
@@ -85,7 +87,7 @@ export function HeaderTop() {
         <li>
           <HeaderTopItem
             title='Thông tin hay'
-            linkTo='/post'
+            linkTo={URL.POST}
             icon={<HiDocumentText />}
           />
         </li>
@@ -105,10 +107,8 @@ export function HeaderTop() {
                     style={{ marginTop: '-1rem' }}
                   >
                     <Avatar
-                      src={
-                        import.meta.env.VITE_BACKEND_SITE_URL + userInfo.avatar
-                      }
-                      // style={{ marginBottom: '.5rem' }}
+                      icon={<UserOutlined />}
+                      src={URL_BACKEND + userInfo.avatar}
                     />
                     {userInfo.name}
                   </div>

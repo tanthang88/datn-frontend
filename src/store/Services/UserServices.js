@@ -5,7 +5,6 @@ export const registerUser = createAsyncThunk(
   'user/register',
   async (data, { rejectWithValue }) => {
     try {
-      console.log(data)
       return await publicRequest.post('/client/register', data)
     } catch (error) {
       if (error.response && error.response.data.message) {

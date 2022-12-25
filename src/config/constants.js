@@ -3,6 +3,13 @@ export const URL = {
   HOME: '/',
   BILL: '/bill',
   USER: '/user',
+  CART: '/cart',
+  POST: '/post',
+  PRODUCT: '/product',
+  CATEGORY: '/category',
+  ACCESSORY: '/accessory',
+  REGISTER: '/register',
+  LOGIN: '/login',
 }
 
 export const REGEX = {
@@ -43,3 +50,8 @@ export const LIST_BILL_STATUS = [
     value: 4,
   },
 ]
+export const LIST_TYPE_SLIDER = {
+  PROMOTION: 0,
+  PRODUCT: 1,
+  ACCESSORY: 2,
+}
