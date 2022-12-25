@@ -41,8 +41,8 @@ export const fetchProductByPropertiesId = async (id, payload) => {
   return data
 }
 
-export const fetchProductFilter = async (payload) => {
-  const { data } = await publicRequest.get(`product/filter/`, payload)
+export const fetchProductFilter = async () => {
+  const { data } = await publicRequest.get(`product/filter`)
   return data
 }
 

@@ -1,13 +1,15 @@
 import React from 'react'
 import { Col, Row, Card } from 'antd'
+import _ from 'lodash'
+import { URL_BACKEND } from '../../../config/constants.js'
 
-const PostGroup = () => {
+export default function PostGroup({ dataPost }) {
   return (
     <>
       <section>
         <div className='bg-white mt-6 px-2 py-2 rounded-lg shadow-md'>
           <Row gutter='20'>
-            <Col span='14'>
+            <Col span='14' key={dataPost[0] && dataPost[0].id}>
               <Card
                 hoverable
                 style={{
@@ -17,70 +19,39 @@ const PostGroup = () => {
                 cover={
                   <img
                     alt=''
-                    src='https://images.fpt.shop/unsafe/fit-in/490x326/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/2/638029989961821055_dsc09752.JPG'
+                    src={
+                      URL_BACKEND + (dataPost[0] && dataPost[0].post_image) ||
+                      undefined
+                    }
                   />
                 }
               >
                 <h1 className='text-lg font-semibold'>
-                  Trên tay OPPO A17k: Ngoại hình hiện đại, pin lớn sử dụng thoải
-                  mái, giá 3.29 triệu đồng
+                  {(dataPost[0] && dataPost[0].post_title) || undefined}
                 </h1>
                 <p className='text-black-200'>0 - 17 giờ trước</p>
               </Card>
             </Col>
             <Col span='10'>
-              <div className='hover:shadow-md 0.5s'>
-                <img
-                  width='160'
-                  className='float-left mr-2'
-                  alt=''
-                  src='https://images.fpt.shop/unsafe/fit-in/120x80/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/2/638030022256603088_giam-30-cho-he-sinh-thai-apple-khi-mua-iphone-fpt-shop-c.jpg'
-                />
-                <h1 className='text-sm tracking-wide font-semibold pl-2'>
-                  Trên tay OPPO A17k: Ngoại hình hiện đại, pin lớn sử dụng thoải
-                  mái, giá 3.29 triệu
-                </h1>
-                <p className='text-black'>0 - 17 giờ trước</p>
-              </div>
-              <div className='hover:shadow-md 0.5s'>
-                <img
-                  width='160'
-                  className='float-left mr-2'
-                  alt=''
-                  src='https://images.fpt.shop/unsafe/fit-in/120x80/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/31/638028349936363720_realme-c33-tren-tay-cover.jpg'
-                />
-                <h1 className='text-sm tracking-wide font-semibold pl-2'>
-                  Trên tay OPPO A17k: Ngoại hình hiện đại, pin lớn sử dụng thoải
-                  mái, giá 3.29 triệu
-                </h1>
-                <p className='text-black'>0 - 17 giờ trước</p>
-              </div>
-              <div className='hover:shadow-md 0.5s'>
-                <img
-                  width='160'
-                  className='float-left mr-2'
-                  alt=''
-                  src='https://images.fpt.shop/unsafe/fit-in/120x80/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/30/638027511748716253_oppo-a98-cover.jpeg'
-                />
-                <h1 className='text-sm tracking-wide font-semibold pl-2'>
-                  Trên tay OPPO A17k: Ngoại hình hiện đại, pin lớn sử dụng thoải
-                  mái, giá 3.29 triệu
-                </h1>
-                <p className='text-black'>0 - 17 giờ trước</p>
-              </div>
-              <div className='hover:shadow-md 0.5s'>
-                <img
-                  width='160'
-                  className='float-left mr-2'
-                  alt=''
-                  src='https://images.fpt.shop/unsafe/fit-in/120x80/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/10/29/638026591239585498_galaxy-s23-ultra-camera-cover.jpeg'
-                />
-                <h1 className='text-sm tracking-wide font-semibold pl-2'>
-                  Trên tay OPPO A17k: Ngoại hình hiện đại, pin lớn sử dụng thoải
-                  mái, giá 3.29 triệu
-                </h1>
-                <p className='text-black'>0 - 17 giờ trước</p>
-              </div>
+              {dataPost &&
+                dataPost.slice(1, 4).map((item) => (
+                  <div className='hover:shadow-md 0.5s' key={item.id}>
+                    <a>
+                      <img
+                        width='160'
+                        className='float-left mr-2'
+                        alt='anh'
+                        src={URL_BACKEND + item.post_image}
+                      />
+                    </a>
+                    <div className='ml-22 mb-10'>
+                      <h1 className='text-sm tracking-wide font-semibold pl-2'>
+                        {item.post_title}
+                      </h1>
+                      <p className='text-black'>0 - 17 giờ trước</p>
+                    </div>
+                  </div>
+                ))}
             </Col>
           </Row>
         </div>
@@ -88,5 +59,3 @@ const PostGroup = () => {
     </>
   )
 }
-
-export default PostGroup

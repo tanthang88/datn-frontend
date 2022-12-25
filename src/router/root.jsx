@@ -59,6 +59,10 @@ const RouterContainer = createBrowserRouter([
         // element: <PostPageContainer />,
       },
       {
+        path: 'post/:category/:id',
+        element: <PostPageContainer />,
+      },
+      {
         path: 'post/:category_slug/:id',
         // element: <PostPageContainer />,
       },

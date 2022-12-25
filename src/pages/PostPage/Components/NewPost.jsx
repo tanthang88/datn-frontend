@@ -44,7 +44,7 @@ const PostHotView = () => {
             <p>97 bài viết</p>
           </a>
         </div>
-      </section>c
+      </section>
     </>
   )
 }

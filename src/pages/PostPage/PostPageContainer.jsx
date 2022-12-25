@@ -5,8 +5,21 @@ import PostHotView from './Components/PostHotView.jsx'
 import ListPost from './Components/ListPost.jsx'
 import NewPost from './Components/NewPost'
 import SalePost from './Components/SalePost.jsx'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { postsAPI } from '../../api/services/postsAPI.js'
 
 const PostPageContainer = () => {
+  const [dataPost, setDataPost] = useState([])
+  const { id } = useParams()
+  const getData = async () => {
+    const data = await postsAPI.getPostOfCategoriesById(id)
+    setDataPost(data?.data)
+    console.log(data)
+  }
+  useEffect(function () {
+    getData()
+  }, [])
   return (
     <>
       <section className='xl:container px-2 py-2'>
@@ -18,7 +31,7 @@ const PostPageContainer = () => {
         </Row>
         <Row gutter='20'>
           <Col span='17'>
-            <PostGroup />
+            <PostGroup dataPost={dataPost} />
           </Col>
           <Col span='7'>
             <PostHotView />
@@ -26,7 +39,7 @@ const PostPageContainer = () => {
         </Row>
         <Row gutter='20'>
           <Col span='17'>
-            <ListPost />
+            <ListPost dataPost={dataPost} />
           </Col>
           <Col span='7'>
             <NewPost />
