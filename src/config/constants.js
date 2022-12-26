@@ -57,3 +57,11 @@ export const LIST_TYPE_SLIDER = {
 }
 
 export const OUTSTANDING = 1
+export const DEFAULT_PAGINATION_OBJECT = {
+  currentPage: 1,
+  lastPage: 0,
+  totalPage: 0,
+  perPage: 10,
+  from: 0,
+  to: 0,
+}
