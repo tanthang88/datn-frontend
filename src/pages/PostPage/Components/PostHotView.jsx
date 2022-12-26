@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PostHotView = () => {
+const PostHotView = ({}) => {
   return (
     <>
       <section className='bg-white mt-6 px-2 py-3.5 rounded-lg shadow-md'>
@@ -64,7 +64,6 @@ const PostHotView = () => {
             5 tính năng hấp dẫn có trên Nokia 5710 XpressAudio
           </h1>
         </div>
-
       </section>
     </>
   )

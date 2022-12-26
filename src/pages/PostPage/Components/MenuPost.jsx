@@ -1,7 +1,8 @@
 import { Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { postsAPI } from '../../../api/services/postsAPI.js'
-const onClick = (key) => {
+import { Link } from 'react-router-dom'
+const onChange = (key) => {
   console.log(key)
 }
 
@@ -11,9 +12,9 @@ const MenuPost = () => {
     const dataPost = await postsAPI.getCategoryPost()
     setCategoryPost(
       dataPost.data.map(({ name, id }) => ({
-        label: name.toUpperCase(),
+        label: <Link to={'/post/category/' + id}>{name.toUpperCase()}</Link>,
+        // label: name.toUpperCase(),
         key: id,
-        path: name,
       })),
     )
   }
@@ -23,7 +24,7 @@ const MenuPost = () => {
   }, [])
   return (
     <div>
-      <Tabs onChange={onClick} items={CategoryPost} />
+      <Tabs onChange={onChange} items={CategoryPost} />
     </div>
   )
 }
