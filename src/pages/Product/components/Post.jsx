@@ -23,9 +23,6 @@ export default function Post({ posts }) {
               <NavLink to=''>
                 {truncate(item.post_title, { length: 83 })}
               </NavLink>
-              <p className='text-sm pt-1'>
-                {truncate(item.post_desc, { length: 50 })}
-              </p>
             </div>
           </div>
         ))}
