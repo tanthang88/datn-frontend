@@ -52,6 +52,10 @@ const Pages = () =>
           errorElement: <ErrorPage />,
         },
         {
+          path: `${URL.POST}/:category/:id`,
+          element: <Post />,
+        },
+        {
           path: `${URL.POST}/:category_slug/:id`,
           element: <Post />,
           errorElement: <ErrorPage />,
