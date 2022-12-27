@@ -42,20 +42,20 @@ export default function PostGroup({ dataPost }) {
 
             <Col span='10'>
               {dataPost &&
-                dataPost.slice(1, 4).map((item, index) => (
+                dataPost.slice(1, 5).map((item, index) => (
                   <Link key={index} to={'/post/' + item.id}>
-                    <div className='hover:shadow-md 0.5s pb-5' key={item.id}>
+                    <div className='hover:shadow-md 0.5s' key={item.id}>
                       <img
                         width='160'
                         className='float-left mr-2'
                         alt='anh'
                         src={URL_BACKEND + item.post_image}
                       />
-                      <div className='ml-22 mb-10'>
+                      <div className='ml-22'>
                         <h1 className='text-sm tracking-wide font-semibold pl-2'>
                           {item.post_title}
                         </h1>
-                        <p className='text-black'>
+                        <p className='text-black ml-40 pl-2'>
                           {format(new Date(item.date), 'dd/MM/yyyy')}
                         </p>
                       </div>
