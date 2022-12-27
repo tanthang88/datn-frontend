@@ -33,7 +33,7 @@ export const ProductItem = (props) => {
           </NavLink>
         </h3>
         {!isEmpty(props.discounts) && (
-          <div className='my-3 flex flex-wrap'>
+          <div className='flex flex-wrap'>
             {props.discounts.map((item, index) => (
               <div
                 key={index}
