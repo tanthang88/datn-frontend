@@ -10,6 +10,7 @@ export const URL = {
   ACCESSORY: '/accessory',
   REGISTER: '/register',
   LOGIN: '/login',
+  CONTACT: '/contact',
 }
 
 export const REGEX = {
@@ -54,4 +55,14 @@ export const LIST_TYPE_SLIDER = {
   PROMOTION: 0,
   PRODUCT: 1,
   ACCESSORY: 2,
+}
+
+export const OUTSTANDING = 1
+export const DEFAULT_PAGINATION_OBJECT = {
+  currentPage: 1,
+  lastPage: 0,
+  totalPage: 0,
+  perPage: 10,
+  from: 0,
+  to: 0,
 }

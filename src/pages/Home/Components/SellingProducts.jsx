@@ -10,7 +10,7 @@ export const SellingProducts = () => {
   useEffect(() => {
     data &&
       setProductSelling(
-        data.filter((item) => item.is_selling === 1).slice(0, 8),
+        data.filter((item) => item.product_outstanding === 1).slice(0, 8),
       )
   }, [data])
   return (

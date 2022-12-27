@@ -9,14 +9,14 @@ export default function GridLayout({ productsList, loading }) {
   return (
     <>
       <Row className='site-card-wrapper'>
-        {!isEmpty(productsList.data) ? (
-          productsList.data.map((item, index) => (
+        {!isEmpty(productsList) ? (
+          productsList.map((item, index) => (
             <Col span={8} key={index}>
               <ProductItem data={item} />
             </Col>
           ))
         ) : (
-          <Col span={24} className='justify-center items-center p-20'>
+          <Col span={24} className='justify-center items-center py-20 '>
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={<span>Không tìm thấy sản phẩm</span>}

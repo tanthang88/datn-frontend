@@ -26,7 +26,7 @@ export default function CategoryAccessory() {
             className='hover:shadow-2xl'
             style={{ border: '1px solid rgba(0,0,0,0.05)' }}
           >
-            <NavLink to={'accessory/' + item.category_slug}>
+            <NavLink to={'accessory/' + item.id}>
               <div className='flex justify-center items-center flex-col p-3 gap-3'>
                 <picture className='p-4'>
                   <img
