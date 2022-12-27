@@ -1,17 +1,17 @@
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
-import {ProductItem} from '../../../components/product/ProductItem.jsx'
-import {Col} from 'antd'
-import {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
+import { ProductItem } from '../../../components/product/ProductItem.jsx'
+import { Col } from 'antd'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export const SellingProducts = () => {
   const [productSelling, setProductSelling] = useState([])
   const data = useSelector((state) => state.products.entities)
   useEffect(() => {
     data &&
-    setProductSelling(
+      setProductSelling(
         data.filter((item) => item.product_outstanding === 1).slice(0, 8),
-    )
+      )
   }, [data])
   return (
     <GridContentLayout gutter={[0, 24]} classNameContainer='px-4 py-4'>
