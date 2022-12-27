@@ -1,7 +1,6 @@
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import mkcert from 'vite-plugin-mkcert'
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
 import { AntdResolve, createStyleImportPlugin } from 'vite-plugin-style-import'
 import path from 'path'
 
@@ -16,7 +15,7 @@ export default defineConfig({
     createStyleImportPlugin({
       resolves: [AntdResolve()],
     }),
-    chunkSplitPlugin(),
+    splitVendorChunkPlugin(),
   ],
   css: {
     preprocessorOptions: {
