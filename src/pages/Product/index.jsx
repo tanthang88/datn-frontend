@@ -230,7 +230,7 @@ export default function Product() {
           {!isEmpty(discounts) &&
             discounts.map((item, index) => (
               <div className='py-1' key={index}>
-                Mã giảm giá
+                {item.title}:
                 <span className='ml-1 px-2 py-1 bg-red-200 font-bold text-red-900'>
                   {item.type === 'Giảm %'
                     ? `Giảm ${item.rate}%`
