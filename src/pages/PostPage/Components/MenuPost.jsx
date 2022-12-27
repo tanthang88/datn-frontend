@@ -13,7 +13,6 @@ const MenuPost = () => {
     setCategoryPost(
       dataPost.data.map(({ name, id }) => ({
         label: <Link to={'/post/category/' + id}>{name.toUpperCase()}</Link>,
-        // label: name.toUpperCase(),
         key: id,
       })),
     )
