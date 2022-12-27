@@ -15,25 +15,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/Services/UserServices.js'
 import { isEmpty } from 'lodash'
 import { URL, URL_BACKEND } from '../../config/constants'
-
+import SiteLogo from '../../assets/images/logo.png'
 const onSearch = (value) => console.log(value)
 
 export function HeaderTop() {
   const dispatch = useDispatch()
   const [loadingInputSearch, setLoadingInputSearch] = useState(false)
-  const { userInfo, error } = useSelector((state) => state.user)
+  const { userInfo } = useSelector((state) => state.user)
   const { numberCart } = useSelector((state) => state.cart)
   const search = (e) => {
     setLoadingInputSearch(true)
     console.log(e.target.value)
     e.target.value.length === 0 ? setLoadingInputSearch(false) : ''
   }
-  useEffect(
-    function () {
-      // console.log(error)
-    },
-    [error],
-  )
   const menu = (
     <Menu
       items={[
@@ -62,11 +56,7 @@ export function HeaderTop() {
     <div className='xl:container flex justify-between items-center h-full'>
       <div className='w-3/12'>
         <Link to={URL.HOME}>
-          <img
-            src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/1200px-FPT_logo_2010.svg.png'
-            alt=''
-            className='w-20'
-          />
+          <img src={SiteLogo} alt='Logo' className='w-40' />
         </Link>
       </div>
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { CartEmpty } from './CartEmpty.jsx'
 import CartBill from './CartBill.jsx'
-import { Col, InputNumber, Select, Table, Radio, Space } from 'antd'
+import { Col, InputNumber, Select, Table } from 'antd'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
@@ -15,8 +15,6 @@ import {
 import { CartBillSuccess } from './CartBillSuccess'
 import { currency } from '../../../utils/currency.js'
 import { URL_BACKEND } from '../../../config/constants'
-import IconPaymentMethodATM from '../../../assets/images/icon-payment-method-atm.svg'
-import IconPaymentMethodCOD from '../../../assets/images/icon-payment-method-cod.svg'
 
 const { Column } = Table
 
@@ -34,10 +32,30 @@ export const CartListProducts = () => {
     dispatch(loadingCart())
     dispatch(decreaseQuantity({ index, value }))
   }
-  const handleChangeProperty = (index, productID, colorID, capacityID) => {
+  const handleChangeColorProperty = (
+    itemID,
+    productID,
+    colorID,
+    capacityID,
+  ) => {
     dispatch(
       changeProperties({
-        index,
+        itemID,
+        productID,
+        colorID,
+        capacityID,
+      }),
+    )
+  }
+  const handleChangeCapacityProperty = (
+    itemID,
+    productID,
+    colorID,
+    capacityID,
+  ) => {
+    dispatch(
+      changeProperties({
+        itemID,
         productID,
         colorID,
         capacityID,
@@ -47,7 +65,7 @@ export const CartListProducts = () => {
   if (numberCart === 0) return <CartEmpty />
   return (
     <GridContentLayout justify='' classNameContainer='bg-main2'>
-      <Col span={15}>
+      <Col span={24}>
         <Table
           // bordered={true}
           locale={locale}
@@ -106,7 +124,7 @@ export const CartListProducts = () => {
                 <Select
                   defaultValue={product.color_id}
                   onChange={(e) => {
-                    handleChangeProperty(
+                    handleChangeColorProperty(
                       index,
                       product.id,
                       e,
@@ -120,7 +138,7 @@ export const CartListProducts = () => {
                     </div>
                   }
                   style={{
-                    width: 90,
+                    width: 110,
                   }}
                   options={product.prop_attr_color}
                 />
@@ -133,10 +151,15 @@ export const CartListProducts = () => {
                     </div>
                   }
                   onChange={(e) => {
-                    handleChangeProperty(index, product.id, product.color_id, e)
+                    handleChangeCapacityProperty(
+                      index,
+                      product.id,
+                      product.color_id,
+                      e,
+                    )
                   }}
                   style={{
-                    width: 90,
+                    width: 110,
                   }}
                   options={product.prop_attr_capacity}
                 />
@@ -182,40 +205,9 @@ export const CartListProducts = () => {
             )}
           />
         </Table>
-        <section className='bg-white my-4'>
-          <h1 className='uppercase'>Hình thức thanh toán</h1>
-          <Radio.Group
-            onChange={(e) => {
-              console.log(e)
-            }}
-            optionType={'button'}
-            // value={1}
-          >
-            <Space direction='horizontal'>
-              <Radio value={1} className='pb-8'>
-                <div className='flex flex-row items-center gap-2'>
-                  <img
-                    src={IconPaymentMethodCOD}
-                    alt='phương thức thanh toán khi nhận hàng'
-                  />
-                  <p className='pt-2'>Thanh toán khi nhận hàng</p>
-                </div>
-              </Radio>
-              <Radio value={2}>
-                <div className='flex flex-row items-center gap-2'>
-                  <img
-                    src={IconPaymentMethodATM}
-                    alt='phương thức thanh toán qua thẻ'
-                  />
-                  <p className='pt-0.5'>Thẻ ATM/Internet Banking</p>
-                </div>
-              </Radio>
-            </Space>
-          </Radio.Group>
-        </section>
       </Col>
       {/* Cart Information */}
-      <Col span={9}>
+      <Col span={24}>
         <CartBill />
       </Col>
       <CartBillSuccess />
