@@ -1,6 +1,15 @@
 .main-layout {
   background: #f8f9fa;
 }
+#type-page::before{
+    content: '';
+    width: 3px;
+    height: 100%;
+    background: #ee4d2d;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
 .ft__httt {
   width: 145px;
   height: 27px;
