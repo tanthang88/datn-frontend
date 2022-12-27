@@ -102,7 +102,7 @@ export const MainBanner = () => {
                   />
                   <p
                     className='text-black font-semibold mb-0 py-1 '
-                    style={{ fontSize: '15px' }}
+                    style={{ fontSize: '14px' }}
                   >
                     {item.post_title}
                   </p>

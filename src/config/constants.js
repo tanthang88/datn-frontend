@@ -10,6 +10,7 @@ export const URL = {
   ACCESSORY: '/accessory',
   REGISTER: '/register',
   LOGIN: '/login',
+  CONTACT: '/contact',
 }
 
 export const REGEX = {

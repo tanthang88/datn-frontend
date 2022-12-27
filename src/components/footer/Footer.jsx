@@ -1,54 +1,53 @@
 import GridContentLayout from '../base/GridContentLayout.jsx'
 import { Col, Row } from 'antd'
 import { Link } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
+import { fetchAboutByType } from '../../api/services/AboutService'
 export const Footer = () => {
+  const [listAboutIntro, setListAboutIntro] = useState([])
+  const [listAboutPolicy, setListAboutPolicy] = useState([])
+  useEffect(() => {
+    const getListAboutIntro = async () => {
+      fetchAboutByType('gioi-thieu').then((data) => {
+        setListAboutIntro(data)
+      })
+    }
+    const getListAboutPolicy = async () => {
+      fetchAboutByType('chinh-sach').then((data) => {
+        setListAboutPolicy(data)
+      })
+    }
+    getListAboutIntro()
+    getListAboutPolicy()
+  }, [])
   return (
     <Row className='xl:container pt-2'>
       <Col span={6}>
+        {listAboutIntro.map((item) => (
+          <p key={item.id}>
+            <Link to={`/about/${item.id}`}>
+              <span className='text-teal-900 font-medium hover:underline '>
+                {item.about_title}
+              </span>
+            </Link>
+          </p>
+        ))}
         <p>
-          <Link to={'/'}>
-            <span>Giới thiệu về công ty</span>
-          </Link>
-        </p>
-        <p>
-          <Link to={'/'}>
-            <span>Câu hỏi thường gặp mua hàng</span>
-          </Link>
-        </p>
-
-        <p>
-          <Link to={'/'}>
-            <span>Giới thiệu máy đổi trả</span>
+          <Link to={'/contact'}>
+            <span>Liên hệ</span>
           </Link>
         </p>
       </Col>
       <Col span={6}>
-        <p>
-          <Link to={'/'}>
-            <span>Chính sách trả góp</span>
-          </Link>
-        </p>
-        <p>
-          <Link to={'/'}>
-            <span>Chính sách bảo mật</span>
-          </Link>
-        </p>
-        <p>
-          <Link to={'/'}>
-            <span>Chính sách đổi trả</span>
-          </Link>
-        </p>
-        <p>
-          <Link to={'/'}>
-            <span>Tin tuyển dụng</span>
-          </Link>
-        </p>
-        <p>
-          <Link to={'/'}>
-            <span>Tin khuyến mãi</span>
-          </Link>
-        </p>
+        {listAboutPolicy.map((item) => (
+          <p key={item.id}>
+            <Link to={`/about/${item.id}`}>
+              <span className='text-teal-900 font-medium hover:underline '>
+                {item.about_title}
+              </span>
+            </Link>
+          </p>
+        ))}
       </Col>
       <Col span={6}>
         <ul>
