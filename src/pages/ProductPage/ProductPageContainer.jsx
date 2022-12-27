@@ -10,7 +10,12 @@ import { useParams } from 'react-router'
 import { useLocation } from 'react-router-dom'
 import SortBy from './Components/SortBy.jsx'
 import { fetchSliderByType } from '../../api/services/SliderServices.js'
-import { LIST_TYPE_SLIDER, URL } from '../../config/constants.js'
+import {
+  DEFAULT_PAGINATION_OBJECT,
+  LIST_TYPE_SLIDER,
+  URL,
+} from '../../config/constants.js'
+import PaginationCustom from './Components/Pagination.jsx'
 
 const iniDataSearch = {
   price: '',
@@ -18,6 +23,7 @@ const iniDataSearch = {
   screen: '',
   order_by: '',
   order_type: 'desc',
+  page: '1',
 }
 const ProductPageContainer = () => {
   const { pathname } = useLocation()
@@ -26,6 +32,7 @@ const ProductPageContainer = () => {
   const [productsList, setProductsList] = useState([])
   const [loading, setLoading] = useState(true)
   const [sliders, setSliders] = useState([])
+  const [pagination, setPagination] = useState(DEFAULT_PAGINATION_OBJECT)
 
   useEffect(() => {
     getDataProductFilter(dataSearch)
@@ -35,21 +42,34 @@ const ProductPageContainer = () => {
     setLoading(true)
     fetchProductsByCategoryFilter(id, data)
       .then((data) => {
-        setProductsList(data)
+        setProductsList(data.data)
+        setPagination({
+          currentPage: data.current_page,
+          lastPage: data.last_page,
+          totalPage: data.total,
+          perPage: data.per_page,
+          from: data.from,
+          to: data.to,
+        })
       })
       .catch(() => {})
       .finally(() => setLoading(false))
   }
   useEffect(() => {
-    const typeId = pathname.includes(URL.CATEGORY)
+    const typeValue = pathname.includes(URL.CATEGORY)
       ? LIST_TYPE_SLIDER.PRODUCT
       : LIST_TYPE_SLIDER.ACCESSORY
 
-    fetchSliderByType(typeId).then((data) => {
+    fetchSliderByType(typeValue).then((data) => {
       const dataNewSlider = slice(data, 0, 8)
       setSliders(dataNewSlider)
     })
   }, [])
+
+  const handleChangePage = (current) => {
+    setPagination({ ...pagination, currentPage: current })
+    setDataSearch({ ...dataSearch, page: current })
+  }
 
   return (
     <>
@@ -67,12 +87,22 @@ const ProductPageContainer = () => {
               dataSearch={dataSearch}
             />
           </Col>
-          <Col span={18} className='bg-white mt-6 mb-16 px-2 py-2 rounded-lg'>
-            <SortBy
-              setProductsList={setProductsList}
-              setDataSearch={setDataSearch}
-              dataSearch={dataSearch}
-            />
+          <Col
+            span={18}
+            className='bg-white mt-6 mb-16 px-2 py-2 rounded-lg relative'
+          >
+            <div className='w-full flex justify-between px-5 py-5'>
+              <SortBy
+                setProductsList={setProductsList}
+                setDataSearch={setDataSearch}
+                dataSearch={dataSearch}
+              />
+              <PaginationCustom
+                pagination={pagination}
+                handleChangePage={handleChangePage}
+              />
+            </div>
+
             <GridLayout
               productsList={productsList}
               setProductsList={setProductsList}

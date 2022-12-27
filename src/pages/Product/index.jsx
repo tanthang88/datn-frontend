@@ -1,4 +1,5 @@
 import first from 'lodash/first'
+import isEmpty from 'lodash/isEmpty'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../scss/product.scss'
@@ -11,6 +12,7 @@ import { currency } from '../../utils/currency'
 import { useParams } from 'react-router'
 import {
   fetchCommentsProduct,
+  fetchPost,
   fetchProductById,
   fetchProductByPropertiesId,
   fetchProductsRelated,
@@ -19,11 +21,13 @@ import LoadingProduct from '../../components/Loading/LoadingProduct'
 import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'
 import { addProduct } from '../../store/Reducers/CartSlice'
+import Post from './components/Post'
 
 export default function Product() {
   const [product, setProduct] = useState({})
   const [productsRelated, setProductsRelated] = useState([])
   const [comments, setComments] = useState([])
+  const [posts, setPosts] = useState([])
   const [messageApi, contextHolder] = message.useMessage()
   const [isMoreContent, setIsMoreContent] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -61,14 +65,20 @@ export default function Product() {
       .finally(() => setLoading(false))
 
     getListComments()
+    getListPost()
     fetchProductsRelated(id).then((data) => {
       setProductsRelated(data)
     })
-  }, [])
+  }, [id])
 
   const getListComments = () => {
     fetchCommentsProduct(id).then((data) => {
       setComments(data)
+    })
+  }
+  const getListPost = () => {
+    fetchPost(id).then((data) => {
+      setPosts(data)
     })
   }
 
@@ -90,9 +100,7 @@ export default function Product() {
           product_images: null,
         })
       })
-      .catch(() => {
-        console.log('thất bại')
-      })
+      .catch(() => {})
   }
   useEffect(() => {
     handleGetProduct()
@@ -166,7 +174,7 @@ export default function Product() {
               ))}
           </div>
           <div className='w-full flex justify-start items-center'>
-            <div className='bg-slate-100 w-full p-4'>{desc}</div>
+            <div className='bg-white rounded-lg w-full p-4'>{desc}</div>
           </div>
         </div>
         <div className='w-full sm:w-96 md:w-8/12 lg:w-6/12'>
@@ -181,7 +189,16 @@ export default function Product() {
               onChange={onChangeCapacity}
             >
               {listCapacities.map((property, index) => (
-                <Radio.Button value={property.id} key={index}>
+                <Radio.Button
+                  style={{
+                    height: '50px',
+                    textAlign: 'center',
+                    lineHeight: '20px',
+                    padding: '3px 15px',
+                  }}
+                  value={property.id}
+                  key={index}
+                >
                   <p>{property.propertie_name}</p>
                   <b>{property.propertie_value}</b>
                 </Radio.Button>
@@ -228,37 +245,8 @@ export default function Product() {
           <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
         <div className='col-span-2 mt-10'>
-          <div className='w-full bg-white p-5'>
-            <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
-              Thông số kỹ thuật
-            </h2>
-            {configurations && <Info configurations={configurations} />}
-          </div>
-          <div className='w-full bg-white p-5 mt-5'>
-            <h2 className='text-xl font-normal leading-normal mt-0 mb-2'>
-              Tin tức về iPhone 13 Pro Max
-            </h2>
-            <div className='grid grid-cols-5 gap-2'>
-              <img
-                src='https://images.fpt.shop/unsafe/fit-in/105x70/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/4/26/637866023730277814_iphone-13-pro-cover.jpg'
-                alt=''
-                className='col-span-1 py-1'
-              />
-              <a href='' className='col-span-4 text-base'>
-                Apple tăng cường sản xuất dòng iPhone 13 Pro vì quá “hot” Tin
-                Mới
-              </a>
-              <img
-                src='https://images.fpt.shop/unsafe/fit-in/105x70/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/4/26/637866023730277814_iphone-13-pro-cover.jpg'
-                alt=''
-                className='col-span-1'
-              />
-              <a href='' className='col-span-4 text-base'>
-                Apple tăng cường sản xuất dòng iPhone 13 Pro vì quá “hot” Tin
-                Mới
-              </a>
-            </div>
-          </div>
+          {configurations && <Info configurations={configurations} />}
+          {!isEmpty(posts) && <Post posts={posts} />}
         </div>
       </div>
 

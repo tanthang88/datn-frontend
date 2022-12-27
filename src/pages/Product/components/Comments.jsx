@@ -158,7 +158,7 @@ export default function Comments({ productId, comments, getListComments }) {
                         <p className='inline-flex items-center mr-3 text-sm text-gray-900'>
                           <img
                             className='mr-2 w-6 h-6 rounded-full'
-                            src={URL_BACKEND + item.avatar}
+                            src={URL_BACKEND + '/storage/default-avatar.png'}
                           />
                           {itemChild.comment_name}
                         </p>
