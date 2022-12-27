@@ -43,7 +43,8 @@ const Cart = createSlice({
       state.isLoading = false
     },
     changeProperties: (state, { payload }) => {
-      const { index, productID, colorID, capacityID } = payload
+      const Carts = state.Carts
+      const { itemID, productID, colorID, capacityID } = payload
       const check = state.Carts.findIndex(function (cart) {
         return (
           cart.id === productID &&
@@ -51,14 +52,21 @@ const Cart = createSlice({
           cart.capacity_id === capacityID
         )
       })
-      console.log(check)
-      if (check !== -1) {
-        console.log(check)
-        state.numberCart -= 1
-        state.Carts[index].quantity += state.Carts[check].quantity
-        state.amountCart += state.Carts[check].product_price
-        state.Carts = state.Carts.filter((item, i) => i !== check)
-      }
+      Carts[itemID].color_id = colorID
+      Carts[itemID].capacity_id = capacityID
+      if (check === -1) return
+      state.numberCart -= 1
+      const priceBefore =
+        state.Carts[itemID].quantity * state.Carts[itemID].product_price
+      state.Carts[itemID].quantity += state.Carts[check].quantity
+      const priceAfter =
+        state.Carts[itemID].quantity * state.Carts[itemID].product_price
+      const priceItemDuplicate =
+        state.Carts[check].product_price * state.Carts[check].quantity
+
+      state.amountCart -= priceItemDuplicate
+      state.amountCart = state.amountCart + (priceAfter - priceBefore)
+      state.Carts = state.Carts.filter((item, i) => i !== check)
     },
     deleteProduct: (state, { payload }) => {
       const ID = payload.index
@@ -91,7 +99,7 @@ const Cart = createSlice({
             })
           : dataProduct.prop_attr_capacity.push({
               slug: prop?.propertie_slug,
-              label: label.charAt(0).toUpperCase() + label.slice(1) + ' GB',
+              label: label.charAt(0).toUpperCase() + label.slice(1),
               value: prop?.id,
             })
       })
@@ -100,8 +108,8 @@ const Cart = createSlice({
         state.Carts.push({
           ...dataProduct,
           quantity: 1,
-          capacity_id: propertyCapacity,
           color_id: propertyColor,
+          capacity_id: propertyCapacity,
         })
         state.numberCart += 1
         state.amountCart += price
@@ -133,8 +141,8 @@ const Cart = createSlice({
       state.Carts.push({
         ...dataProduct,
         quantity: 1,
-        capacity_id: propertyCapacity,
         color_id: propertyColor,
+        capacity_id: propertyCapacity,
       })
       state.numberCart += 1
       state.amountCart += price

@@ -13,17 +13,16 @@ export default function Post({ posts }) {
         .filter((post) => post.post_outstanding === OUTSTANDING)
         .slice(0, 5)
         .map((item, index) => (
-          <div key={index} className='grid grid-cols-5 gap-4'>
+          <div key={index} className='grid grid-cols-5 gap-4 mb-1'>
             <img
               src={URL_BACKEND + item.post_img}
               alt={item.post_slug}
               className='col-span-1 py-1'
             />
-            <div className='col-span-4 text-base py-2'>
-              <NavLink to=''>{item.post_title}</NavLink>
-              <p className='text-sm pt-1'>
-                {truncate(item.post_desc, { length: 95 })}
-              </p>
+            <div className='col-span-4 text-base py-1'>
+              <NavLink to=''>
+                {truncate(item.post_title, { length: 83 })}
+              </NavLink>
             </div>
           </div>
         ))}

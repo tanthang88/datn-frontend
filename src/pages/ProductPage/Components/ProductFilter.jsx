@@ -7,9 +7,13 @@ const ProductFilter = ({ setDataSearch, dataSearch }) => {
 
   const onChange = (e) => {
     if (e.target.checked) {
-      return setDataSearch({ ...dataSearch, [e.target.label]: e.target.value })
+      return setDataSearch({
+        ...dataSearch,
+        [e.target.label]: e.target.value,
+        page: 1,
+      })
     }
-    setDataSearch({ ...dataSearch, [e.target.label]: '' })
+    setDataSearch({ ...dataSearch, [e.target.label]: '', page: 1 })
   }
   useEffect(() => {
     const getData = async () => {
