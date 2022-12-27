@@ -15,6 +15,21 @@
     left: 0;
     bottom: 0;
 }
+//Custom next - prev icon SwiperJS
+.swiper-button-prev, .swiper-button-next{
+    color: #6c757d !important;
+    opacity: .75;
+    font-size: 14px;
+    background: #fff;
+    padding: 1.5em;
+    border: 2px solid #a7a7b1 !important;
+    border-radius: 50%;
+    width: 32px !important;
+    height: 32px !important;
+    &:after{
+         font-size: 1.5rem !important;
+     }
+}
 .ft__httt {
   width: 145px;
   height: 27px;

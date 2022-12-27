@@ -44,7 +44,9 @@ const Cart = createSlice({
     },
     changeProperties: (state, { payload }) => {
       const Carts = state.Carts
-      const { itemID, productID, colorID, capacityID } = payload
+      const { itemID, productID, colorID, capacityID, propertyLabel, slug } =
+        payload
+
       const check = state.Carts.findIndex(function (cart) {
         return (
           cart.id === productID &&
@@ -52,6 +54,8 @@ const Cart = createSlice({
           cart.capacity_id === capacityID
         )
       })
+      if (slug === 'mau-sac') Carts[itemID].labelColor = propertyLabel
+      if (slug === 'dung-luong') Carts[itemID].labelCapacity = propertyLabel
       Carts[itemID].color_id = colorID
       Carts[itemID].capacity_id = capacityID
       if (check === -1) return
@@ -87,21 +91,28 @@ const Cart = createSlice({
         'product_price',
         'properties',
       ])
+      dataProduct.labelColor = null
+      dataProduct.labelCapacity = null
       dataProduct.prop_attr_color = []
       dataProduct.prop_attr_capacity = []
       dataProduct?.properties.forEach((prop) => {
         const label = prop?.propertie_value
-        prop.propertie_slug === 'mau-sac'
-          ? dataProduct.prop_attr_color.push({
-              slug: prop?.propertie_slug,
-              label: label.charAt(0).toUpperCase() + label.slice(1),
-              value: prop?.id,
-            })
-          : dataProduct.prop_attr_capacity.push({
-              slug: prop?.propertie_slug,
-              label: label.charAt(0).toUpperCase() + label.slice(1),
-              value: prop?.id,
-            })
+        const convertLabel = label.charAt(0).toUpperCase() + label.slice(1)
+        if (prop.propertie_slug === 'mau-sac') {
+          dataProduct.prop_attr_color.push({
+            slug: prop?.propertie_slug,
+            label: convertLabel,
+            value: prop?.id,
+          })
+          dataProduct.labelColor = convertLabel
+        } else {
+          dataProduct.prop_attr_capacity.push({
+            slug: prop?.propertie_slug,
+            label: convertLabel,
+            value: prop?.id,
+          })
+          dataProduct.labelCapacity = convertLabel
+        }
       })
       const { Carts } = current(state)
       if (!Carts.length) {

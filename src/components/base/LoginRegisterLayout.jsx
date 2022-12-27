@@ -1,6 +1,6 @@
 import { Layout } from 'antd'
 import { Footer } from '../footer/Footer.jsx'
-import '../../App.css'
+import '../../App.scss'
 import SiteLogo from '../../assets/images/logo-2.png'
 const { Content, Header } = Layout
 

@@ -14,3 +14,6 @@ export const cancelBill = async (id) => {
   const { data } = await publicRequest.post(`client/bills/${id}/cancel`)
   return data
 }
+export const addBill = async (formValue) => {
+  return await publicRequest.post(`client/bills/add_to_bill`, formValue)
+}

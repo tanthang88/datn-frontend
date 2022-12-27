@@ -35,7 +35,7 @@ export default function CategoryAccessory() {
                       item.category_image
                     }
                     alt=''
-                    className='w-11 h-11 object-cover'
+                    className='w-20 h-20 object-cover'
                   />
                 </picture>
                 <div className='text-black'>{item.category_name}</div>
