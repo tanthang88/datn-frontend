@@ -1,10 +1,8 @@
-import { Avatar, List, Skeleton, Switch, Col, Row } from 'antd'
-import SellingPost from '../PostPage/Components/SellingPost.jsx'
+import { Skeleton, Col, Row } from 'antd'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { postsAPI } from '../../api/services/postsAPI.js'
 import { format } from 'date-fns'
-import ReactPlayer from 'react-player'
 
 export default function Post() {
   const [dataPost, setDataPost] = useState([])
@@ -63,17 +61,6 @@ export default function Post() {
           <img
             className='pt-5'
             src='https://cdn.tgdd.vn/2022/12/banner/380x215-380x215.webp'
-          />
-          <ReactPlayer
-            url='https://www.youtube.com/watch?v=mRApZVPSsps'
-            style={{
-              paddingTop: 10,
-              paddingBottom: 10,
-            }}
-            width='317px'
-            height='230px'
-            playing={true}
-            controls={false}
           />
         </Col>
       </Row>
