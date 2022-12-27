@@ -44,6 +44,7 @@ import VARB from '../../../assets/images/bank-logo/VARB.jpg'
 import VCB from '../../../assets/images/bank-logo/vcb.jpg'
 import VTB from '../../../assets/images/bank-logo/viettink.png'
 import VPB from '../../../assets/images/bank-logo/VPB.jpg'
+import { addBill } from '../../../api/services/BillService.js'
 
 const layoutFormBill = {
   labelCol: {
@@ -55,14 +56,8 @@ const layoutFormBill = {
 }
 const CartBill = () => {
   const dispatch = useDispatch()
-  const {
-    numberCart,
-    Carts,
-    amountCart,
-    isLoading,
-    transportFee,
-    saveMoneyDiscount,
-  } = useSelector((state) => state.cart)
+  const { numberCart, Carts, amountCart, transportFee, saveMoneyDiscount } =
+    useSelector((state) => state.cart)
   const { userInfo } = useSelector((state) => state.user)
   const [FormBill, FormVoucher] = Form.useForm()
   const [listCity, setListCity] = useState(null)
@@ -72,9 +67,16 @@ const CartBill = () => {
   const [listDiscountCode, setListDiscountCode] = useState([])
   const [modalDiscountCode, setModalDiscountCode] = useState(false)
   const [btnSubmitVoucher, setBtnSubmitVoucher] = useState(true)
+  const [bankCode, setBankCode] = useState('NCB')
+  const [discountCodeID, setDiscountCodeID] = useState(null)
   const listBank = (
-    <article className='my-2'>
-      <Radio.Group buttonStyle='outline' name='bank' optionType={'default'}>
+    <article className='my-2' key={showListBank.toString()}>
+      <Radio.Group
+        buttonStyle='outline'
+        name='bank'
+        optionType={'default'}
+        onChange={(e) => handleSelectBankPayment(e)}
+      >
         <Row gutter={[8, 8]} className='payment-listbank'>
           <Col span={6}>
             <Radio value='ACB' className='w-full'>
@@ -278,8 +280,16 @@ const CartBill = () => {
     })
     setListDiscountCode(data)
   }
-  const submitFormBill = (formValue) => {
-    console.log(formValue)
+  const submitFormBill = (form) => {
+    const formValue = JSON.parse(JSON.stringify(form))
+    formValue?.products.forEach((item) => {
+      item.variant_name = `${item.labelColor} ${item.labelCapacity}`
+    })
+    formValue.bank_code = bankCode
+    formValue.discount_code_id = discountCodeID
+    Object.preventExtensions(formValue)
+    const rs = addBill(formValue)
+    console.log(rs)
   }
   const handleChoiceDiscount = (e) => {
     const value = e.target.value
@@ -290,6 +300,7 @@ const CartBill = () => {
           notification.success({
             message: `${message}`,
           })
+          setDiscountCodeID(value)
         } else {
           notification.error({
             message: `${message}`,
@@ -317,10 +328,13 @@ const CartBill = () => {
         break
       case e:
         if (e !== null) {
-          console.log(e)
+          handleChoiceDiscount(e)
         }
         break
     }
+  }
+  const handleSelectBankPayment = (e) => {
+    setBankCode(e.target.value)
   }
   useEffect(() => {
     getListCity()
@@ -328,7 +342,6 @@ const CartBill = () => {
     dispatch(resetDiscountCode())
     if (userInfo) getValueCity(userInfo.city_id)
   }, [userInfo])
-  useEffect(() => {}, showListBank)
   return (
     <GridContentLayout>
       <Col span={12}>
@@ -344,13 +357,14 @@ const CartBill = () => {
               className='w-full justify-between payment-method gap-3'
             >
               <Radio value='COD' className='w-full'>
-                <div className='flex flex-row justify-center items-center gap-2'>
+                <div className='inline-flex flex-row justify-center items-center gap-2 ml-8'>
                   <img
                     src={IconPaymentMethodCOD}
                     alt='phương thức thanh toán khi nhận hàng'
-                    className=''
+                    className='m-0 p-0'
+                    style={{ marginTop: '-.35rem' }}
                   />
-                  <p className='mt-0.5'>Thanh toán khi nhận hàng</p>
+                  <p className='m-0'>Thanh toán khi nhận hàng</p>
                 </div>
               </Radio>
               <Radio value='ATM' className='w-full'>
@@ -359,7 +373,7 @@ const CartBill = () => {
                     src={IconPaymentMethodATM}
                     alt='phương thức thanh toán qua thẻ'
                   />
-                  <p className=''>Thẻ ATM/Internet Banking</p>
+                  <p className='m-0 p-0'>Thẻ ATM/Internet Banking</p>
                 </div>
               </Radio>
             </Space>
@@ -493,6 +507,20 @@ const CartBill = () => {
                   <Form.Item name='products' noStyle initialValue={Carts}>
                     <Input type='hidden' />
                   </Form.Item>
+                  <Form.Item
+                    name='bill_price'
+                    noStyle
+                    initialValue={amountCart}
+                  >
+                    <Input type='hidden' />
+                  </Form.Item>
+                  <Form.Item
+                    name='customer_id'
+                    noStyle
+                    initialValue={userInfo?.id}
+                  >
+                    <Input type='hidden' />
+                  </Form.Item>
                 </Col>
               </Row>
               <div className='flex flex-col px-0 pb-2'>
@@ -607,22 +635,21 @@ const CartBill = () => {
                                   }}
                                   className='overflow-hidden'
                                 >
-                                  <h1 className='uppercase text-white text-lg m-0 px-6 pt-6'>
+                                  <h1 className='uppercase text-white text-lg m-0 px-6 pt-12'>
                                     giảm giá <br /> đơn hàng
                                   </h1>
                                 </div>
-                                <div className='flex flex-col gap-2 py-2'>
-                                  <p>
-                                    Mã{' '}
+                                <div className='flex flex-col gap-2 py-2 pt-4'>
+                                  <p className='m-0'>
                                     <span className='font-bold'>
                                       {item.title}
                                     </span>
                                   </p>
-                                  <p>
+                                  <p className='m-0'>
                                     Giảm <strong>{item.type_content}</strong>{' '}
                                     trên tổng đơn hàng
                                   </p>
-                                  <p className='italic'>
+                                  <p className='italic mb-0'>
                                     Đơn hàng tối thiếu:{' '}
                                     <span className='font-bold'>
                                       {currency(item.minimum_order)}

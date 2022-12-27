@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import '../../../App.css'
+import '../../../App.scss'
 import { postsAPI } from '../../../api/services/postsAPI.js'
 import { useParams } from 'react-router'
 import { URL_BACKEND } from '../../../config/constants.js'
@@ -30,7 +30,10 @@ const SellingPost = () => {
               <div className='pt-4 pb-1 float-left'>
                 <div className='relative'>
                   <div className='sale-post absolute'></div>
-                  <img className='sale-img' src={URL_BACKEND + item.post_image} />
+                  <img
+                    className='sale-img'
+                    src={URL_BACKEND + item.post_image}
+                  />
                   <h2 className='absolute bottom-5 px-2 text-white font-bold text-base font-sans'>
                     {item.post_title}
                   </h2>

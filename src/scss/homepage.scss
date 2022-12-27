@@ -2,21 +2,6 @@
   border-right: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-//Custom next - prev icon SwiperJS
-.swiper-button-prev, .swiper-button-next{
-  color: #6c757d;
-  opacity: .75;
-  font-size: 14px;
-  background: #fff;
-  padding: 1.5em;
-  border: 2px solid #a7a7b1;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  &:after{
-    font-size: 1.5rem;
-  }
-}
 
 .product-sale {
   padding: .8rem;

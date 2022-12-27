@@ -1,19 +1,13 @@
 import { BackTop, Layout } from 'antd'
 import MainHeader from '../header/Header.jsx'
 import { Footer as MainFooter } from '../footer/Footer.jsx'
-import '../../App.css'
+import '../../App.scss'
 import { Outlet } from 'react-router'
 import { AiFillUpCircle } from 'react-icons/ai'
-import useCheckLogin from '../../hooks/useCheckLogin.js'
-import LoginContainer from '../../pages/Login/LoginContainer.jsx'
 
 const { Content, Footer } = Layout
 
 export default function MainLayout() {
-  // const checklogin = useCheckLogin()
-  // if (!checklogin) {
-  //   return <LoginContainer />
-  // }
   return (
     <Layout className='main-layout'>
       <MainHeader />
