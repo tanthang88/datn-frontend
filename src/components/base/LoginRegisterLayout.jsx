@@ -1,24 +1,32 @@
-import { Layout, BackTop } from 'antd'
+import { Layout } from 'antd'
 import { Footer } from '../footer/Footer.jsx'
 import '../../App.css'
-import logo from '../../assets/react.svg'
+import SiteLogo from '../../assets/images/logo-2.png'
 const { Content, Header } = Layout
 
 export default function LoginRegisterLayout({ children, type }) {
   return (
     <Layout className='login-register-layout'>
       <Header className='background-white'>
-        <div className='xl:container py-4'>
+        <div className='xl:container'>
           <div className=''>
-            <div className='flex flex-row items-center gap-4'>
-              <img src={logo} alt='Logo' />
-              <h1 className='text-xl text-black p-0 m-0'>{type}</h1>
+            <div
+              className='flex flex-row items-center gap-4'
+              style={{ marginTop: '-1rem' }}
+            >
+              <img src={SiteLogo} alt='Logo' className='w-40' />
+              <h1
+                className='text-xl text-black p-0 m-0 relative'
+                id='type-page'
+              >
+                <div className='ml-5 mt-1.5'>{type}</div>
+              </h1>
             </div>
           </div>
         </div>
       </Header>
       <Content
-        className='w-full py-10'
+        className='w-full py-40'
         style={{ backgroundColor: 'rgb(238, 77, 45)' }}
       >
         {children}
