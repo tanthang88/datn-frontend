@@ -2,12 +2,19 @@ import React from 'react'
 import { currency } from '../../../utils/currency'
 import { URL } from '../../../config/constants'
 import { Link, NavLink } from 'react-router-dom'
-export default function index({ name, price, imgUrl, callback, value }) {
+export default function index({
+  name,
+  price,
+  imgUrl,
+  callback,
+  value,
+  discounts,
+}) {
   return (
     <section className='product-sale'>
       <div className='product__sale-img--separator relative text-center'>
         <img
-          style={{ objectFit: 'contain', backgroundColor: '#fdfdfd' }}
+          style={{ objectFit: 'contain' }}
           src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/14/638040405020658246_frame-cate-270x210.png'
           alt=''
         />

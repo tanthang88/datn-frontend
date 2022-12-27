@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { URL_BACKEND } from '../../config/constants'
+import { currency } from '../../utils/currency'
+import isEmpty from 'lodash/isEmpty'
 
 export const ProductItem = (props) => {
   return (
@@ -10,7 +12,7 @@ export const ProductItem = (props) => {
     >
       <div className='product__sale-img--separator relative text-center'>
         <img
-          style={{ objectFit: 'contain', backgroundColor: '#fdfdfd' }}
+          style={{ objectFit: 'contain' }}
           src='https://images.fpt.shop/unsafe/fit-in/270x210/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/11/14/638040405020658246_frame-cate-270x210.png'
           alt=''
         />
@@ -30,6 +32,20 @@ export const ProductItem = (props) => {
             {props.data?.product_title || props.data?.product_name}
           </NavLink>
         </h3>
+        {!isEmpty(props.discounts) && (
+          <div className='my-3 flex flex-wrap'>
+            {props.discounts.map((item, index) => (
+              <div
+                key={index}
+                className='px-2 py-1 my-2 mx-1 bg-red-200 font-bold text-red-900'
+              >
+                {item.type === 'Giảm %'
+                  ? `Giảm ${item.rate}%`
+                  : `Giảm ${currency(item.rate)}`}
+              </div>
+            ))}
+          </div>
+        )}
         <p className='process rounded-full relative bg-price-mark text-white'>
           {new Intl.NumberFormat('vi-VN', {
             style: 'currency',

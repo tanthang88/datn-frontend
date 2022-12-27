@@ -14,19 +14,13 @@ import { _ } from 'lodash'
 const PostPageContainer = () => {
   const [dataPost, setDataPost] = useState([])
   const { id } = useParams()
-  // const getAllData = async () => {
-  //   const data = await postsAPI.getAllPost()
-  //   setDataPost(data)
-  // }
   const getData = async () => {
     const data = await postsAPI.getPostOfCategoriesById(id)
     setDataPost(data?.data)
   }
 
   useEffect(() => {
-    getData(
-      setDataPost(_.orderBy(dataPost, ['post_view'], ['desc']).slice(0, 7)),
-    )
+    getData()
   }, [id])
   return (
     <>

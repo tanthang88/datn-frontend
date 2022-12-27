@@ -4,7 +4,7 @@ import { Col, Empty, Row } from 'antd'
 import { OverlaySpinner } from '../../../components/Loading/OverlaySpinner.jsx'
 import isEmpty from 'lodash/isEmpty'
 
-export default function GridLayout({ productsList, loading }) {
+export default function GridLayout({ productsList, loading, discounts }) {
   if (loading) return <OverlaySpinner open={loading} />
   return (
     <>
@@ -12,7 +12,7 @@ export default function GridLayout({ productsList, loading }) {
         {!isEmpty(productsList) ? (
           productsList.map((item, index) => (
             <Col span={8} key={index}>
-              <ProductItem data={item} />
+              <ProductItem data={item} discounts={discounts} />
             </Col>
           ))
         ) : (

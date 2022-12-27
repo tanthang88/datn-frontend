@@ -16,6 +16,7 @@ import {
   URL,
 } from '../../config/constants.js'
 import PaginationCustom from './Components/Pagination.jsx'
+import { getListDiscountCode } from '../../api/services/DiscountCodeServices.js'
 
 const iniDataSearch = {
   price: '',
@@ -33,6 +34,7 @@ const ProductPageContainer = () => {
   const [loading, setLoading] = useState(true)
   const [sliders, setSliders] = useState([])
   const [pagination, setPagination] = useState(DEFAULT_PAGINATION_OBJECT)
+  const [discounts, setDiscounts] = useState([])
 
   useEffect(() => {
     getDataProductFilter(dataSearch)
@@ -63,6 +65,12 @@ const ProductPageContainer = () => {
     fetchSliderByType(typeValue).then((data) => {
       const dataNewSlider = slice(data, 0, 8)
       setSliders(dataNewSlider)
+    })
+  }, [])
+
+  useEffect(() => {
+    getListDiscountCode().then((data) => {
+      setDiscounts(data)
     })
   }, [])
 
@@ -109,6 +117,7 @@ const ProductPageContainer = () => {
               setDataSearch={setDataSearch}
               dataSearch={dataSearch}
               loading={loading}
+              discounts={discounts}
             />
           </Col>
         </Row>
