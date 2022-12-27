@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { postsAPI } from '../../api/services/postsAPI.js'
 import { format } from 'date-fns'
-import ReactPlayer from "react-player";
+import ReactPlayer from 'react-player'
 
 export default function Post() {
   const [dataPost, setDataPost] = useState([])

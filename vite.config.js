@@ -35,12 +35,12 @@ export default defineConfig({
     port: 9999,
     https: true,
   },
-  resolve: {
-    alias: {
-      '~': path.resolve(__dirname, 'node_modules'),
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     '~': path.resolve(__dirname, 'node_modules'),
+  //     '@': path.resolve(__dirname, 'src'),
+  //   },
+  // },
   build: {
     rollupOptions: {
       external: ['react-player'],
