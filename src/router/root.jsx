@@ -19,8 +19,9 @@ const Bill = React.lazy(() => import('../pages/Bill'))
 const Login = React.lazy(() => import('../pages/Login/LoginContainer.jsx'))
 const BillDetail = React.lazy(() => import('../pages/Bill/Detail'))
 const ProductDetail = React.lazy(() => import('../pages/Product'))
+const ContactPage = React.lazy(() => import('../pages/Contact'))
+const AboutPage = React.lazy(() => import('../pages/About'))
 const PostDetail = React.lazy(() => import('../pages/Post/index.jsx'))
-
 const Pages = () =>
   useRoutes([
     {
@@ -69,6 +70,16 @@ const Pages = () =>
         {
           path: URL.CART,
           element: <Cart />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: URL.CONTACT,
+          element: <ContactPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `about/:id`,
+          element: <AboutPage />,
           errorElement: <ErrorPage />,
         },
       ],
