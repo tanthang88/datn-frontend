@@ -4,7 +4,7 @@ import { AiFillCheckCircle } from 'react-icons/ai'
 export default function Gift() {
   return (
     <div className='w-full flex justify-start items-center'>
-      <div className='bg-slate-100 w-full p-4 mt-7'>
+      <div className='bg-slate-100 w-full p-4 mt-3'>
         <ul>
           <li className='flex flex-row'>
             <AiFillCheckCircle className='text-green-700 inline-flex mt-1 mr-1' />

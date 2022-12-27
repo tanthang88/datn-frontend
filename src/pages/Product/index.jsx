@@ -22,6 +22,7 @@ import Related from './components/Related'
 import { URL_BACKEND } from '../../config/constants'
 import { addProduct } from '../../store/Reducers/CartSlice'
 import Post from './components/Post'
+import { getListDiscountCode } from '../../api/services/DiscountCodeServices'
 
 export default function Product() {
   const [product, setProduct] = useState({})
@@ -35,6 +36,8 @@ export default function Product() {
   const { userInfo } = useSelector((state) => state.user)
   const [listCapacities, setListCapacities] = useState([])
   const [listColors, setListColors] = useState([])
+  const [discounts, setDiscounts] = useState([])
+
   const dispatch = useDispatch()
 
   const [data, setData] = useState({
@@ -69,6 +72,7 @@ export default function Product() {
     fetchProductsRelated(id).then((data) => {
       setProductsRelated(data)
     })
+    getListDiscount()
   }, [id])
 
   const getListComments = () => {
@@ -79,6 +83,12 @@ export default function Product() {
   const getListPost = () => {
     fetchPost(id).then((data) => {
       setPosts(data)
+    })
+  }
+
+  const getListDiscount = () => {
+    getListDiscountCode().then((data) => {
+      setDiscounts(data)
     })
   }
 
@@ -205,7 +215,7 @@ export default function Product() {
               ))}
             </Radio.Group>
           </div>
-          <div className='w-full mt-4'>
+          <div className='w-full mt-4 mb-2'>
             <Radio.Group
               onChange={onChangeColor}
               value={data?.propertyColor || ''}
@@ -217,6 +227,17 @@ export default function Product() {
               ))}
             </Radio.Group>
           </div>
+          {!isEmpty(discounts) &&
+            discounts.map((item, index) => (
+              <div className='py-1' key={index}>
+                Mã giảm giá
+                <span className='ml-1 px-2 py-1 bg-red-200 font-bold text-red-900'>
+                  {item.type === 'Giảm %'
+                    ? `Giảm ${item.rate}%`
+                    : `Giảm ${currency(item.rate)}`}
+                </span>
+              </div>
+            ))}
           {/* quà tặng khi mua hàng */}
           <Gift />
           <div className='w-full py-5'>
@@ -255,7 +276,7 @@ export default function Product() {
         getListComments={getListComments}
         productId={id}
       />
-      <Related productsRelated={productsRelated} />
+      <Related productsRelated={productsRelated} discounts={discounts} />
     </div>
   )
 }

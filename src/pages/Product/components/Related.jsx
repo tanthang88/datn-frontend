@@ -3,10 +3,9 @@ import { Navigation } from 'swiper'
 import { SliderProducts } from '../../../components/slider/SliderProduct.jsx'
 import GridContentLayout from '../../../components/base/GridContentLayout.jsx'
 import { ImFire } from 'react-icons/im'
-import Item from '../../../components/product/Item'
-import { URL_BACKEND } from '../../../config/constants'
+import { ProductItem } from '../../../components/product/ProductItem.jsx'
 
-export default function Related({ productsRelated }) {
+export default function Related({ productsRelated, discounts }) {
   return (
     <GridContentLayout classNameContainer='px-1 py-5 my-6'>
       <div className='w-full inline-flex items-baseline gap-2 px-3'>
@@ -24,12 +23,7 @@ export default function Related({ productsRelated }) {
       >
         {productsRelated.map((item, index) => (
           <SwiperSlide key={index}>
-            <Item
-              value={item.id}
-              price={item.product_price}
-              name={item.product_title}
-              imgUrl={URL_BACKEND + item.product_image}
-            />
+            <ProductItem data={item} discounts={discounts} />
           </SwiperSlide>
         ))}
       </SliderProducts>
