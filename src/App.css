@@ -1,6 +1,11 @@
 .main-layout {
   background: #f8f9fa;
 }
+.post-layout {
+  max-width: 75%;
+  padding-left: 25%;
+  padding-top: 30px;
+}
 #type-page::before{
     content: '';
     width: 3px;
@@ -55,6 +60,12 @@
 }
 .sale-post{
     box-shadow: inset 0px -90px 120px rgba(0, 0, 0, 0.8);
-    width: 331px;
+    min-width: 331px;
     height: 221px;
+}
+.selling-post{
+   width: 331px;
+}
+.sale-img{
+    min-width: 331px;
 }

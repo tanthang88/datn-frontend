@@ -19,6 +19,7 @@ const Bill = React.lazy(() => import('../pages/Bill'))
 const Login = React.lazy(() => import('../pages/Login/LoginContainer.jsx'))
 const BillDetail = React.lazy(() => import('../pages/Bill/Detail'))
 const ProductDetail = React.lazy(() => import('../pages/Product'))
+const PostDetail = React.lazy(() => import('../pages/Post/index.jsx'))
 
 const Pages = () =>
   useRoutes([
@@ -58,6 +59,11 @@ const Pages = () =>
         {
           path: `${URL.POST}/:category_slug/:id`,
           element: <Post />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: `${URL.POST}/:id`,
+          element: <PostDetail />,
           errorElement: <ErrorPage />,
         },
         {

@@ -77,7 +77,7 @@ export function HeaderTop() {
         <li>
           <HeaderTopItem
             title='Thông tin hay'
-            linkTo={URL.POST}
+            linkTo='/post/category/1'
             icon={<HiDocumentText />}
           />
         </li>
