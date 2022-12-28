@@ -300,6 +300,9 @@ const CartBill = () => {
     Object.preventExtensions(formValue)
     const rs = addBill(formValue)
     rs.then((res) => {
+      notification.success({
+        message: 'Thanh toán đơn hàng thành công!',
+      })
       if (res[0].payment === 'offline') {
         console.log('ok')
         notification.success({
