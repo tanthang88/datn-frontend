@@ -46,6 +46,13 @@ export const fetchProductFilter = async () => {
   return data
 }
 
+export const fetchProductsSearch = async (payload) => {
+  const { data } = await publicRequest.get(`product/search/search`, {
+    params: payload,
+  })
+  return data
+}
+
 export const fetchProductSort = async (payload) => {
   const { data } = await publicRequest.get(`product/sort/`)
   return data

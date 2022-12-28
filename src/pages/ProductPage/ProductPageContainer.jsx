@@ -5,7 +5,10 @@ import ProductSlider from './Components/ProductSlider.jsx'
 import GridLayout from './Components/GridLayout.jsx'
 import '../../scss/homepage.scss'
 import { useEffect, useState } from 'react'
-import { fetchProductsByCategoryFilter } from '../../api/services/ProductsServices'
+import {
+  fetchProductsByCategoryFilter,
+  fetchProductsSearch,
+} from '../../api/services/ProductsServices'
 import { useParams } from 'react-router'
 import { useLocation } from 'react-router-dom'
 import SortBy from './Components/SortBy.jsx'
@@ -22,6 +25,7 @@ const iniDataSearch = {
   price: '',
   battery: '',
   screen: '',
+  product_name: '',
   order_by: '',
   order_type: 'desc',
   page: '1',
@@ -42,7 +46,26 @@ const ProductPageContainer = () => {
 
   const getDataProductFilter = (data) => {
     setLoading(true)
-    fetchProductsByCategoryFilter(id, data)
+    if (pathname.includes('/search/')) {
+      const newData = { ...data, product_name: id }
+      fetchProductsSearch(newData)
+        .then((data) => {
+          setProductsList(data.data)
+          setPagination({
+            currentPage: data.current_page,
+            lastPage: data.last_page,
+            totalPage: data.total,
+            perPage: data.per_page,
+            from: data.from,
+            to: data.to,
+          })
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false))
+      return
+    }
+    const newDataFilter = { ...data, product_name: '' }
+    fetchProductsByCategoryFilter(id, newDataFilter)
       .then((data) => {
         setProductsList(data.data)
         setPagination({

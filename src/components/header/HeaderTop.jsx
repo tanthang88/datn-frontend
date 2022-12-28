@@ -8,25 +8,22 @@ import {
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa'
 import { HiDocumentText } from 'react-icons/hi'
 import { HeaderTopItem } from './HeaderTopItem'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Search from 'antd/es/input/Search.js'
-import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/Services/UserServices.js'
 import { isEmpty } from 'lodash'
 import { URL, URL_BACKEND } from '../../config/constants'
 import SiteLogo from '../../assets/images/logo.png'
-const onSearch = (value) => console.log(value)
 
 export function HeaderTop() {
   const dispatch = useDispatch()
-  const [loadingInputSearch, setLoadingInputSearch] = useState(false)
   const { userInfo } = useSelector((state) => state.user)
   const { numberCart } = useSelector((state) => state.cart)
-  const search = (e) => {
-    setLoadingInputSearch(true)
-    console.log(e.target.value)
-    e.target.value.length === 0 ? setLoadingInputSearch(false) : ''
+
+  const navigate = useNavigate()
+  const onSearch = (value) => {
+    navigate(`/search/${value}`)
   }
   const menu = (
     <Menu
@@ -65,12 +62,8 @@ export function HeaderTop() {
           className='pt-3'
           placeholder='Nhập tên điện thoại, phụ kiện ... cần tìm'
           onSearch={onSearch}
-          onChange={(e) => {
-            search(e)
-          }}
           size='large'
           enterButton
-          loading={loadingInputSearch}
         />
       </div>
       <ul className='flex justify-around h-14 pt-3 w-4/12'>

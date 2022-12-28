@@ -37,6 +37,8 @@ export const CartListProducts = () => {
     productID,
     colorID,
     capacityID,
+    propertyLabel,
+    slug,
   ) => {
     dispatch(
       changeProperties({
@@ -44,6 +46,8 @@ export const CartListProducts = () => {
         productID,
         colorID,
         capacityID,
+        propertyLabel,
+        slug,
       }),
     )
   }
@@ -52,6 +56,8 @@ export const CartListProducts = () => {
     productID,
     colorID,
     capacityID,
+    propertyLabel,
+    slug,
   ) => {
     dispatch(
       changeProperties({
@@ -59,6 +65,8 @@ export const CartListProducts = () => {
         productID,
         colorID,
         capacityID,
+        propertyLabel,
+        slug,
       }),
     )
   }
@@ -123,12 +131,15 @@ export const CartListProducts = () => {
               <div className='flex flex-col gap-2'>
                 <Select
                   defaultValue={product.color_id}
-                  onChange={(e) => {
+                  onChange={(e, propertyColor) => {
+                    console.log(propertyColor)
                     handleChangeColorProperty(
                       index,
                       product.id,
                       e,
                       product.capacity_id,
+                      propertyColor.label,
+                      propertyColor.slug,
                     )
                   }}
                   suffixIcon={
@@ -150,12 +161,14 @@ export const CartListProducts = () => {
                       <AiFillCaretDown fill={'rgba(0, 0, 0, 0.25)'} />
                     </div>
                   }
-                  onChange={(e) => {
+                  onChange={(e, propertyCapacity) => {
                     handleChangeCapacityProperty(
                       index,
                       product.id,
                       product.color_id,
                       e,
+                      propertyCapacity.label,
+                      propertyCapacity.slug,
                     )
                   }}
                   style={{

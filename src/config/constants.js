@@ -11,6 +11,7 @@ export const URL = {
   REGISTER: '/register',
   LOGIN: '/login',
   CONTACT: '/contact',
+  SEARCH: '/search',
 }
 
 export const REGEX = {

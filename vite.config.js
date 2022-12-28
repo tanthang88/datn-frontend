@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import mkcert from 'vite-plugin-mkcert'
 import { AntdResolve, createStyleImportPlugin } from 'vite-plugin-style-import'
@@ -15,7 +15,6 @@ export default defineConfig({
     createStyleImportPlugin({
       resolves: [AntdResolve()],
     }),
-    splitVendorChunkPlugin(),
   ],
   css: {
     preprocessorOptions: {
@@ -41,9 +40,6 @@ export default defineConfig({
   //   },
   // },
   build: {
-    rollupOptions: {
-      external: ['react-player'],
-    },
     chunkSizeWarningLimit: 1600,
   },
 })
