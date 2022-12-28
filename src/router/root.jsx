@@ -39,6 +39,11 @@ const Pages = () =>
           errorElement: <ErrorPage />,
         },
         {
+          path: `${URL.SEARCH}/:id`,
+          element: <ProductPageContainer />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: `${URL.ACCESSORY}/:id`,
           element: <ProductPageContainer />,
           errorElement: <ErrorPage />,
