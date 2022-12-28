@@ -45,6 +45,7 @@ import VCB from '../../../assets/images/bank-logo/vcb.jpg'
 import VTB from '../../../assets/images/bank-logo/viettink.png'
 import VPB from '../../../assets/images/bank-logo/VPB.jpg'
 import { addBill } from '../../../api/services/BillService.js'
+import { useNavigate } from 'react-router-dom'
 
 const layoutFormBill = {
   labelCol: {
@@ -67,8 +68,9 @@ const CartBill = () => {
   const [listDiscountCode, setListDiscountCode] = useState([])
   const [modalDiscountCode, setModalDiscountCode] = useState(false)
   const [btnSubmitVoucher, setBtnSubmitVoucher] = useState(true)
-  const [bankCode, setBankCode] = useState('NCB')
+  const [bankCode, setBankCode] = useState(null)
   const [discountCodeID, setDiscountCodeID] = useState(null)
+  const navigate = useNavigate()
   const listBank = (
     <article className='my-2' key={showListBank.toString()}>
       <Radio.Group
@@ -284,12 +286,32 @@ const CartBill = () => {
     const formValue = JSON.parse(JSON.stringify(form))
     formValue?.products.forEach((item) => {
       item.variant_name = `${item.labelColor} ${item.labelCapacity}`
+      item.product_name = item.product_title
+      item.variant_id = null
     })
-    formValue.bank_code = bankCode
+    formValue.payment = 1
+    if (showListBank && bankCode !== null) {
+      formValue.bank_code = bankCode
+      formValue.payment = 0
+    }
     formValue.discount_code_id = discountCodeID
+    formValue.bill_price = amountCart
+
     Object.preventExtensions(formValue)
     const rs = addBill(formValue)
-    console.log(rs)
+    rs.then((res) => {
+      notification.success({
+        message: 'Thanh toán đơn hàng thành công!',
+      })
+      if (res[0].payment === 'offline') {
+        console.log('ok')
+        notification.success({
+          message: 'Thanh toán đơn hàng thành công!',
+        })
+      } else {
+        navigate(res[0].data)
+      }
+    })
   }
   const handleChoiceDiscount = (e) => {
     const value = e.target.value
@@ -319,6 +341,7 @@ const CartBill = () => {
       }, 500)
     } else {
       setShowListBank(false)
+      setBankCode(null)
     }
   }
   const submitDiscount = (e) => {
@@ -507,17 +530,24 @@ const CartBill = () => {
                   <Form.Item name='products' noStyle initialValue={Carts}>
                     <Input type='hidden' />
                   </Form.Item>
-                  <Form.Item
-                    name='bill_price'
-                    noStyle
-                    initialValue={amountCart}
-                  >
-                    <Input type='hidden' />
-                  </Form.Item>
+                  {/* <Form.Item */}
+                  {/*  name='bill_price' */}
+                  {/*  noStyle */}
+                  {/*  initialValue={amountCart} */}
+                  {/* > */}
+                  {/*  <Input type='hidden' /> */}
+                  {/* </Form.Item> */}
                   <Form.Item
                     name='customer_id'
                     noStyle
                     initialValue={userInfo?.id}
+                  >
+                    <Input type='hidden' />
+                  </Form.Item>
+                  <Form.Item
+                    name='sale'
+                    noStyle
+                    initialValue={saveMoneyDiscount || 0}
                   >
                     <Input type='hidden' />
                   </Form.Item>
